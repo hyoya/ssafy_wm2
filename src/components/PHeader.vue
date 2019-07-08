@@ -1,5 +1,5 @@
 <template>
-  <div>header</div>
+  <div>palkim test</div>
 </template>
 
 <script>
