@@ -2,9 +2,9 @@
   <div>
     <!-- 서비스 안내 -->
     <!-- TODO 배너 이미지 정하기 -->
-    <ImgBanner imgSrc="https://source.unsplash.com/random/1600x900">
+    <MainBanner imgSrc="https://source.unsplash.com/random/1600x900">
       <div style="line-height:1.2em;" slot="text"> Show your Potential   </div>
-    </ImgBanner>
+    </MainBanner>
 
     <!-- 필터링 -->
     <v-container>
@@ -43,14 +43,14 @@
 import MainBanner from '../components/MainBanner'
 
 export default {
-	name: 'MainPage',
-	components: {
+   name: 'MainPage',
+   components: {
     MainBanner,
-	},
-	methods: {
-		getImgUrl(img) {
-			return require('../assets/' + img)
-		}
-	},
+   },
+   methods: {
+      getImgUrl(img) {
+         return require('../assets/' + img)
+      }
+   },
 }
 </script>
