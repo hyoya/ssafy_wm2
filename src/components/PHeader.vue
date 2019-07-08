@@ -4,7 +4,7 @@
       <!-- toolbar start -->
       <v-toolbar fixed style="background:black;">
         <!-- logo -->
-        <v-btn icon to"/"><!--  TODO 여기는 로고 자리입니다. --> </v-btn>
+        <v-btn icon to="/"><!--  TODO 여기는 로고 자리입니다. --> </v-btn>
 
         <!-- title -->
         <v-toolbar-title class="white--text">Bobsleh</v-toolbar-title>
@@ -54,26 +54,6 @@ export default {
       {icon : 'signin', title:'Sign In', link:"/signin"},
     ],
   }),
-  methods: {
- AddBookmark : function() {
-   var url = this.location;
-   var title = document.title;
-   if (window.sidebar && window.sidebar.addPanel){ // Firefox
-   window.sidebar.addPanel(sidebartitle, sidebarurl,"");
-   alert("FF")
-   }
-   else if ( document.all ) { // IE Favorite
-   window.external.AddFavorite(url, title);
-   alert("IE")
-   }
-   else if (window.opera && window.print) {
-   // do nothing
-   alert("OPERA")
-    }
-   else if (navigator.appName=="Netscape") {
-    alert((navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Cmd' : 'Ctrl') + '+D 키를 눌러 즐겨찾기에 등록하실 수 있습니다.');
-  }
-}
-}
+
 }
 </script>
