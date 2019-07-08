@@ -21,8 +21,8 @@ import PFilter from '../components/MainPage/PFilter'
 import PortfolioList from '../components/MainPage/PortfolioList'
 
 export default {
-	name: 'MainPage',
-	components: {
+   name: 'MainPage',
+   components: {
     MainBanner,
     PFilter,
     PortfolioList,
