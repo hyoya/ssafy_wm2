@@ -1,5 +1,11 @@
 <template>
-  <div>footer</div>
+  <v-app>
+    <v-content>
+      <v-flex>
+        
+      </v-flex>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
