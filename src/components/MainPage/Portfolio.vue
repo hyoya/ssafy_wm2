@@ -1,3 +1,4 @@
+<!--
 <template>
   <v-card>
     <v-img :src="imgSrc" height="200px">
@@ -5,7 +6,7 @@
     <v-card-title primary-title>
       <div>
         <div class="headline" v-line-clamp:20="1">{{title}}</div>
-        <span class="grey--text" v-line-clamp:20="3">{{body}}</span>
+        <span class="greytext" v-line-clamp:20="3">{{body}}</span>
       </div>
     </v-card-title>
   </v-card>
@@ -33,3 +34,4 @@ export default {
 	}
 }
 </script>
+-->

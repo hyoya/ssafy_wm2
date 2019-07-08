@@ -1,4 +1,10 @@
 <template>
+
+</template>
+<script>
+</script>
+<!--
+<template>
   <v-layout mt-5 wrap>
     <v-flex v-for="i in portfolios.length > limits ? limits : portfolios.length" xs12 sm6 md3>
       <Portfolio class="ma-3"
@@ -20,7 +26,7 @@
 
   </v-layout>
 </template>
-
+-->
 <!-- TODO 포트폴리오 샘플파일이 생겼을경우, firebase와 연결시켜서 출력하기 -->
 <!--
 <script>

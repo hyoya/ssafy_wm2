@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div>
-      <hr/>
+      <h1> ---------------------------------------------------------------------------------------------------------------------------------------------- </h1>
       <h2> 오늘의 날씨 </h2>
       <p>도시명 : {{ city }}</p>
       <p>현재 습도 : {{ humidity }}% / 100% </p>
-      <p> 날씨 : {{  weather[0].main }} </p>
+      <p> 날씨 : {{  weather }} </p>
     </div>
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
       .then((result) => {
         this.city = result.data.name
         this.humidity = result.data.main.humidity
-        this.weather = result.data.weather
+        this.weather = result.data.weather[0].main
       })
   }
 }

@@ -27,10 +27,5 @@ export default {
     PFilter,
     PortfolioList,
 	},
-	methods: {
-		getImgUrl(img) {
-			return require('../assets/' + img)
-		}
-	},
 }
 </script>
