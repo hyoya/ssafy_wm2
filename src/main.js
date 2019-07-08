@@ -4,6 +4,10 @@ import 'vuetify/dist/vuetify.min.css'
 import VueSimplemde from 'vue-simplemde'
 
 import App from './App.vue'
+import router from './router'
+import store from './store'
+import './registerServiceWorker'
+
 import axios from 'axios'
 
 Vue.prototype.$http = axios
