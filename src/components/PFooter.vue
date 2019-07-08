@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <div>
+<<<<<<< HEAD
       <h2>오늘의 날씨</h2>
+=======
+      <hr/>
+      <h2> 오늘의 날씨 </h2>
+>>>>>>> 73b02ecb2d940e15ef72aa7ca630b8d06e5d06fb
       <p>도시명 : {{ city }}</p>
       <p>현재 습도 : {{ humidity }}% / 100%</p>
       <p>날씨 : {{ weather[0].main }}</p>

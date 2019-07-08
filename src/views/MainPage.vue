@@ -3,7 +3,7 @@
     <!-- 서비스 안내 -->
     <!-- TODO 배너 이미지 정하기 -->
     <MainBanner imgSrc="https://source.unsplash.com/random/1600x900">
-      <div style="line-height:1.2em;" slot="text"> Show your Potential   </div>
+      <div style="line-height:1.2em;" slot="text">Show your Potential</div>
     </MainBanner>
 
     <!-- 필터링 -->
@@ -16,8 +16,6 @@
           </v-toolbar>
         </v-flex>
       </v-layout>
-
-
 
       <!-- 필터링 - SM and UP SIZE -->
       <v-layout>
@@ -35,22 +33,21 @@
         </v-flex>
       </v-layout>
     </v-container>
-
   </div>
 </template>
 
 <script>
-import MainBanner from '../components/MainBanner'
+import MainBanner from "../components/MainBanner";
 
 export default {
-   name: 'MainPage',
-   components: {
-    MainBanner,
-   },
-   methods: {
-      getImgUrl(img) {
-         return require('../assets/' + img)
-      }
-   },
-}
+  name: "MainPage",
+  components: {
+    MainBanner
+  },
+  methods: {
+    getImgUrl(img) {
+      return require("../assets/" + img);
+    }
+  }
+};
 </script>
