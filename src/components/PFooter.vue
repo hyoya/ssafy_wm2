@@ -1,5 +1,6 @@
 <template>
   <div>footer</div>
+  commit Test
 </template>
 
 <script>
