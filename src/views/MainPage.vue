@@ -40,14 +40,11 @@
 import MainBanner from "../components/MainBanner";
 
 export default {
-  name: "MainPage",
-  components: {
-    MainBanner
-  },
-  methods: {
-    getImgUrl(img) {
-      return require("../assets/" + img);
-    }
-  }
-};
+   name: 'MainPage',
+   components: {
+    MainBanner,
+    PFilter,
+    PortfolioList,
+	},
+}
 </script>
