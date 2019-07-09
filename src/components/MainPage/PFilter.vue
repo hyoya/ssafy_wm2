@@ -1,8 +1,18 @@
 <template>
-  <v-container>
-    <v-layout row>
-      <v-flex xs3 sm2>
-        <v-overflow-btn :items="category" label="분류" target="#dropdown-example"></v-overflow-btn>
+<v-container>
+  <v-layout row>
+    <v-flex xs3 sm2>
+      <v-overflow-btn
+        :items="category"
+        label="분류"
+        target="#dropdown-example"
+      ></v-overflow-btn>
+    </v-flex>
+
+    <v-spacer class="hidden-sm-and-up"></v-spacer>
+    <v-layout class="hidden-xs-only">
+      <v-flex column>
+        <!-- <v-btn v-for="t in tags">{{ t.tag }}</v-btn> -->
       </v-flex>
 
       <v-spacer class="hidden-sm-and-up"></v-spacer>
@@ -16,8 +26,11 @@
     </v-layout>
 
     <v-layout row class="hidden-sm-and-up">
-      <v-flex></v-flex>
+      <v-flex>
+        <!-- <v-btn v-for="t in tags">{{ t.tag }}</v-btn> -->
+      </v-flex>
     </v-layout>
+
   </v-container>
 </template>
 
