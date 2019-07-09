@@ -18,6 +18,7 @@
         <v-toolbar-items >
           <LoginModal/>
           <SignUpModal/>
+          <ProjectDetail/>
         </v-toolbar-items>
 
 
@@ -31,6 +32,7 @@
 <script>
 import LoginModal from "./LoginModal"
 import SignUpModal from "./SignUp/SignUp"
+import ProjectDetail from "./ProjectDetail"
 
 export default {
 	name: 'PHeader',
@@ -39,13 +41,8 @@ export default {
   components :{
     LoginModal,
     SignUpModal,
+    ProjectDetail,
   },
-	data: () => ({
-    menu : [
-      {icon : 'signup', title:'Sign Up', link:"/signup"},
-      {icon : 'signin', title:'Sign In', link:"/signin"},
-    ],
-  }),
 
 }
 </script>
