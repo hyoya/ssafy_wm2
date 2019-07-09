@@ -1,7 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div>palkim test</div>
-=======
   <v-layout>
     <v-flex column>
       <!-- toolbar start -->
@@ -27,7 +24,6 @@
       <!-- toolbar end -->
     </v-flex>
   </v-layout>
->>>>>>> 5768d19734b288491efda057f917643ff9fe419f
 </template>
 
 <script>
