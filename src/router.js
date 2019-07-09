@@ -8,6 +8,7 @@ import SignUpPage from "./views/SignUpPage.vue";
 import UserInfo from "./views/UserInfo.vue";
 Vue.use(Router);
 
+
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,

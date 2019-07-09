@@ -1,7 +1,9 @@
 <template>
   <div class="SideUserInfo">
     <div class="SideUserInfo__intro box">
-      <div class="SideUserInfo__intro__userImg box">userImg</div>
+      <div class="SideUserInfo__intro__userImg box">userImg
+          <ImgUpload/>
+      </div>
       <div class="SideUserInfo__intro__userName box">userName</div>
       <div class="SideUserInfo__intro__introduce box">hello my name is palkim</div>
       <div class="FBtn">
@@ -24,7 +26,15 @@
 </template>
 
 <script>
-export default {};
+
+import ImgUpload from "../ImgUpload"
+
+export default {
+  name: "SideUserInfo",
+  components: {
+    ImgUpload,
+  }
+};
 </script>
 
 <style scoped>

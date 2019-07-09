@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import FirebaseService from "@/services/FirebaseService";
+//import FirebaseService from "@/services/FirebaseService";
 // const auth = FirebaseService.auth
 
 export default {
