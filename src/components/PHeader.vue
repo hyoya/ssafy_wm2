@@ -23,6 +23,9 @@
             flat
             class="white--text"
           >{{ item.title }}</v-btn>
+        <v-toolbar-items >
+          <LoginModal/>
+          <SignUpModal/>
         </v-toolbar-items>
 
         <v-menu class="hidden-sm-and-up">
@@ -42,6 +45,7 @@
 </template>
 
 <script>
+<<<<<<< src/components/PHeader.vue
 export default {
   name: "PHeader",
   props: {},
@@ -53,4 +57,25 @@ export default {
     ]
   })
 };
+=======
+import LoginModal from "./LoginModal"
+import SignUpModal from "./SignUp/SignUp"
+
+export default {
+	name: 'PHeader',
+	props: {
+	},
+  components :{
+    LoginModal,
+    SignUpModal,
+  },
+	data: () => ({
+    menu : [
+      {icon : 'signup', title:'Sign Up', link:"/signup"},
+      {icon : 'signin', title:'Sign In', link:"/signin"},
+    ],
+  }),
+
+}
+>>>>>>> src/components/PHeader.vue
 </script>

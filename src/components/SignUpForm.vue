@@ -1,8 +1,9 @@
+<!--
+
 <template>
 
   <v-layout column>
     <v-flex>
-      <!-- -->
       <div style='height:300px;'>아직 미정입니다.</div>
       <div>
         <h1>회원가입하자</h1>
@@ -30,6 +31,18 @@ export default {
 		}
   },
   methods: {
+
+    check : function() {
+      FirebaseService.auth().createUserWithEmailAndPassword(this.id, this.password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode)
+      console.log(errorMessage)
+      // ...
+    });
+    }
+
   }
 
 }
@@ -44,3 +57,5 @@ button {
   color : red;
 }
 </style>
+
+-->
