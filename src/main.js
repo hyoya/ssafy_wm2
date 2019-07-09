@@ -9,7 +9,7 @@ import store from './store'
 import './registerServiceWorker'
 
 import axios from 'axios'
-import * as firebase from "firebase/app";
+// import * as firebase from "firebase/app";
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false

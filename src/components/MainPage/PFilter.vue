@@ -31,6 +31,7 @@
       </v-flex>
     </v-layout>
 
+  </v-layout>
   </v-container>
 </template>
 
