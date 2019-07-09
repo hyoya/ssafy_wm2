@@ -14,15 +14,10 @@
         <!--spacer -->
         <v-spacer></v-spacer>
 
-        <!-- sign in & sign up  -->
-        <v-toolbar-items class="hidden-xs-only">
-          <v-btn
-            v-for="item in menu"
-            :key="item.icon"
-            :to="item.link"
-            flat
-            class="white--text"
-          >{{ item.title }}</v-btn>
+
+        <v-toolbar-items >
+          <LoginModal/>
+          <SignUpModal/>
         </v-toolbar-items>
 
         <v-menu class="hidden-sm-and-up">
@@ -54,3 +49,4 @@ export default {
   })
 };
 </script>
+
