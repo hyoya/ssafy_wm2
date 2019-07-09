@@ -40,11 +40,11 @@
 import MainBanner from "../components/MainBanner";
 
 export default {
-   name: 'MainPage',
-   components: {
+  name: "MainPage",
+  components: {
     MainBanner,
     PFilter,
-    PortfolioList,
-	},
-}
+    PortfolioList
+  }
+};
 </script>
