@@ -22,7 +22,6 @@
       <v-layout>
         <v-flex column class="hidden-xs-only">
           <!-- TODO 모바일 사이즈 필터(두줄) -->
-          <ImgUpload />
         </v-flex>
       </v-layout>
     </v-container>

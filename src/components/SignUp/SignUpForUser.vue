@@ -66,7 +66,8 @@
               <!-- 이미지 -->
               <v-flex xs12>
                 <!-- TODO Add ImgUpload Btn-->
-                <v-flex xs
+                <v-flex xs12>
+                </v-flex>
               </v-flex>
 
             </v-layout>

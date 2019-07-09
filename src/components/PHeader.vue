@@ -11,7 +11,7 @@
 
         <!--spacer -->
         <v-spacer></v-spacer>
-
+        <div id="google_translate_element"></div>
         <!-- sign in & sign up  -->
         <v-toolbar-items>
           <LoginModal />
