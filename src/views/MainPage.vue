@@ -38,14 +38,11 @@
 
 <script>
 import MainBanner from "../components/MainPage/MainBanner";
-import PFilter from "../components/MainPage/PFilter";
 
 export default {
   name: "MainPage",
   components: {
-    MainBanner,
-    PFilter,
-    PortfolioList
+    MainBanner
   }
 };
 </script>
