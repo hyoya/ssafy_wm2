@@ -1,5 +1,3 @@
-<!--
-
 <template>
 
   <v-layout column>
@@ -31,7 +29,7 @@
 </template>
 
 <script>
-//import FirebaseService from "@/services/FirebaseService";
+import FirebaseService from "@/services/FirebaseService";
 // const auth = FirebaseService.auth
 
 export default {
@@ -64,6 +62,7 @@ export default {
 
 }
 </script>
+
 <style>
 input {
   border : 1px solid;
@@ -74,5 +73,3 @@ button {
   color : red;
 }
 </style>
-
--->
