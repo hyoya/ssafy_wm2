@@ -1,20 +1,40 @@
 <template>
   <div class="SideUserInfo">
-    <div class="SideUserInfo__box box">
-      <div class="SideUserInfo__intro">
-        <div class="SideUserInfo__intro__userImg box">userImg</div>
-        <div class="SideUserInfo__intro__userName box">userName</div>
-        <div class="SideUserInfo__intro__introduce box">hello my name is palkim</div>
-        <div class="FBtn">
-          <button class="followBtn">Follow</button>
+    <div class="SideUserInfo__intro box">
+      <div class="SideUserInfo__intro__userImg box">userImg
+          <ImgUpload/>
+      </div>
+      <div class="SideUserInfo__intro__userName box">userName</div>
+      <div class="SideUserInfo__intro__introduce box">hello my name is palkim</div>
+      <div class="FBtn">
+        <button class="followBtn">Follow</button>
+      </div>
+      <div class="SideUserInfo__skills box">
+        <div class="SideUserInfo__skills__list">SKILLS</div>
+      </div>
+      <div class="SideUserInfo__history box">
+        <div class="SideUserInfo__history__content">
+          history
+          <ul class="content">
+            <li class="content__col">ssafy 2018.12~</li>
+          </ul>
         </div>
       </div>
+      <div class="SideUserInfo__elseWhere box">ELSE WHERE</div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+
+import ImgUpload from "../ImgUpload"
+
+export default {
+  name: "SideUserInfo",
+  components: {
+    ImgUpload,
+  }
+};
 </script>
 
 <style scoped>
@@ -28,7 +48,16 @@ export default {};
   border-radius: 5px;
   margin: 25px;
 }
-.SideUserInfo__box {
+.SideUserInfo__elseWhere {
+  height: 120px;
+}
+.SideUserInfo__skills {
+  height: 150px;
+}
+.SideUserInfo__history {
+  height: 150px;
+}
+.SideUserInfo__intro {
   height: 280px;
 }
 .SideUserInfo__intro__userImg {

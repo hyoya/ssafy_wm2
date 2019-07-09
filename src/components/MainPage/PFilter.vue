@@ -30,7 +30,6 @@
         <!-- <v-btn v-for="t in tags">{{ t.tag }}</v-btn> -->
       </v-flex>
     </v-layout>
-
   </v-layout>
   </v-container>
 </template>
