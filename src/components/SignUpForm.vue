@@ -1,8 +1,9 @@
+<!--
+
 <template>
 
   <v-layout column>
     <v-flex>
-      <!-- -->
       <div style='height:300px;'>아직 미정입니다.</div>
       <div>
         <h1>현재 로그인한 사용자 : ' {{login_user}} ' </h1>
@@ -30,7 +31,7 @@
 </template>
 
 <script>
-import FirebaseService from "@/services/FirebaseService";
+//import FirebaseService from "@/services/FirebaseService";
 // const auth = FirebaseService.auth
 
 export default {
@@ -73,3 +74,5 @@ button {
   color : red;
 }
 </style>
+
+-->
