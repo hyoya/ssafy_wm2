@@ -9,7 +9,7 @@ import store from './store'
 import './registerServiceWorker'
 
 import axios from 'axios'
-import firebase from 'firebase'
+import * as firebase from "firebase/app";
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
@@ -40,5 +40,5 @@ const firebase_config = {
   storageBucket: '',
   messagingSenderId: '395343379837',
   appId: '1:395343379837:web:62eb22d57ca1520e'
-}
-firebase.initializeApp(firebase_config)
+};
+firebase.initializeApp(firebase_config);

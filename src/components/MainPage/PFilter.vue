@@ -12,7 +12,7 @@
     <v-spacer class="hidden-sm-and-up"></v-spacer>
     <v-layout class="hidden-xs-only">
       <v-flex column>
-        <v-btn v-for="t in tags">{{ t.tag }}</v-btn>
+        <!-- <v-btn v-for="t in tags">{{ t.tag }}</v-btn> -->
       </v-flex>
     </v-layout>
 
@@ -27,10 +27,10 @@
 
     <v-layout row class="hidden-sm-and-up">
       <v-flex>
-        <v-btn v-for="t in tags">{{ t.tag }}</v-btn>
+        <!-- <v-btn v-for="t in tags">{{ t.tag }}</v-btn> -->
       </v-flex>
     </v-layout>
-    
+
   </v-container>
 </template>
 
