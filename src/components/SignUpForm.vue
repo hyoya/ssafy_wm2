@@ -8,7 +8,7 @@
         <h1>회원가입하자</h1>
         Email : <input v-model='id'><br>
         Password : <input v-model='password' type="password">
-        <button @click='check(id, password)'>회원가입하기</button>
+        <button @click='signup_raw(id, password)'>회원가입하기</button>
       </div>
     </v-flex>
   </v-layout>
@@ -30,18 +30,10 @@ export default {
 		}
   },
   methods: {
-    check : function() {
-      FirebaseService.auth().createUserWithEmailAndPassword(this.id, this.password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode)
-      console.log(errorMessage)
-      // ...
-    });
+    signup_raw(id, password) {
+      FirebaseService.signup(id, password);
     }
   }
-
 }
 </script>
 <style>
