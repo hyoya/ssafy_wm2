@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-const auth = firebase.auth
+import FirebaseService from "@/services/FirebaseService";
+// const auth = FirebaseService.auth
 
 export default {
 	name: 'SignUpForm',
@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     check : function() {
-      firebase.auth().createUserWithEmailAndPassword(this.id, this.password).catch(function(error) {
+      FirebaseService.auth().createUserWithEmailAndPassword(this.id, this.password).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
