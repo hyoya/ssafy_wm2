@@ -1,15 +1,18 @@
 <template>
   <div>
-    <PUserState></PUserState>
+    <UserStateBar></UserStateBar>
+    <SideUserInfo></SideUserInfo>
   </div>
 </template>
 
 <script>
-import PUserState from "../components/UserInfoPage/PUserState";
+import UserStateBar from "../components/UserInfoPage/UserStateBar";
+import SideUserInfo from "../components/UserInfoPage/SideUserInfo";
 export default {
   name: "UserInfo",
   components: {
-    PUserState
+    UserStateBar,
+    SideUserInfo
   }
 };
 </script>
