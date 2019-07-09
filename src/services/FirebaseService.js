@@ -42,4 +42,18 @@ export default{
       console.log(errorMessage)
     });
     },
+    signin_facebook(id, password){
+      console.log(1)
+    },
+    login(id, password){
+      auth().signInWithEmailAndPassword(id, password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode)
+      console.log(errorMessage)
+      });
+
+      console.log(2)
+    }
 }
