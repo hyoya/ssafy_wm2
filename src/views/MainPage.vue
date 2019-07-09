@@ -21,6 +21,7 @@
       <v-layout>
         <v-flex column class="hidden-xs-only">
           <!-- TODO 모바일 사이즈 필터(두줄) -->
+          <ImgUpload />
         </v-flex>
       </v-layout>
     </v-container>
@@ -38,13 +39,12 @@
 
 <script>
 import MainBanner from "../components/MainPage/MainBanner";
-import PFilter from "../components/MainPage/PFilter";
-
+import ImgUpload from "../components/ImgUpload"
 export default {
-   name: 'MainPage',
-   components: {
+  name: "MainPage",
+  components: {
     MainBanner,
-    PFilter,
-	},
-}
+    ImgUpload,
+  }
+};
 </script>
