@@ -37,7 +37,8 @@
 </template>
 
 <script>
-import MainBanner from "../components/MainBanner";
+import MainBanner from "../components/MainPage/MainBanner";
+import PFilter from "../components/MainPage/PFilter";
 
 export default {
   name: "MainPage",

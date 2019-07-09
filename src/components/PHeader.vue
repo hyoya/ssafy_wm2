@@ -1,7 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div>palkim test</div>
-=======
   <v-layout>
     <v-flex column>
       <!-- toolbar start -->
@@ -12,7 +9,7 @@
         </v-btn>
 
         <!-- title -->
-        <v-toolbar-title class="white--text">Bobsleh</v-toolbar-title>
+        <v-toolbar-title class="white--text">Bobsleh test</v-toolbar-title>
 
         <!--spacer -->
         <v-spacer></v-spacer>
@@ -42,7 +39,6 @@
       <!-- toolbar end -->
     </v-flex>
   </v-layout>
->>>>>>> 5768d19734b288491efda057f917643ff9fe419f
 </template>
 
 <script>
@@ -52,8 +48,7 @@ export default {
   data: () => ({
     menu: [
       { icon: "signup", title: "Sign Up", link: "/signup" },
-      { icon: "signin", title: "Sign In", link: "/signin" },
-      { icon: "userInfo", title: "UserInfo", link: "/userPage" }
+      { icon: "signin", title: "Sign In", link: "/signin" }
     ]
   })
 };
