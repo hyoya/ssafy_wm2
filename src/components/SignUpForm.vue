@@ -44,26 +44,33 @@ export default {
       login_password : '',
       facebook_id : '',
       facebook_password : '',
-      login_user: 's',
+      login_user: 's ',
+
 		}
   },
   methods: {
     signup(id, password) {
       FirebaseService.signup(id, password);
+      this.id = '',
+      this.password = ''
     },
     signin_facebook(id, password) {
       FirebaseService.signin_facebook(id, password);
     },
     login(id, password) {
       FirebaseService.login(id, password)
+
     },
 
+  },
+  mounted: function() {
+    this.login_user = FirebaseService.metadata().login_user
   }
 
 }
 </script>
 
-<style>
+<style scoped>
 input {
   border : 1px solid;
   margin : 10px;

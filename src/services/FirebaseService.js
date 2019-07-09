@@ -18,22 +18,14 @@ const auth = firebase.auth
 
 var login_user = '임시로 존재합니까?'
 
-firebase.auth().onAuthStateChanged(function(user) {
-if (user) {
-  // User is signed in.
-  var displayName = user.displayName;
-  var email = user.email;
-  var emailVerified = user.emailVerified;
-  var photoURL = user.photoURL;
-  var isAnonymous = user.isAnonymous;
-  var uid = user.uid;
-  var providerData = user.providerData;
-  // ...
-} else {
-  // User is signed out.
-  // ...
-}
-});
+// 여기가 로그인 관련된 것
+auth().onAuthStateChanged(function(user) {
+  if (user) {
+  login_user = user.email
+  console.log('현재 로그인된 ID : ', login_user)
+} else {console.log('현재 로그인 되어 있지 않음')}
+})
+
 
 export default{
     async getData(){
@@ -70,7 +62,13 @@ export default{
       .then(function() {
         console.log('로그인 성공한것이다')
         login_user = id
-        // console.log(login_user, '이걸로 저장됐나?')
+        console.log(login_user, '이걸로 저장됐나?')
+
+        auth().onAuthStateChanged(function(user) {
+          if (user) {console.log(user)
+          } else {console.log(2)}
+        })
+
       })
       .catch(function(error) {
         // Handle Errors here.
@@ -81,4 +79,8 @@ export default{
         console.log('로그인 실패한 것이다.')
         });
     },
+    metadata() {
+      return {'login_user':login_user}
+    }
+
 }
