@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import FirebaseService from "@/services/FirebaseService";
+//import FirebaseService from "@/services/FirebaseService";
 // const auth = FirebaseService.auth
 
 export default {
@@ -30,16 +30,6 @@ export default {
 		}
   },
   methods: {
-    check : function() {
-      FirebaseService.auth().createUserWithEmailAndPassword(this.id, this.password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode)
-      console.log(errorMessage)
-      // ...
-    });
-    }
   }
 
 }

@@ -18,7 +18,7 @@ firebase.initializeApp(firebase_config);
 
   export default{
       async getData(){
-        return firestore.collection("portfolio").get().then((docSnapshots) => {
+        return firestore.collection("userImg").get().then((docSnapshots) => {
           return docSnapshots.docs.map((doc) => {
               let data = doc.data()
               let id = doc.id
@@ -26,11 +26,9 @@ firebase.initializeApp(firebase_config);
           })
         })
       },
-      addData(title, image,content){
-        return firestore.collection('portfolio').add({
-          title,
+      addData(image){
+        return firestore.collection('userImg').add({
           image,
-          content,
           date: firebase.firestore.FieldValue.serverTimestamp()
         });
       },
