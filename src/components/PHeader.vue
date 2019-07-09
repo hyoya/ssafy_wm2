@@ -15,26 +15,13 @@
         <v-spacer></v-spacer>
 
         <!-- sign in & sign up  -->
-        <v-toolbar-items class="hidden-xs-only">
-          <v-btn
-            v-for="item in menu"
-            :key="item.icon"
-            :to="item.link"
-            flat
-            class="white--text"
-          >{{ item.title }}</v-btn>
+        <v-toolbar-items >
+          <LoginModal/>
+          <v-btn flat class="white--text">Sign Up</v-btn>
         </v-toolbar-items>
 
-        <v-menu class="hidden-sm-and-up">
-          <v-toolbar-side-icon slot="activator" class="white--text"></v-toolbar-side-icon>
-          <v-list>
-            <v-list-tile v-for="item in menu" :key="item.icon" :to="item.link">
-              <v-list-tile-content>
-                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
+
+
       </v-toolbar>
       <!-- toolbar end -->
     </v-flex>
@@ -42,15 +29,21 @@
 </template>
 
 <script>
+import LoginModal from "./LoginModal"
+
 export default {
-  name: "PHeader",
-  props: {},
-  data: () => ({
-    menu: [
-      { icon: "signup", title: "Sign Up", link: "/signup" },
-      { icon: "signin", title: "Sign In", link: "/signin" },
-      { icon: "userInfo", title: "User Info", link: "/userInfo" }
-    ]
-  })
-};
+	name: 'PHeader',
+	props: {
+	},
+  components :{
+    LoginModal,
+  },
+	data: () => ({
+    menu : [
+      {icon : 'signup', title:'Sign Up', link:"/signup"},
+      {icon : 'signin', title:'Sign In', link:"/signin"},
+    ],
+  }),
+
+}
 </script>
