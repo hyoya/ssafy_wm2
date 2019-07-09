@@ -4,7 +4,9 @@
       <!-- toolbar start -->
       <v-toolbar fixed style="background:black;">
         <!-- logo -->
-        <v-btn icon to="/"><!--  TODO 여기는 로고 자리입니다. --> </v-btn>
+        <v-btn icon to="/">
+          <!--  TODO 여기는 로고 자리입니다. -->
+        </v-btn>
 
         <!-- title -->
         <v-toolbar-title class="white--text">Bobsleh</v-toolbar-title>

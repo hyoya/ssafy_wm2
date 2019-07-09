@@ -1,0 +1,56 @@
+<template>
+
+  <v-layout column>
+    <v-flex>
+      <!-- -->
+      <div style='height:300px;'>아직 미정입니다.</div>
+      <div>
+        <h1>회원가입하자</h1>
+        Email : <input v-model='id'><br>
+        Password : <input v-model='password' type="password">
+        <button @click='check(id, password)'>회원가입하기</button>
+      </div>
+    </v-flex>
+  </v-layout>
+
+</template>
+
+<script>
+import firebase from 'firebase'
+const auth = firebase.auth
+
+export default {
+	name: 'SignUpForm',
+	props: {
+	},
+	data() {
+		return {
+      id : '',
+      password : ''
+		}
+  },
+  methods: {
+    check : function() {
+      firebase.auth().createUserWithEmailAndPassword(this.id, this.password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode)
+      console.log(errorMessage)
+      // ...
+    });
+    }
+  }
+
+}
+</script>
+<style>
+input {
+  border : 1px solid;
+  margin : 10px;
+}
+button {
+  border : 1px solid red;
+  color : red;
+}
+</style>
