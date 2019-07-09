@@ -5,12 +5,14 @@
       <!-- -->
       <div style='height:300px;'>아직 미정입니다.</div>
       <div>
+        <h1>현재 로그인한 사용자 : ' {{login_user}} ' </h1>
         <h1>회원가입하자</h1>
         Email : <input v-model='id'><br>
         Password : <input v-model='password' type="password">
         <button @click='signup(id, password)'>회원가입하기</button>
       </div>
       <div>
+        <button @click='check()'>변경됨??</button>
         <h1>로그인하자</h1>
         Email : <input v-model='login_id'><br>
         Password : <input v-model='login_password' type="password">
@@ -43,6 +45,7 @@ export default {
       login_password : '',
       facebook_id : '',
       facebook_password : '',
+      login_user: 's',
 		}
   },
   methods: {
@@ -53,9 +56,11 @@ export default {
       FirebaseService.signin_facebook(id, password);
     },
     login(id, password) {
-      FirebaseService.login(id, password);
-    }
+      FirebaseService.login(id, password)
+    },
+
   }
+
 }
 </script>
 <style>

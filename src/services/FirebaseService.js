@@ -15,6 +15,26 @@ const firebase_config = {
 firebase.initializeApp(firebase_config);
 const firestore = firebase.firestore();
 const auth = firebase.auth
+
+var login_user = '임시로 존재합니까?'
+
+firebase.auth().onAuthStateChanged(function(user) {
+if (user) {
+  // User is signed in.
+  var displayName = user.displayName;
+  var email = user.email;
+  var emailVerified = user.emailVerified;
+  var photoURL = user.photoURL;
+  var isAnonymous = user.isAnonymous;
+  var uid = user.uid;
+  var providerData = user.providerData;
+  // ...
+} else {
+  // User is signed out.
+  // ...
+}
+});
+
 export default{
     async getData(){
       return firestore.collection("portfolio").get().then((docSnapshots) => {
@@ -43,17 +63,22 @@ export default{
     });
     },
     signin_facebook(id, password){
-      console.log(1)
+      console.log('열심히 합시다~~')
     },
     login(id, password){
-      auth().signInWithEmailAndPassword(id, password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode)
-      console.log(errorMessage)
-      });
-
-      console.log(2)
-    }
+      auth().signInWithEmailAndPassword(id, password)
+      .then(function() {
+        console.log('로그인 성공한것이다')
+        login_user = id
+        // console.log(login_user, '이걸로 저장됐나?')
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode)
+        console.log(errorMessage)
+        console.log('로그인 실패한 것이다.')
+        });
+    },
 }
