@@ -1,8 +1,8 @@
 <template>
   <div class="userState">
     <div class="userState__info">
-      <div class="info__content">followers</div>
-      <div class="info__content">stars</div>
+      <div class="info__content">followers 1,224</div>
+      <div class="info__content">stars 150</div>
       <i class="far fa-star" id="star"></i>
     </div>
   </div>
@@ -16,7 +16,7 @@ export default {};
 .userState__info {
   background-color: white;
   width: 100%;
-  height: 70px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +27,4 @@ export default {};
   color: #2c2c2c;
   font-size: 20px;
 }
-/* #star {
-  color: #2c2c2c;
-}  */
 </style>

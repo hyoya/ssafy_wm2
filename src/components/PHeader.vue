@@ -9,7 +9,7 @@
         </v-btn>
 
         <!-- title -->
-        <v-toolbar-title class="white--text">Bobsleh test</v-toolbar-title>
+        <v-toolbar-title class="white--text">Bobsleh</v-toolbar-title>
 
         <!--spacer -->
         <v-spacer></v-spacer>
