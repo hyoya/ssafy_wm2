@@ -27,15 +27,15 @@ export default {
       }
   },
   mounted() {
-      const BASE_URL = 'http://api.openweathermap.org/data/2.5/weather?q=Daejeon&appid=8524498325d50c1573d0f08755ed342c'
-      this.$http.get(`${BASE_URL}`)
-      .then((result) => {
-        this.city = result.data.name
-        this.humidity = result.data.main.humidity
-        this.weather = result.data.weather[0].main
-      })
-  }
-}
+    const BASE_URL = 'http://api.openweathermap.org/data/2.5/weather?q=Daejeon&appid=8524498325d50c1573d0f08755ed342c'
+    this.$http.get(`${BASE_URL}`)
+    .then((result) => {
+      this.city = result.data.name
+      this.humidity = result.data.main.humidity
+      this.weather = result.data.weather[0].main
+    })
+    }
+};
 </script>
 
 <style>
