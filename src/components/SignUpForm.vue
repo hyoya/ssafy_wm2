@@ -8,7 +8,9 @@
   </v-layout>
 
 </template>
-
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+<script src="/__/firebase/5.10.1/firebase-storage.js"></script>
 <script>
 export default {
 	name: 'SignUpForm',
