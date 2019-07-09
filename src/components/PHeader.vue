@@ -15,7 +15,7 @@
         <!-- sign in & sign up  -->
         <v-toolbar-items >
           <LoginModal/>
-          <v-btn flat class="white--text">Sign Up</v-btn>
+          <SignUpModal/>
         </v-toolbar-items>
 
 
@@ -28,6 +28,7 @@
 
 <script>
 import LoginModal from "./LoginModal"
+import SignUpModal from "./SignUp/SignUp"
 
 export default {
 	name: 'PHeader',
@@ -35,6 +36,7 @@ export default {
 	},
   components :{
     LoginModal,
+    SignUpModal,
   },
 	data: () => ({
     menu : [
