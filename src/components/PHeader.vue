@@ -48,7 +48,8 @@ export default {
   data: () => ({
     menu: [
       { icon: "signup", title: "Sign Up", link: "/signup" },
-      { icon: "signin", title: "Sign In", link: "/signin" }
+      { icon: "signin", title: "Sign In", link: "/signin" },
+      { icon: "userInfo", title: "User Info", link: "/userInfo" }
     ]
   })
 };
