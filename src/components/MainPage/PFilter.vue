@@ -5,6 +5,7 @@
       <v-overflow-btn
         :items="category"
         label="분류"
+        segmented
         target="#dropdown-example"
       ></v-overflow-btn>
     </v-flex>
