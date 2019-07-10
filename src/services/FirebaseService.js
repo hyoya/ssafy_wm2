@@ -13,35 +13,31 @@ const firebase_config = {
 }
 
 firebase.initializeApp(firebase_config);
+
 const firestore = firebase.firestore();
 const auth = firebase.auth
 var login_user // 로그인 하면 email, 아니면 ''  처리
 var usercanuse // 로그인된 유저만 쓸 수 있는 박스 ex, 글 작성
 var provider = new auth.FacebookAuthProvider()
-console.log(provider)
+// console.log(provider)
 
 // 여기가 로그인 관련된 것
 auth().onAuthStateChanged(function(user) {
 
   var tmp_logintext = document.querySelector('#now_login')
   var writebox = document.querySelector('#writebox')
-
   if (user) {
-  login_user = user.email
-  console.log('로그인 상태, ID : ', login_user)
-  usercanuse = 'block'
-} else {
-  login_user = '로그인 해주세요'
-  console.log('로그아웃 상태')
-  usercanuse = 'none'
-}
-
+    login_user = user.email
+    // console.log('로그인 상태, ID : ', login_user)
+    usercanuse = 'block'
+  } else {
+    login_user = '로그인 해주세요'
+    // console.log('로그아웃 상태')
+    usercanuse = 'none'
+  }
   writebox.style.display = usercanuse
   tmp_logintext.innerText = login_user
-
 })
-
-
 
 export default{
     data() {
@@ -49,6 +45,9 @@ export default{
          usercanuse : usercanuse
       }
     },
+
+    // sxngho
+    // -------------------------------------------
     async getData(){
       return firestore.collection("portfolio").get().then((docSnapshots) => {
         return docSnapshots.docs.map((doc) => {
@@ -66,42 +65,56 @@ export default{
         date: firebase.firestore.FieldValue.serverTimestamp()
       });
     },
+    // -------------------------------------------
+
+    // seulgi
+    // ---------------------------------------
     signup(id, password){
-      auth().createUserWithEmailAndPassword(id, password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode)
-      console.log(errorMessage)
+      auth().createUserWithEmailAndPassword(id, password)
+      .then(function() {
+        // console.log('됏냐아')
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        // var errorCode = error.code;
+        // var errorMessage = error.message;
+        // console.log(errorCode)
+        // console.log(errorMessage)
+        alert(error)
       });
     },
     login(id, password){
       auth().signInWithEmailAndPassword(id, password)
       .then(function() {
-        console.log('로그인 성공한것이다')
+        // console.log('로그인 성공한것이다')
+        alert('로그인 완료!');
       })
       .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log(errorCode)
-        console.log(errorMessage)
-        console.log('로그인 실패한 것이다.')
+        // console.log(errorCode)
+        // console.log(errorMessage)
+        // console.log('로그인 실패한 것이다.')
+        alert(`${errorCode}\n${errorMessage}`);
         });
     },
     logout() {
       auth().signOut().then(function() {
         // Sign-out successful.
+        alert('로그아웃 완료!');
       }).catch(function(error) {
         // An error happened.
+        alert(error);
       });
     },
-    signin_facebook(id, password){
+    signin_facebook(){
       firebase.auth().signInWithPopup(provider).then(function(result) {
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        var token = result.credential.accessToken;
+        // var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
+        alert(`페이스북 로그인 완료!, ${user}`);
         // ...
       }).catch(function(error) {
         // Handle Errors here.
@@ -112,6 +125,7 @@ export default{
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
         // ...
+        alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
       });
     }
 
