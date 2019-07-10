@@ -26,14 +26,15 @@
 
             </v-layout>
           </v-container>
+          <v-btn round color="#4267b2" dark @click="signin_facebook()" style="width:100%;"><v-icon size="25" class="mr-2">fa-facebook</v-icon> Facebook으로 로그인하기</v-btn>
 
         </v-card-text>
 
 
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <!-- <v-spacer></v-spacer> -->
           <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="dialog = false, signin(login_id, login_password)">Login</v-btn>
+          <v-btn color="blue darken-1" flat @click="dialog = false, signin(login_id, login_password)">Login</v-btn><br>
         </v-card-actions>
 
       </v-card>
@@ -56,7 +57,10 @@ import FirebaseService from "@/services/FirebaseService";
     methods: {
       signin(id, password) {
         FirebaseService.login(id, password)
-      }
+      },
+      signin_facebook() {
+        FirebaseService.signin_facebook();
+      },
     }
   }
 </script>

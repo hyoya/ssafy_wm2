@@ -17,8 +17,8 @@ firebase.initializeApp(firebase_config);
 const firestore = firebase.firestore();
 const auth = firebase.auth
 var login_user // 로그인 하면 email, 아니면 ''  처리
-var usercanuse // 로그인된 유저만 쓸 수 있는 박스 ex, 글 작성
-var usercantuse
+// var usercanuse // 로그인된 유저만 쓸 수 있는 박스 ex, 글 작성
+// var usercantuse //
 var provider = new auth.FacebookAuthProvider()
 // console.log(provider)
 
@@ -43,6 +43,7 @@ auth().onAuthStateChanged(function(user) {
     usercansees.forEach(function(usercansee) {
       usercansee.style.display = 'none' })
   }
+  // console.log(login_user)
   whoareyou.innerText = login_user
 })
 
@@ -85,11 +86,7 @@ export default{
   },
 // -----------------------------------------------------------------
 // seulgi
-    data() {
-      return {
-         usercanuse : usercanuse
-      }
-    },
+
 
     signup(id, password){
       auth().createUserWithEmailAndPassword(id, password)
