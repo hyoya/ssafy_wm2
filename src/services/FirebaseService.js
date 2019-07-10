@@ -15,8 +15,12 @@ const firebase_config = {
 firebase.initializeApp(firebase_config);
 const firestore = firebase.firestore();
 const auth = firebase.auth
+var login_user // 로그인 하면 email, 아니면 ''  처리
+var usercanuse // 로그인된 유저만 쓸 수 있는 박스 ex, 글 작성
+var provider = new auth.FacebookAuthProvider()
+console.log(provider)
 
-var login_user = '임시로 존재합니까?'
+// 여기가 로그인 관련된 것
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
@@ -52,6 +56,7 @@ export default{
         let data = doc.data()
         let id = doc.id
         return {id , data}
+
       })
     })
   },
@@ -77,24 +82,29 @@ export default{
       console.log(errorCode)
       console.log(errorMessage)
     });
-  },
-  signin_facebook(id, password){
-    console.log('열심히 합시다~~')
-  },
-  login(id, password){
-    auth().signInWithEmailAndPassword(id, password)
-    .then(function() {
-      console.log('로그인 성공한것이다')
-      login_user = id
-      // console.log(login_user, '이걸로 저장됐나?')
-    })
-    .catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode)
-      console.log(errorMessage)
-      console.log('로그인 실패한 것이다.')
-    });
-  },
+    },
+    signin_facebook(id, password){
+      console.log('열심히 합시다~~')
+    },
+    login(id, password){
+      auth().signInWithEmailAndPassword(id, password)
+      .then(function() {
+        console.log('로그인 성공한것이다')
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode)
+        console.log(errorMessage)
+        console.log('로그인 실패한 것이다.')
+        });
+    },
+    logout() {
+      firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+      }).catch(function(error) {
+        // An error happened.
+      });
+    }
 }

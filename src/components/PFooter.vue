@@ -1,10 +1,23 @@
 <template>
   <div class="pfooter">
     <div class="pfooter__content">
-      <h2>오늘의 날씨</h2>
-      <p>도시명 : {{ city }}</p>
+      <span>도시 : {{ city }}</span>
+      <span>현재 습도 : {{ humidity }}% / 100%</span>
+      <span>날씨 : {{ weather }}</span>
+
+      <!-- <p>도시 : {{ city }}</p>
       <p>현재 습도 : {{ humidity }}% / 100%</p>
       <p>날씨 : {{ weather }}</p>
+      <p>2019.07.08 - 2019.08.16</p>-->
+    </div>
+    <div class="pfooter__period">
+      <span>2019.07.08 - 2019.08.16</span>
+    </div>
+
+    <div class="pfooter__icon">
+      <v-btn href="https://lab.ssafy.com/Kim-Seul-Gi/webmobile-sub2">
+        <i class="fab fa-gitlab fa-2x"></i>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -45,7 +58,16 @@ export default {
   bottom: 0;
 }
 .pfooter__content {
-  display: block;
+  display: flex;
+  justify-content: space-around;
   text-align: center;
+}
+.pfooter__icon {
+  display: flex;
+  justify-content: center;
+}
+.pfooter__period {
+  display: flex;
+  justify-content: center;
 }
 </style>

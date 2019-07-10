@@ -1,8 +1,9 @@
 <template>
   <div class="SideUserInfo">
     <div class="SideUserInfo__intro box">
-      <div class="SideUserInfo__intro__userImg box">userImg
-          <ImgUpload/>
+      <div class="SideUserInfo__intro__userImg box">
+        userImg
+        <ImgUpload />
       </div>
       <div class="SideUserInfo__intro__userName box">userName</div>
       <div class="SideUserInfo__intro__introduce box">hello my name is palkim</div>
@@ -26,13 +27,12 @@
 </template>
 
 <script>
-
-import ImgUpload from "../ImgUpload"
+import ImgUpload from "../ImgUpload";
 
 export default {
   name: "SideUserInfo",
   components: {
-    ImgUpload,
+    ImgUpload
   }
 };
 </script>
@@ -44,9 +44,10 @@ export default {
 .SideUserInfo {
   width: 325px;
   height: 700px;
-  background-color: greenyellow;
+  background-color: white;
   border-radius: 5px;
   margin: 25px;
+  text-align: center;
 }
 .SideUserInfo__elseWhere {
   height: 120px;
@@ -74,5 +75,9 @@ export default {
   color: #666;
   width: 70px;
   height: 30px;
+}
+.FBtn {
+  display: flex;
+  justify-content: center;
 }
 </style>
