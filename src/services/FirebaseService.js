@@ -77,23 +77,26 @@ export default{
     });
   },
 // -----------------------------------------------------------------
+// seulgi
     data() {
       return {
          usercanuse : usercanuse
       }
     },
+
     signup(id, password){
       auth().createUserWithEmailAndPassword(id, password)
       .then(function() {
-        console.log('됏냐아')
+        // console.log('됏냐아')
       })
       .catch(function(error) {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode)
-        console.log(errorMessage)}
-      );
+        // var errorCode = error.code;
+        // var errorMessage = error.message;
+        // console.log(errorCode)
+        // console.log(errorMessage)
+        alert(error)
+      });
     },
     login(id, password){
       auth().signInWithEmailAndPassword(id, password)
@@ -117,16 +120,16 @@ export default{
         alert('로그아웃 완료!');
       }).catch(function(error) {
         // An error happened.
-        alert('로그아웃 실패!');
+        alert(error);
       });
     },
-    signin_facebook(id, password){
+    signin_facebook(){
       firebase.auth().signInWithPopup(provider).then(function(result) {
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        var token = result.credential.accessToken;
+        // var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
-        alert('페이스북 로그인 완료!');
+        alert(`페이스북 로그인 완료!, ${user}`);
         // ...
       }).catch(function(error) {
         // Handle Errors here.
