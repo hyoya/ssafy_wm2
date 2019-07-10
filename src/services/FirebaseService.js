@@ -40,35 +40,50 @@ auth().onAuthStateChanged(function(user) {
 })
 
 export default{
+  // SXNGHo
+  // --------------------------------------------------------
+  async getProjects() {
+    return firestore.collection('project')
+    .get()
+    .then((docSnapshots) => {
+      return docSnapshots.docs.map((doc) => {
+        let data = doc.data()
+        return data
+      })
+    })
+  },
+  async getData(){
+    return firestore.collection("userImg").get().then((docSnapshots) => {
+      return docSnapshots.docs.map((doc) => {
+        let data = doc.data()
+        let id = doc.id
+        return {id , data}
+
+      })
+    })
+  },
+  ADD_userImg(image){
+    return firestore.collection('userImg').add({
+      image,
+      date: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  },
+  ADD_project(title, image,content){
+    return firestore.collection('project').add({
+      title,
+      image,
+      content,
+      date: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  },
+// -----------------------------------------------------------------
+// seulgi
     data() {
       return {
          usercanuse : usercanuse
       }
     },
 
-    // sxngho
-    // -------------------------------------------
-    async getData(){
-      return firestore.collection("portfolio").get().then((docSnapshots) => {
-        return docSnapshots.docs.map((doc) => {
-            let data = doc.data()
-            let id = doc.id
-            return {id , data}
-        })
-      })
-    },
-    addData(title, image,content){
-      return firestore.collection('portfolio').add({
-        title,
-        image,
-        content,
-        date: firebase.firestore.FieldValue.serverTimestamp()
-      });
-    },
-    // -------------------------------------------
-
-    // seulgi
-    // ---------------------------------------
     signup(id, password){
       auth().createUserWithEmailAndPassword(id, password)
       .then(function() {
