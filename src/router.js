@@ -29,6 +29,7 @@ export default new Router({
       component: MainPage
     },
     {
+      // 헤더에 다 구현되어있지만, 여긴 개발환경이라고 생각하시면 됩니다.
       path: "/signup",
       name: "signup",
       component: SignUpPage

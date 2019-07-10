@@ -17,8 +17,6 @@ firebase.initializeApp(firebase_config);
 const firestore = firebase.firestore();
 const auth = firebase.auth
 var login_user // 로그인 하면 email, 아니면 ''  처리
-// var usercanuse // 로그인된 유저만 쓸 수 있는 박스 ex, 글 작성
-// var usercantuse //
 var provider = new auth.FacebookAuthProvider()
 // console.log(provider)
 
