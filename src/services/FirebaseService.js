@@ -18,25 +18,32 @@ const firestore = firebase.firestore();
 const auth = firebase.auth
 var login_user // 로그인 하면 email, 아니면 ''  처리
 var usercanuse // 로그인된 유저만 쓸 수 있는 박스 ex, 글 작성
+var usercantuse
 var provider = new auth.FacebookAuthProvider()
 // console.log(provider)
 
 // 여기가 로그인 관련된 것
 auth().onAuthStateChanged(function(user) {
 
-  var tmp_logintext = document.querySelector('#now_login')
-  var writebox = document.querySelector('#writebox')
+  var whoareyou = document.querySelector('#whoareyou')
+  var usercantsees = document.querySelectorAll('.usercantsee')
+  var usercansees = document.querySelectorAll('.usercansee')
+
   if (user) {
     login_user = user.email
-    // console.log('로그인 상태, ID : ', login_user)
-    usercanuse = 'block'
+    usercantsees.forEach(function(usercantsee) {
+      usercantsee.style.display = 'none' })
+    usercansees.forEach(function(usercansee) {
+      usercansee.style.display = 'block' })
+
   } else {
-    login_user = '로그인 해주세요'
-    // console.log('로그아웃 상태')
-    usercanuse = 'none'
+    login_user = '익명'
+    usercantsees.forEach(function(usercantsee) {
+      usercantsee.style.display = 'block' })
+    usercansees.forEach(function(usercansee) {
+      usercansee.style.display = 'none' })
   }
-  writebox.style.display = usercanuse
-  tmp_logintext.innerText = login_user
+  whoareyou.innerText = login_user
 })
 
 export default{

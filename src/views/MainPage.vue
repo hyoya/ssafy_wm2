@@ -35,6 +35,7 @@
 <script>
 import MainBanner from "../components/MainPage/MainBanner";
 import PFilter from "../components/MainPage/PFilter";
+import FirebaseService from "@/services/FirebaseService";
 
 export default {
   name: "MainPage",

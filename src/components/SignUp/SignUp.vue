@@ -3,7 +3,9 @@
     <v-dialog v-model="signupmodal" max-width="500px">
 
       <template v-slot:activator="{ on }">
-        <v-btn flat class="white--text" v-on="on">Sign Up</v-btn>
+        <v-btn class="usercantsee white--text" flat v-on="on">Sign Up</v-btn>
+        <v-btn id="whoareyou" class="usercansee white--text" flat >누구십니까</v-btn>
+        <v-btn class="usercansee white--text" flat @click="logout()">Log Out</v-btn>
       </template>
 
       <v-card>
@@ -33,6 +35,8 @@
 import SignupforCompanyModal from './SignUpForCompany'
 import SignupforUserModal from './SignUpForUser'
 
+import FirebaseService from "@/services/FirebaseService";
+
   export default {
     components :{
       SignupforCompanyModal,
@@ -44,6 +48,12 @@ import SignupforUserModal from './SignUpForUser'
         signupforcompany: false,
         signupmodal: false,
       }
+    },
+    methods: {
+      logout() {
+        FirebaseService.logout()
+      }
     }
+
   }
 </script>

@@ -30,6 +30,7 @@ import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUp/SignUp";
 import ProjectDetail from "./ProjectDetail";
 
+
 export default {
   name: "PHeader",
   props: {},
