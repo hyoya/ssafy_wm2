@@ -87,6 +87,7 @@ export default{
     signup(id, password){
       auth().createUserWithEmailAndPassword(id, password)
       .then(function() {
+        alert(`${id}님, 회원가입이 완료되었습니다.`)
         // console.log('됏냐아')
       })
       .catch(function(error) {

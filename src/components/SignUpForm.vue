@@ -36,7 +36,6 @@
 
 <script>
 import FirebaseService from "@/services/FirebaseService";
-// const auth = FirebaseService.auth
 
 export default {
 	name: 'SignUpForm',

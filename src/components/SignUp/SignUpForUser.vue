@@ -29,12 +29,12 @@
 
               <!-- email -->
               <v-flex xs12>
-                <v-text-field label="Email*" required></v-text-field>
+                <v-text-field label="Email*" required v-model="signup_id"></v-text-field>
               </v-flex>
 
               <!-- Password -->
               <v-flex xs12>
-                <v-text-field label="Password*" type="password" required></v-text-field>
+                <v-text-field label="Password*" type="password" required v-model="signup_password"></v-text-field>
               </v-flex>
 
               <!-- PhoneNumber -->
@@ -80,18 +80,22 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click="signupforusermodal = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="signupforusermodal = false">Submit</v-btn>
+          <v-btn color="blue darken-1" flat @click="signupforusermodal = false, signup(signup_id, signup_password)">SignUp</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 </template>
 
 <script>
+import FirebaseService from "@/services/FirebaseService";
+
   export default {
     data: () => ({
       signupforusermodal: false,
       careers : [],
       career:"",
+      signup_id : '',
+      signup_password : ''
     }),
     methods : {
       addNewCareer(){
@@ -99,6 +103,9 @@
       },
       deleteCareer(index){
         this.careers.splice(index,1);
+      },
+      signup(id, password) {
+        FirebaseService.signup(id, password)
       }
     }
   }

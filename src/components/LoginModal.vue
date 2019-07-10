@@ -1,7 +1,7 @@
 <template>
   <v-layout row justify-center>
     <v-dialog v-model="dialog" persistent max-width="600px">
-      
+
       <template v-slot:activator="{ on }">
         <v-btn flat class="white--text" v-on="on">Sign In</v-btn>
       </template>
@@ -17,11 +17,11 @@
             <v-layout wrap>
 
               <v-flex xs12>
-                <v-text-field label="ID" required></v-text-field>
+                <v-text-field label="ID" required v-model="login_id"></v-text-field>
               </v-flex>
 
               <v-flex xs12>
-                <v-text-field label="Password*" type="password" required></v-text-field>
+                <v-text-field label="Password*" type="password" required v-model="login_password"></v-text-field>
               </v-flex>
 
             </v-layout>
@@ -33,7 +33,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
+          <v-btn color="blue darken-1" flat @click="dialog = false, signin(login_id, login_password)">Login</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -45,9 +45,18 @@
 
 
 <script>
+import FirebaseService from "@/services/FirebaseService";
+
   export default {
     data: () => ({
-      dialog: false
-    })
+      dialog: false,
+      login_id : '',
+      login_password : ''
+    }),
+    methods: {
+      signin(id, password) {
+        FirebaseService.login(id, password)
+      }
+    }
   }
 </script>
