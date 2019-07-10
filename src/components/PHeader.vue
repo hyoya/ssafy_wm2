@@ -1,4 +1,4 @@
-a<template>
+<template>
   <v-layout>
     <v-flex column>
       <!-- toolbar start -->
@@ -14,7 +14,7 @@ a<template>
         <div id="google_translate_element"></div>
         <!-- sign in & sign up  -->
         <v-toolbar-items>
-          <LoginModal />
+          <SignInModal />
           <SignUpModal />
           <ProjectDetail />
           <v-btn flat class="white--text" href="/userInfo">userInfo</v-btn>
@@ -26,18 +26,18 @@ a<template>
 </template>
 
 <script>
-import LoginModal from "./LoginModal";
+import SignInModal from "./SignIn/SignIn";
 import SignUpModal from "./SignUp/SignUp";
 import ProjectDetail from "./ProjectDetail";
+
 
 export default {
   name: "PHeader",
   props: {},
   components: {
-    LoginModal,
+    SignInModal,
     SignUpModal,
     ProjectDetail
   }
 };
 </script>
-
