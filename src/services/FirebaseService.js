@@ -21,51 +21,61 @@ var provider = new auth.FacebookAuthProvider()
 console.log(provider)
 
 // 여기가 로그인 관련된 것
-auth().onAuthStateChanged(function(user) {
 
-  var tmp_logintext = document.querySelector('#now_login')
-  var writebox = document.querySelector('#writebox')
-
+firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-  login_user = user.email
-  console.log('로그인 상태, ID : ', login_user)
-  usercanuse = 'block'
-} else {
-  login_user = '로그인 해주세요'
-  console.log('로그아웃 상태')
-  usercanuse = 'none'
-}
-
-  writebox.style.display = usercanuse
-  tmp_logintext.innerText = login_user
-
-})
+    // User is signed in.
+    var displayName = user.displayName;
+    var email = user.email;
+    var emailVerified = user.emailVerified;
+    var photoURL = user.photoURL;
+    var isAnonymous = user.isAnonymous;
+    var uid = user.uid;
+    var providerData = user.providerData;
+    // ...
+  } else {
+    // User is signed out.
+    // ...
+  }
+});
 
 export default{
-    data() {
-      return {
-         usercanuse : usercanuse
-      }
-    },
-    async getData(){
-      return firestore.collection("portfolio").get().then((docSnapshots) => {
-        return docSnapshots.docs.map((doc) => {
-            let data = doc.data()
-            let id = doc.id
-            return {id , data}
-        })
+  async getProjects() {
+    return firestore.collection('project')
+    .get()
+    .then((docSnapshots) => {
+      return docSnapshots.docs.map((doc) => {
+        let data = doc.data()
+        return data
       })
-    },
-    addData(title, image,content){
-      return firestore.collection('portfolio').add({
-        title,
-        image,
-        content,
-        date: firebase.firestore.FieldValue.serverTimestamp()
-      });
-    },
-    signup(id, password){
-      auth().createUserWithEmailAndPassword(id, password).catch(function(error) {
+    })
+  },
+  async getData(){
+    return firestore.collection("userImg").get().then((docSnapshots) => {
+      return docSnapshots.docs.map((doc) => {
+        let data = doc.data()
+        let id = doc.id
+        return {id , data}
+
+      })
+    })
+  },
+  ADD_userImg(image){
+    return firestore.collection('userImg').add({
+      image,
+      date: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  },
+  ADD_project(title, image,content){
+    return firestore.collection('project').add({
+      title,
+      image,
+      content,
+      date: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  },
+  signup(id, password){
+    auth().createUserWithEmailAndPassword(id, password).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -97,6 +107,4 @@ export default{
         // An error happened.
       });
     }
-
-
 }

@@ -47,7 +47,7 @@ export default {
         .then(response => response.json())
         .then(success => {
           this.image = success.data.link;
-          FirebaseService.addData(this.image);
+          FirebaseService.ADD_userImg(this.image);
           alert("업로드 되었습니다");
         })
         .catch();
