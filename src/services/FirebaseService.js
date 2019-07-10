@@ -32,7 +32,7 @@ auth().onAuthStateChanged(function(user) {
     usercanuse = 'block'
   } else {
     login_user = '로그인 해주세요'
-    // console.log('로그아웃 상태')
+    console.log('로그아웃 상태')
     usercanuse = 'none'
   }
   writebox.style.display = usercanuse
