@@ -32,10 +32,10 @@
 
 
 <script>
+import FirebaseService from "@/services/FirebaseService";
+
 import SignupforCompanyModal from './SignUpForCompany'
 import SignupforUserModal from './SignUpForUser'
-
-import FirebaseService from "@/services/FirebaseService";
 
   export default {
     components :{
@@ -54,6 +54,5 @@ import FirebaseService from "@/services/FirebaseService";
         FirebaseService.logout()
       }
     }
-
   }
 </script>
