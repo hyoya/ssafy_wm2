@@ -4,14 +4,13 @@
     <v-flex>
       <div style='height:300px;'>아직 미정입니다.</div>
       <div>
-        <h1>현재 로그인한 사용자 : ' {{login_user}} ' </h1>
+        <h1>현재 로그인한 사용자 : <span id='now_login'></span></h1>
         <h1>회원가입하자</h1>
         Email : <input v-model='id'><br>
         Password : <input v-model='password' type="password">
         <button @click='signup(id, password)'>회원가입하기</button>
       </div>
       <div>
-        <button @click='check()'>변경됨??</button>
         <h1>로그인하자</h1>
         Email : <input v-model='login_id'><br>
         Password : <input v-model='login_password' type="password">
@@ -22,6 +21,14 @@
         Email : <input v-model='facebook_id'><br>
         Password : <input v-model='facebook_password' type="password">
         <button @click='signin_facebook(facebook_id, facebook_password)'>페북로그인</button>
+      </div>
+      <div>
+        <h1>로그아웃</h1>
+        <button @click='logout()'>로그아웃</button>
+      </div>
+      <br><br><br><br><br>
+      <div id='writebox'>
+        <button>글 작성</button>
       </div>
     </v-flex>
   </v-layout>
@@ -44,8 +51,6 @@ export default {
       login_password : '',
       facebook_id : '',
       facebook_password : '',
-      login_user: 's ',
-
 		}
   },
   methods: {
@@ -59,14 +64,14 @@ export default {
     },
     login(id, password) {
       FirebaseService.login(id, password)
-
+      console.log(FirebaseService.data())
     },
-
+    logout() {
+      FirebaseService.logout()
+      console.log(1)
+      console.log(FirebaseService.data())
+    }
   },
-  mounted: function() {
-    this.login_user = FirebaseService.metadata().login_user
-  }
-
 }
 </script>
 
