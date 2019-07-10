@@ -3,12 +3,6 @@
     <UserStateBar></UserStateBar>
     <div class="userInfoMainContent">
       <SideUserInfo></SideUserInfo>
-      <!-- <v-layout my-5 class="userInfoPortfolioLayout">
-        <v-flex xs12>
-          <h2 class="headline my-5 text-xs-center">Portfolio</h2>
-          <PortfolioList></PortfolioList>
-        </v-flex>
-      </v-layout>-->
 
       <v-layout class="userInfoPortfolioLayout">
         <v-flex xs12>
