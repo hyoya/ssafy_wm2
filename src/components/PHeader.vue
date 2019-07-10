@@ -13,10 +13,10 @@
         <v-spacer></v-spacer>
         <div id="google_translate_element"></div>
         <!-- sign in & sign up  -->
-        <v-toolbar-items >
-          <LoginModal/>
-          <SignUpModal/>
-          <ProjectDetail/>
+        <v-toolbar-items>
+          <SignInModal />
+          <SignUpModal />
+          <ProjectDetail />
           <v-btn flat class="white--text" href="/userInfo">userInfo</v-btn>
         </v-toolbar-items>
       </v-toolbar>
@@ -26,18 +26,18 @@
 </template>
 
 <script>
-import LoginModal from "./LoginModal"
-import SignUpModal from "./SignUp/SignUp"
-import ProjectDetail from "./ProjectDetail"
+import SignInModal from "./SignIn/SignIn";
+import SignUpModal from "./SignUp/SignUp";
+import ProjectDetail from "./ProjectDetail";
+
 
 export default {
   name: "PHeader",
   props: {},
   components: {
-    LoginModal,
+    SignInModal,
     SignUpModal,
-    ProjectDetail,
-  },
-
-}
+    ProjectDetail
+  }
+};
 </script>

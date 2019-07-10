@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <v-text-field v-model="title" label="제목" ></v-text-field>
-
     <div v-if="!image">
       <input type="file" @change="onFileChange" />
     </div>
@@ -12,23 +11,44 @@
     <v-text-field v-model="content" label="내용" ></v-text-field>
     <v-btn @click="submit">업로드</v-btn>
 
+    <v-layout row wrap mw-700>
 
-  </v-container>
+      <v-flex v-for="i in projects.length">
+        <Project
+        :imglink="projects[i - 1].image"
+        :title="projects[i - 1].title"
+        :content="projects[i - 1].content">
+      </Project>
+      <v-divider></v-divider>
+    </v-flex>
+  </v-layout>
+</v-container>
+
 </template>
 
 <script>
 import FirebaseService from "@/services/FirebaseService";
-
+import Project from '../components/Project'
 export default {
   name: "ImgUpload",
   data() {
     return {
       title: '',
       content:'',
-      image: ''
+      image: '',
+      projects: [],
     };
   },
+  components: {
+    Project
+  },
+  created() {
+    this.getProjects()
+  },
   methods: {
+    async getProjects() {
+      this.projects = await FirebaseService.getProjects()
+    },
     submit(){
       if(this.title == ""){
         alert("제목을 입력하세요");
@@ -40,7 +60,7 @@ export default {
         alert("내용을 입력하세요");
       }
       else{
-        FirebaseService.addData(this.title,this.image,this.content);
+        FirebaseService.ADD_project (this.title,this.image,this.content);
         alert("업로드 되었습니다");
         this.title = "";
         this.image = "";
@@ -74,11 +94,11 @@ export default {
       data.append("image", files[0]);
 
       fetch(apiUrl, content)
-        .then(response => response.json())
-        .then(success => {
-          this.image = success.data.link;
-        })
-        .catch();
+      .then(response => response.json())
+      .then(success => {
+        this.image = success.data.link;
+      })
+      .catch();
     }
   }
 };

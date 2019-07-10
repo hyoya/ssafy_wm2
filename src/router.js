@@ -7,19 +7,19 @@ import MainPage from "./views/MainPage.vue";
 import SignUpPage from "./views/SignUpPage.vue";
 import UserInfo from "./views/UserInfo.vue";
 import ProjectWrite from "./views/ProjectWrite.vue";
+import UserInfoPage from "./views/UserInfoPage.vue";
 Vue.use(Router);
 
-
-import Vuetify from 'vuetify'
+import Vuetify from "vuetify";
 Vue.use(Vuetify, {
-	iconfont: 'fa',
-	theme: {
-		primary: '#3f51b5',
-		secondary: '#b0bec5',
-		accent: '#8c9eff',
-		error: '#b71c1c'
-	}
-})
+  iconfont: "fa",
+  theme: {
+    primary: "#3f51b5",
+    secondary: "#b0bec5",
+    accent: "#8c9eff",
+    error: "#b71c1c"
+  }
+});
 
 export default new Router({
   mode: "history",
@@ -31,6 +31,7 @@ export default new Router({
       component: MainPage
     },
     {
+      // 헤더에 다 구현되어있지만, 여긴 개발환경이라고 생각하시면 됩니다.
       path: "/signup",
       name: "signup",
       component: SignUpPage
@@ -38,12 +39,16 @@ export default new Router({
     {
       path: "/userInfo",
       name: "userInfo",
+<<<<<<< HEAD
       component: UserInfo
     },
 		{
       path: "/projectwrite",
       name: "projectwrite",
       component: ProjectWrite
+=======
+      component: UserInfoPage
+>>>>>>> master
     }
   ]
 });

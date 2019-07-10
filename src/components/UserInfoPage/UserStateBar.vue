@@ -1,10 +1,16 @@
 <template>
   <div class="userState">
     <div class="userState__info">
-      <div class="info__content">followers 1,224</div>
-      <div class="info__content">stars 150</div>
-      <i class="far fa-star" id="star"></i>
+      <div class="info__content">
+        <button class="btn">followers</button>
+        <span>123</span>
+      </div>
+      <div class="info__content">
+        <button class="btn">stars</button>
+        <span>99</span>
+      </div>
     </div>
+    <div></div>
   </div>
 </template>
 
@@ -13,6 +19,9 @@ export default {};
 </script>
 
 <style scoped>
+.userState {
+  margin-top: 70px;
+}
 .userState__info {
   background-color: white;
   width: 100%;
@@ -22,9 +31,11 @@ export default {};
   align-items: center;
 }
 .info__content {
-  background-color: yellow;
   margin-left: 30px;
   color: #2c2c2c;
   font-size: 20px;
+}
+.btn {
+  margin-right: 10px;
 }
 </style>
