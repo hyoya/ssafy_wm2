@@ -1,6 +1,7 @@
 <template>
   <v-layout column>
     <v-flex>
+<<<<<<< HEAD
       <div style="height:300px;">아직 미정입니다.</div>
       <div>
         <h1>현재 로그인한 사용자 : ' {{login_user}} '</h1>
@@ -24,13 +25,25 @@
         <br />Password :
         <input v-model="facebook_password" type="password" />
         <button @click="signin_facebook(facebook_id, facebook_password)">페북로그인</button>
+=======
+
+      <!-- -->
+      <div style="height:300px;">아직 미정입니다.</div>
+      <div style='height:300px;'>아직 미정입니다.</div>
+      <div>
+        <h1>회원가입하자</h1>Email :
+        <input v-model="id" />
+        <br />Password :
+        <input v-model="password" type="password" />
+        <button @click="check(id, password)">회원가입하기</button>
+>>>>>>> aa0ce1c467061442d9b7a6f14acef941c7670c05
       </div>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import FirebaseService from "@/services/FirebaseService";
+// import FirebaseService from "@/services/FirebaseService";
 // const auth = FirebaseService.auth
 
 export default {
@@ -39,6 +52,7 @@ export default {
   data() {
     return {
       id: "",
+<<<<<<< HEAD
       password: "",
       login_id: "",
       login_password: "",
@@ -57,6 +71,31 @@ export default {
     },
     login(id, password) {
       FirebaseService.login(id, password);
+=======
+      password: ""
+    };
+  },
+  methods: {
+    // check: function() {
+    //   FirebaseService.auth()
+    //     .createUserWithEmailAndPassword(this.id, this.password)
+    //     .catch(function(error) {
+    //       var errorCode = error.code;
+    //       var errorMessage = error.message;
+    //       c
+    //     });
+    // }
+
+    check : function() {
+      FirebaseService.auth().createUserWithEmailAndPassword(this.id, this.password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode)
+      console.log(errorMessage)
+      // ...
+    });
+>>>>>>> aa0ce1c467061442d9b7a6f14acef941c7670c05
     }
   }
 };
