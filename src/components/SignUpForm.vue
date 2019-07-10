@@ -18,9 +18,7 @@
       </div>
       <div>
         <h1>페이스북으로 로그인하기</h1>
-        Email : <input v-model='facebook_id'><br>
-        Password : <input v-model='facebook_password' type="password">
-        <button @click='signin_facebook(facebook_id, facebook_password)'>페북로그인</button>
+        <button @click='signin_facebook()'>페북로그인</button>
       </div>
       <div>
         <h1>로그아웃</h1>
@@ -49,8 +47,6 @@ export default {
       password : '',
       login_id : '',
       login_password : '',
-      facebook_id : '',
-      facebook_password : '',
 		}
   },
   methods: {
@@ -59,8 +55,8 @@ export default {
       this.id = '',
       this.password = ''
     },
-    signin_facebook(id, password) {
-      FirebaseService.signin_facebook(id, password);
+    signin_facebook() {
+      FirebaseService.signin_facebook();
     },
     login(id, password) {
       FirebaseService.login(id, password)
