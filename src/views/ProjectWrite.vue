@@ -22,7 +22,6 @@
 
       <!-- 탭 아이템들 -->
       <!-- Step 1 :: ProjectTitle -->
-      <!--
       <v-tab-item :key="1">
         <v-card flat>
           <v-card-text>
@@ -64,10 +63,9 @@
           </v-card-text>
         </v-card flat>
       </v-tab-item>
-    -->
 
       <!-- Step 2 :: ProjecStruct -->
-      <v-tab-item :key="1">
+      <v-tab-item :key="2">
         <v-card flat>
           <v-card-text>
             <!-- 프로젝트 기간 세팅 -->
@@ -86,7 +84,7 @@
                 <v-flex xs12>
                   <ul row style="list-style:none;">
                     <li v-for="item in pterm" style="float:left">
-                      <v-btn small flat outline="black" round @click="termselect(item)">{{ item }}</v-btn>
+                      <v-btn small flat outline round @click="termselect(item)">{{ item }}</v-btn>
                     </li>
                   </ul>
                 </v-flex>
@@ -99,18 +97,87 @@
             <v-container>
               <h3>Tech stack</h3>
               <v-layout column justify-center>
-                <v-flex xs12>
-                  <ul row style="list-style:none;">
-                    <li v-for="item in pterm" style="float:left">
-                      <v-btn small flat outline="black" round @click="termselect(item)">{{ item }}</v-btn>
-                    </li>
-                  </ul>
-                </v-flex>
+                <v-layout row>
+                  <v-flex xs12>
+                    <ul row style="list-style:none;">
+                      <li v-for="(item) in projecttech" style="float:left">
+                        <v-btn small flat outline="black" round @click="deleteTech()">{{ item }}</v-btn>
+                      </li>
+                    </ul>
+                  </v-flex>
+                </v-layout>
 
-                <v-textfield/>
+                <v-layout row>
+                  <v-flex xs6>
+                    <v-text-field
+                    v-model="tech"
+                    v-on:keyup.enter="addNewTech()"
+                    ></v-text-field>
+                  </v-flex>
+                </v-layout>
+
+                <v-layout row>
+                  <v-flex xs12>
+                    <ul row style="list-style:none;">
+                      <li v-for="(item, index) in techlist" style="float:left">
+                        <v-btn small flat outline="black" round @click="addTech(item)">{{ item }}</v-btn>
+                      </li>
+                    </ul>
+                  </v-flex>
+                </v-layout>
 
               </v-layout>
+            </v-container>
 
+            <hr/>
+
+            <!-- TODO project img upload ==> Main and thumbnail -->
+            <v-container>
+              <h3>프로젝트 대표이미지 등록</h3>
+              <v-layout column>
+                <v-layout row>
+                  <v-flex xs6 style="background:red;">
+                    미래의 나야
+                  </v-flex>
+                  <v-flex xs6 style="background:blue;">
+                    칸나누기때문에
+                  </v-flex>
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs6 style="background:yellow;">
+                    힘들어하지마
+                  </v-flex>
+                  <v-flex xs6 style="background:green;">
+                    이정도면 알겠지?
+                  </v-flex>
+                </v-layout>
+              </v-layout>
+            </v-container>
+
+            <hr/>
+
+            <!-- 등급 -->
+            <v-container>
+              <h3>프로젝트의 등급</h3>
+              <v-layout column>
+                <v-layout row>
+                  <v-flex xs6>
+                    <v-text-field
+                    suffix="수준"
+                    v-model="projectrank"/>
+                  </v-flex>
+                </v-layout>
+
+                <v-layout row>
+                  <v-flex xs12>
+                    <ul row style="list-style:none;">
+                      <li v-for="item in ranklist" style="float:left">
+                        <v-btn small flat outline round @click="selectRank(item)">{{ item }}</v-btn>
+                      </li>
+                    </ul>
+                  </v-flex>
+                </v-layout>
+              </v-layout>
             </v-container>
 
             <div class="text-xs-center mt-3">
@@ -180,7 +247,25 @@
              "4년",
              "5년",
           ],
-
+          techlist:[
+            "c",
+            "c#",
+            "javascript",
+            "android",
+            "jquery"
+          ],
+          tech:"",
+          projecttech:[],
+          projectrank:"",
+          ranklist:[
+            "상용화",
+            "베타테스트",
+            "알파테스트",
+            "튜토리얼",
+            "과제",
+            "연구",
+            "개인프로젝트",
+          ],
         }
       },
       methods: {
@@ -192,8 +277,21 @@
           const active = parseInt(this.active)
           this.active = (active == 0 ? 0 : active-1)
         },
-        termselect(tmp){
-          this.projectterm = tmp;
+        termselect(inputterm){
+          this.projectterm = inputterm;
+        },
+        deleteTech(index){
+          this.projecttech.splice(index,1);
+        },
+        addNewTech(){
+          this.projecttech.push(this.tech);
+          this.tech = '';
+        },
+        addTech(t){
+          this.projecttech.push(t);
+        },
+        selectRank(inputrank){
+          this.projectrank = inputrank;
         }
       },
     components: {
@@ -202,10 +300,7 @@
       projecttitle:{type:String, required:true, default:"sss"},
       projectdescription:{type:String, default:"aaa"},
       projectterm:{type:String, default:"-"}
-      projecttech: {
-        type: Array,
-        default: () => []
-      },
+
   	},
   };
 </script>
