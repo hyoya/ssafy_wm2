@@ -44,12 +44,13 @@ export default {
       login_password: "",
       facebook_id: "",
       facebook_password: "",
-      login_user: "s"
+      login_user: "s "
     };
   },
   methods: {
     signup(id, password) {
       FirebaseService.signup(id, password);
+      (this.id = ""), (this.password = "");
     },
     signin_facebook(id, password) {
       FirebaseService.signin_facebook(id, password);
