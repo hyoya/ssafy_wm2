@@ -1,4 +1,4 @@
-a<template>
+<template>
   <v-layout>
     <v-flex column>
       <!-- toolbar start -->
@@ -40,4 +40,3 @@ export default {
   }
 };
 </script>
-
