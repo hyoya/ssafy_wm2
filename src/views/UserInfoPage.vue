@@ -1,33 +1,41 @@
 <template>
-  <v-app>
-    <v-content style="margin-top:100px">
-      <UserStateBar />
-      <v-layout xs12 rows wrap>
-        <v-flex xs3>
-          <SideUserInfo />
-        </v-flex>
-        <v-flex xs9>
-          <PortfolioList />
+  <div>
+    <UserStateBar></UserStateBar>
+    <div class="userInfoMainContent">
+      <SideUserInfo></SideUserInfo>
+
+      <v-layout class="userInfoPortfolioLayout">
+        <v-flex xs12>
+          <!-- <PortfolioList :limits="6" :load-more="true"></PortfolioList> -->
+          <GetUserProject/>
         </v-flex>
       </v-layout>
-      <router-view></router-view>
-    </v-content>
-  </v-app>
+    </div>
+  </div>
 </template>
 
 <script>
 import UserStateBar from "../components/UserInfoPage/UserStateBar";
 import SideUserInfo from "../components/UserInfoPage/SideUserInfo";
-import PortfolioList from "../components/UserInfoPage/PortfolioList";
+import GetUserProject from "../components/UserInfoPage/GetUserProject";
 export default {
   name: "UserInfoPage",
   components: {
     UserStateBar,
     SideUserInfo,
-    PortfolioList
+    GetUserProject
   }
 };
 </script>
 
 <style scoped>
+.userInfoMainContent {
+  display: flex;
+  justify-content: center;
+}
+.userInfoPortfolioLayout {
+  border: 1px solid #2c2c2c;
+  background-color: white;
+  margin: 25px;
+}
 </style>
