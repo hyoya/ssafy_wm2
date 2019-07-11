@@ -1,17 +1,15 @@
 <template>
-  <div class="userState">
-    <div class="userState__info">
-      <div class="info__content">
-        <button class="btn">followers</button>
-        <span>123</span>
-      </div>
-      <div class="info__content">
-        <button class="btn">stars</button>
-        <span>99</span>
-      </div>
-    </div>
-    <div></div>
-  </div>
+  <v-layout row justify-center style="background:white; padding:2.0vw 0;">
+    <v-flex xs2 class="text-md-center">
+      <button class="btn">followers</button>
+      <span>123</span>
+    </v-flex>
+
+    <v-flex xs2 class="text-md-center">
+      <button class="btn">star</button>
+      <span>99</span>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -19,23 +17,4 @@ export default {};
 </script>
 
 <style scoped>
-.userState {
-  margin-top: 70px;
-}
-.userState__info {
-  background-color: white;
-  width: 100%;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.info__content {
-  margin-left: 30px;
-  color: #2c2c2c;
-  font-size: 20px;
-}
-.btn {
-  margin-right: 10px;
-}
 </style>
