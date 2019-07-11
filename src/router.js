@@ -6,7 +6,6 @@ import Router from "vue-router";
 import MainPage from "./views/MainPage.vue";
 import SignUpPage from "./views/SignUpPage.vue";
 import ProjectWrite from "./views/ProjectWrite.vue";
-import UserInfoPage from "./views/UserInfoPage.vue";
 import ForUserInfoPage from "./views/ForUserInfoPage.vue";
 
 Vue.use(Router);
@@ -32,18 +31,12 @@ export default new Router({
       component: MainPage
     },
     {
-      // 헤더에 다 구현되어있지만, 여긴 개발환경이라고 생각하시면 됩니다.
-      path: "/signup",
-      name: "signup",
-      component: SignUpPage
-    },
-    {
-      path: "/userInfoPage",
-      name: "UserInfoPage",
-      component: UserInfoPage
-    },
-    {
       path: "/userInfo/:id",
+      name: "foruserInfo",
+      component: ForUserInfoPage
+    },
+    {
+      path: "/userInfopage",
       name: "foruserInfo",
       component: ForUserInfoPage
     },

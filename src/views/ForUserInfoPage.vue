@@ -8,8 +8,6 @@
     <div class="notmine"><h2>이 글이 보인다면 나는 익명 또는 손님</h2></div><br>
     <!-- <v-btn class="mine" flat href="/projectwrite/">projectwrite</v-btn><br> -->
 
-
-
     <div class="userInfoMainContent">
 
       <SideUserInfo></SideUserInfo>
@@ -17,6 +15,7 @@
       <v-layout class="userInfoPortfolioLayout">
         <v-flex xs12>
           <!-- <PortfolioList :limits="6" :load-more="true"></PortfolioList> -->
+          <GetUserProject/>
         </v-flex>
       </v-layout>
     </div>
@@ -28,6 +27,7 @@ import FirebaseService from "@/services/FirebaseService";
 
 import UserStateBar from "../components/UserInfoPage/UserStateBar";
 import SideUserInfo from "../components/UserInfoPage/SideUserInfo";
+import GetUserProject from "../components/UserInfoPage/GetUserProject";
 
 var url = document.location.href
 var userinfo_email = url.split('/')[4]
@@ -37,7 +37,8 @@ export default {
   name: "UserInfoPage",
   components: {
     UserStateBar,
-    SideUserInfo
+    SideUserInfo,
+    GetUserProject
   }
 };
 </script>
