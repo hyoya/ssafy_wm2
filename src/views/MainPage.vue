@@ -11,6 +11,9 @@
     <GitRepList />
 
     <!-- 포트폴리오 나열 -->
+    <PortfolioList/>
+
+    <v-btn flat href="/projectwrite">projectwrite</v-btn>
   </div>
 </template>
 

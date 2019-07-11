@@ -5,6 +5,7 @@ import Router from "vue-router";
 // vue page
 import MainPage from "./views/MainPage.vue";
 import SignUpPage from "./views/SignUpPage.vue";
+import ProjectWrite from "./views/ProjectWrite.vue";
 import UserInfoPage from "./views/UserInfoPage.vue";
 Vue.use(Router);
 
@@ -29,14 +30,20 @@ export default new Router({
       component: MainPage
     },
     {
+      // 헤더에 다 구현되어있지만, 여긴 개발환경이라고 생각하시면 됩니다.
       path: "/signup",
       name: "signup",
       component: SignUpPage
     },
     {
-      path: "/userInfo",
-      name: "userInfo",
+      path: "/userInfoPage",
+      name: "UserInfoPage",
       component: UserInfoPage
+    },
+		{
+      path: "/projectwrite",
+      name: "projectwrite",
+      component: ProjectWrite,
     }
   ]
 });
