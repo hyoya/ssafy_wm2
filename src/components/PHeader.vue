@@ -35,5 +35,6 @@ export default {
     SignInModal,
     SignUpModal,
   }
+
 };
 </script>

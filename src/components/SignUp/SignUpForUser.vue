@@ -21,10 +21,10 @@
 
               <!-- User name -->
               <v-flex xs12 sm6>
-                <v-text-field label="first name*" required></v-text-field>
+                <v-text-field label="first name*" required v-model="first_name"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6>
-                <v-text-field label="last name*" required></v-text-field>
+                <v-text-field label="last name*" required v-model="last_name"></v-text-field>
               </v-flex>
 
               <!-- email -->
@@ -39,7 +39,7 @@
 
               <!-- PhoneNumber -->
               <v-flex xs12>
-                <v-text-field label="PhoneNumber*"></v-text-field>
+                <v-text-field label="PhoneNumber*" v-model="phonenumber"></v-text-field>
               </v-flex>
 
               <!-- 경력 -->
@@ -80,7 +80,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click="signupforusermodal = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="signupforusermodal = false, signup(signup_id, signup_password)">SignUp</v-btn>
+          <v-btn color="blue darken-1" flat @click="signupforusermodal = false, signup(signup_id, signup_password, first_name, last_name, phonenumber)">SignUp</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -95,7 +95,10 @@ import FirebaseService from "@/services/FirebaseService";
       careers : [],
       career:"",
       signup_id : '',
-      signup_password : ''
+      signup_password : '',
+      first_name : '',
+      last_name : '',
+      phonenumber : ''
     }),
     methods : {
       addNewCareer(){
@@ -104,8 +107,8 @@ import FirebaseService from "@/services/FirebaseService";
       deleteCareer(index){
         this.careers.splice(index,1);
       },
-      signup(id, password) {
-        FirebaseService.signup(id, password)
+      signup(id, password, first_name, last_name, phonenumber) {
+        FirebaseService.signup(id, password, first_name, last_name, phonenumber)
       }
     }
   }

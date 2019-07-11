@@ -23,9 +23,12 @@ var provider = new auth.FacebookAuthProvider()
 // 여기가 로그인 관련된 것
 auth().onAuthStateChanged(function(user) {
 
-  var whoareyou = document.querySelector('#whoareyou')
+  var whoareyous = document.querySelectorAll('.whoareyou')
   var usercantsees = document.querySelectorAll('.usercantsee')
   var usercansees = document.querySelectorAll('.usercansee')
+
+  // var mines = document.querySelectorAll('.mine')
+  // var notmines = document.querySelectorAll('.notmine')
 
   if (user) {
     login_user = user.email
@@ -41,11 +44,15 @@ auth().onAuthStateChanged(function(user) {
     usercansees.forEach(function(usercansee) {
       usercansee.style.display = 'none' })
   }
-  // console.log(login_user)
-  whoareyou.innerText = login_user
+  whoareyous.forEach(function(whoareyou) {
+    whoareyou.innerText = login_user })
+
 })
 
+
+
 export default{
+
   // SXNGHo
   // --------------------------------------------------------
   ADD_Project(projecttitle,
@@ -95,68 +102,110 @@ export default{
 
 // -----------------------------------------------------------------
 // seulgi
-
-
-    signup(id, password){
-      auth().createUserWithEmailAndPassword(id, password)
-      .then(function() {
-        alert(`${id}님, 회원가입이 완료되었습니다.`)
-        // console.log('됏냐아')
+  signup(id, password, first_name, last_name, phonenumber){
+    auth().createUserWithEmailAndPassword(id, password)
+    .then(function() {
+      // console.log(`${id}`)
+      firestore.collection('users').doc(id).set({
+        email : id,
+        first_name : first_name,
+        last_name : last_name,
+        phonenumber : phonenumber
       })
-      .catch(function(error) {
-        // Handle Errors here.
-        // var errorCode = error.code;
-        // var errorMessage = error.message;
-        // console.log(errorCode)
-        // console.log(errorMessage)
-        alert(error)
+      alert(`${id}님, 회원가입이 완료되었습니다.`)
+    })
+    .catch(function(error) {
+      // Handle Errors here.
+      // var errorCode = error.code;
+      // var errorMessage = error.message;
+      // console.log(errorCode)
+      // console.log(errorMessage)
+      alert(error)
+    });
+  },
+  login(id, password){
+    auth().signInWithEmailAndPassword(id, password)
+    .then(function() {
+      // console.log('로그인 성공한것이다')
+      alert('로그인 완료!');
+    })
+    .catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // console.log(errorCode)
+      // console.log(errorMessage)
+      // console.log('로그인 실패한 것이다.')
+      alert(`${errorCode}\n${errorMessage}`);
       });
-    },
-    login(id, password){
-      auth().signInWithEmailAndPassword(id, password)
-      .then(function() {
-        // console.log('로그인 성공한것이다')
-        alert('로그인 완료!');
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // console.log(errorCode)
-        // console.log(errorMessage)
-        // console.log('로그인 실패한 것이다.')
-        alert(`${errorCode}\n${errorMessage}`);
-        });
-    },
-    logout() {
-      auth().signOut().then(function() {
-        // Sign-out successful.
-        alert('로그아웃 완료!');
-      }).catch(function(error) {
-        // An error happened.
-        alert(error);
-      });
-    },
-    signin_facebook(){
-      firebase.auth().signInWithPopup(provider).then(function(result) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        // var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        alert(`페이스북 로그인 완료!, ${user}`);
-        // ...
-      }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
-        alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
-      });
-    }
+  },
+  logout() {
+    auth().signOut().then(function() {
+      // Sign-out successful.
+      alert('로그아웃 완료!');
+    }).catch(function(error) {
+      // An error happened.
+      alert(error);
+    });
+  },
+  signin_facebook(){
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+      // var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      // console.log(user)
+      alert(`페이스북 로그인 완료!, ${user.email}`);
+      // ...
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+      alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
+    });
+  },
+  get_userinfo() {
+    var str = 'http://localhost:8080/userinfo/' + login_user
+    location.replace(str);
+  },
+  filter_userinfo(userinfo_user) {
 
+    // console.log(userinfo_user, '이 페이지의 주인')
 
+    firebase.auth().onAuthStateChanged(function(user) {
+
+      if (user) {
+        login_user = user.email
+      } else {
+        login_user = '익명'}
+
+        var mines = document.querySelectorAll('.mine')
+        var notmines = document.querySelectorAll('.notmine')
+
+        if (login_user == userinfo_user) {
+          // console.log('나의 페이지가 맞다')
+          mines.forEach(function(mine) {
+            mine.style.display = 'block';
+          })
+          notmines.forEach(function(notmine) {
+            notmine.style.display = 'none';
+          })
+
+        } else {
+          // console.log('여긴 남의 페이지이다')
+          notmines.forEach(function(notmine) {
+            notmine.style.display = 'block';
+          })
+          mines.forEach(function(mine) {
+            mine.style.display = 'none';
+          })
+        }
+
+    })
+  }
 }
