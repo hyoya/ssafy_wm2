@@ -6,9 +6,8 @@ import Router from "vue-router";
 import MainPage from "./views/MainPage.vue";
 import SignUpPage from "./views/SignUpPage.vue";
 import ProjectWrite from "./views/ProjectWrite.vue";
-import UserInfoPage from "./views/UserInfoPage.vue";
 import ForUserInfoPage from "./views/ForUserInfoPage.vue";
-
+import UserInfoPage from "./views/UserInfoPage.vue";
 Vue.use(Router);
 
 import Vuetify from "vuetify";
@@ -46,6 +45,11 @@ export default new Router({
       path: "/userInfo/:id",
       name: "foruserInfo",
       component: ForUserInfoPage,
+    },
+    {
+      path: "/userInfopage",
+      name: "foruserInfo",
+      component: UserInfoPage
     },
     {
       path: "/projectwrite",
