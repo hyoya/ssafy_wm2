@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Main from "./views/Main.vue";
 import Story from "./views/Story.vue";
+import CompanyIntro from "./views/CompanyIntro.vue";
 
 Vue.use(Router);
 
@@ -15,13 +16,17 @@ export default new Router({
     {
       path: "/",
       name: "main",
-      component: Main,
+      component: Main
     },
     {
       path: "/story",
       name: "story",
-      component: Story,
+      component: Story
     },
-
+    {
+      path: "/companyIntro",
+      name: "companyIntro",
+      component: CompanyIntro
+    }
   ]
 });

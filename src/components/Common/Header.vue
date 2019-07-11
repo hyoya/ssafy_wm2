@@ -17,6 +17,7 @@
           <SignIn />
           <SignUp />
           <v-btn flat class="white--text" href="/story">Story</v-btn>
+          <v-btn flat class="white--text" href="/companyIntro">Company</v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <!-- toolbar end -->
@@ -33,8 +34,7 @@ export default {
   props: {},
   components: {
     SignIn,
-    SignUp,
+    SignUp
   }
-
 };
 </script>
