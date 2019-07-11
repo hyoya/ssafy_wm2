@@ -6,27 +6,27 @@
     <!-- Header -->
       <v-layout column>
         <v-flex xs12>
-          <PHeader/>
+          <Header/>
         </v-flex>
       </v-layout>
 
       <router-view/>
 
       <!-- Footer -->
-      <PFooter/>
+      <Footer/>
 
     </v-content>
   </v-app>
 </template>
 
 <script>
-import PHeader from "./components/PHeader";
-import PFooter from "./components/PFooter";
+import Header from "./components/Common/Header";
+import Footer from "./components/Common/Footer";
 export default {
   name:'App',
   components: {
-    PHeader,
-    PFooter,
+    Header,
+    Footer,
   }
 
 };

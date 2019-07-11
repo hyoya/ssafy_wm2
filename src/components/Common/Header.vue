@@ -14,9 +14,9 @@
         <div id="google_translate_element"></div>
         <!-- sign in & sign up  -->
         <v-toolbar-items>
-          <SignInModal />
-          <SignUpModal />
-          <v-btn flat class="white--text" href="/userInfoPage">userInfo</v-btn>
+          <SignIn />
+          <SignUp />
+          <v-btn flat class="white--text" href="/story">Story</v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <!-- toolbar end -->
@@ -25,15 +25,15 @@
 </template>
 
 <script>
-import SignInModal from "./SignIn/SignIn";
-import SignUpModal from "./SignUp/SignUp";
+import SignIn from "../Sign/SignIn";
+import SignUp from "../Sign/SignUp";
 
 export default {
-  name: "PHeader",
+  name: "Header",
   props: {},
   components: {
-    SignInModal,
-    SignUpModal,
+    SignIn,
+    SignUp,
   }
 
 };

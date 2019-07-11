@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: "pFooter",
+  name: "Footer",
   data() {
     return {
       city: "",

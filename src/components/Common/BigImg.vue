@@ -14,7 +14,7 @@
 
 <script>
 export default {
-	name: 'MainBanner',
+	name: 'BigImg',
 	props: {
     imgSrc:{type:String},
     text:{type:String}

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UserStateBar></UserStateBar>
+    <TopSide />
 
     <h1>이 글이 나왔다면, id를 URL에 넣었다는 의미입니다. = 된 것이다.</h1>
 
@@ -10,12 +10,12 @@
 
     <div class="userInfoMainContent">
 
-      <SideUserInfo></SideUserInfo>
+      <LeftSide />
 
       <v-layout class="userInfoPortfolioLayout">
         <v-flex xs12>
           <!-- <PortfolioList :limits="6" :load-more="true"></PortfolioList> -->
-          <GetUserProject/>
+          <ProjectList />
         </v-flex>
       </v-layout>
     </div>
@@ -25,20 +25,22 @@
 <script>
 import FirebaseService from "@/services/FirebaseService";
 
-import UserStateBar from "../components/UserInfoPage/UserStateBar";
-import SideUserInfo from "../components/UserInfoPage/SideUserInfo";
-import GetUserProject from "../components/UserInfoPage/GetUserProject";
+import TopSide from "../components/UserInfoPage/TopSide";
+import LeftSide from "../components/UserInfoPage/LeftSide";
+import ProjectList from "../components/UserInfoPage/ProjectList";
+import ProjectEditor from "../components/UserInfoPage/ProjectEditor"
 
 var url = document.location.href
 var userinfo_email = url.split('/')[4]
 FirebaseService.filter_userinfo(userinfo_email)
 
 export default {
-  name: "UserInfoPage",
+  name: "Story",
   components: {
-    UserStateBar,
-    SideUserInfo,
-    GetUserProject
+    TopSide,
+    LeftSide,
+    ProjectList,
+    ProjectEditor,
   }
 };
 </script>

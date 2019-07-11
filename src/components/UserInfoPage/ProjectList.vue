@@ -1,3 +1,4 @@
+<!--GetProjectByUserId-->
 <template>
   <v-container>
     <v-layout row wrap mw-700>
@@ -19,8 +20,8 @@
 
 <script>
 import FirebaseService from "@/services/FirebaseService";
-import Project from '../Project'
-import ProjectDetail from '../ProjectDetail'
+import Project from '../Project/Project'
+import ProjectDetail from '../Project/ProjectDetail'
 export default {
   name: "GetUserProject",
   data() {

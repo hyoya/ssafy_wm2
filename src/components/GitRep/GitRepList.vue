@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import GitRepGraph from '@/components/GitRepGraph'
-import GitRepository from '@/components/GitRepository'
+import GitRepGraph from './GitRepGraph'
+import GitRepository from './GitRepository'
 import GitlabService from '@/services/GitlabService'
 
 export default {

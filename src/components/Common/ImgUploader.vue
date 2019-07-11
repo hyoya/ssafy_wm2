@@ -14,7 +14,7 @@
 import FirebaseService from "@/services/FirebaseService";
 
 export default {
-  name: "ImgUpload",
+  name: "ImgUploader",
   data() {
     return {
       image: ''

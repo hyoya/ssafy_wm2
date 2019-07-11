@@ -1,5 +1,5 @@
-  <template>
-    <v-flex xs3>
+<template>
+  <v-flex xs3>
     <v-layout >
       <v-dialog v-model="popol" max-width="60vw" hide-overlay >
         <!-- Thumbnail -->
@@ -44,8 +44,7 @@
               <v-layout wrap>
                 <!-- Project Main Thumbnail -->
                 <v-flex xs12>
-                  <MainBanner v-bind:imgSrc="projectThumbnailurl">
-                  </MainBanner>
+                  <BigImg v-bind:imgSrc="projectThumbnailurl" />
                 </v-flex>
                 <!--  left detail -->
                 <v-flex xs12 md9>
@@ -122,56 +121,56 @@
       </v-dialog>
     </v-layout>
   </v-flex>
-  </template>
+</template>
 
 
-  <script>
-  import  MainBanner from "./MainPage/MainBanner";
+<script>
+import BigImg from "../Common/BigImg";
 
-  export default {
-    components:{
-      MainBanner
+export default {
+  components:{
+    BigImg
+  },
+  props : {
+    projectimage: {type: String},
+    projecttitle: {type: String},
+    projectdescription: {type: String},
+    projectterm: {type: String},
+    projectcontent: {type: String},
+    projecttech: {type: Array}
+  },
+  data: () => ({
+    popol: false,
+    // projecttitle : "프로젝트이름",
+    projectThumbnailurl : "https://source.unsplash.com/random/1600x900",
+    developer : "개발자이름",
+    projectThumbnail : "../assets/logo.png",
+    // description: "여기에는 프로젝트 디스크립션이 들어갈 공간입니다앙널민얼미;나어림ㄴ어라ㅣ;아아아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ글자수늘리기ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
+    comments :[
+      {nick:"닉네임", content:"댓글1"},
+      {nick:"닉네임", content:"댓글2"},
+      {nick:"닉네임", content:"댓글3"},
+    ],
+    comment : "",
+    etcproject:[
+      {url:"https://source.unsplash.com/random/100x100"},
+      {url:"https://source.unsplash.com/random/100x100"},
+      {url:"https://source.unsplash.com/random/100x100"},
+    ],
+
+  }),
+  methods:{
+    addNewComment(){
+      const newcommnet ={
+        nick:"유저닉네임",
+        content : this.comment
+      };
+      this.comments.push(newcommnet);
     },
-    props : {
-      projectimage: {type: String},
-      projecttitle: {type: String},
-      projectdescription: {type: String},
-      projectterm: {type: String},
-      projectcontent: {type: String},
-      projecttech: {type: Array}
+    likeit(index){
+
     },
-    data: () => ({
-      popol: false,
-      // projecttitle : "프로젝트이름",
-      projectThumbnailurl : "https://source.unsplash.com/random/1600x900",
-      developer : "개발자이름",
-      projectThumbnail : "../assets/logo.png",
-      // description: "여기에는 프로젝트 디스크립션이 들어갈 공간입니다앙널민얼미;나어림ㄴ어라ㅣ;아아아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ글자수늘리기ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
-      comments :[
-        {nick:"닉네임", content:"댓글1"},
-        {nick:"닉네임", content:"댓글2"},
-        {nick:"닉네임", content:"댓글3"},
-      ],
-      comment : "",
-      etcproject:[
-        {url:"https://source.unsplash.com/random/100x100"},
-        {url:"https://source.unsplash.com/random/100x100"},
-        {url:"https://source.unsplash.com/random/100x100"},
-      ],
-
-    }),
-    methods:{
-      addNewComment(){
-        const newcommnet ={
-          nick:"유저닉네임",
-          content : this.comment
-        };
-        this.comments.push(newcommnet);
-      },
-      likeit(index){
-
-      },
-    }
-
   }
-  </script>
+
+}
+</script>

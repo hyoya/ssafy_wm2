@@ -208,7 +208,7 @@ import { VueEditor } from "vue2-editor";
 import FirebaseService from "@/services/FirebaseService";
 
   export default {
-    name: "ProjectWrite",
+    name: "ProjectEditor",
     data () {
         return {
           active: null,

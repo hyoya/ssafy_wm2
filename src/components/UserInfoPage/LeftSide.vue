@@ -1,3 +1,4 @@
+<!-- UserSideInfo -->
 <template>
   <v-layout column>
     <v-layout row xs12>

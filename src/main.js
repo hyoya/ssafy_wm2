@@ -1,21 +1,18 @@
+import App from './App.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
 import VueSimplemde from 'vue-simplemde'
-
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import './registerServiceWorker'
-import axios from 'axios'
-
-// sxngho
 import { VueEditor } from "vue2-editor";
-
+import axios from 'axios'
+import store from './store'
+import router from './router'
+import './registerServiceWorker'
+import 'vuetify/dist/vuetify.min.css'
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
+Vue.use(VueSimplemde)
 Vue.use(Vuetify, {
 	iconfont: 'fa',
 	theme: {
@@ -28,8 +25,6 @@ Vue.use(Vuetify, {
 Vue.use(Vuetify, {
   iconfont: 'mdi' // 'md' || 'mdi' || 'fa' || 'fa4'
 })
-
-Vue.use(VueSimplemde)
 
 new Vue({
   router,

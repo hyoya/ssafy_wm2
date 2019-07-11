@@ -1,60 +1,27 @@
-// install npm
 import Vue from "vue";
 import Router from "vue-router";
+import Main from "./views/Main.vue";
+import Story from "./views/Story.vue";
 
-// vue page
-import MainPage from "./views/MainPage.vue";
-import SignUpPage from "./views/SignUpPage.vue";
-import ProjectWrite from "./views/ProjectWrite.vue";
-import ForUserInfoPage from "./views/ForUserInfoPage.vue";
-import UserInfoPage from "./views/UserInfoPage.vue";
 Vue.use(Router);
-
-import Vuetify from "vuetify";
-Vue.use(Vuetify, {
-  iconfont: "fa",
-  theme: {
-    primary: "#3f51b5",
-    secondary: "#b0bec5",
-    accent: "#8c9eff",
-    error: "#b71c1c"
-  }
-});
 
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
+  // 형식통일
+  // path, name은 모두 소문자
+  // component는 카멜 표기법
   routes: [
     {
       path: "/",
       name: "main",
-      component: MainPage,
+      component: Main,
     },
     {
-      // 헤더에 다 구현되어있지만, 여긴 개발환경이라고 생각하시면 됩니다.
-      path: "/signup",
-      name: "signup",
-      component: SignUpPage
+      path: "/story",
+      name: "story",
+      component: Story,
     },
-    {
-      path: "/userInfoPage",
-      name: "UserInfoPage",
-      component: UserInfoPage,
-    },
-    {
-      path: "/userInfo/:id",
-      name: "foruserInfo",
-      component: ForUserInfoPage,
-    },
-    {
-      path: "/userInfopage",
-      name: "foruserInfo",
-      component: UserInfoPage
-    },
-    {
-      path: "/projectwrite",
-      name: "projectwrite",
-      component: ProjectWrite,
-    }
+
   ]
 });
