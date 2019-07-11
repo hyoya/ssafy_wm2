@@ -11,7 +11,7 @@
     <GitRepList />
 
     <!-- 포트폴리오 나열 -->
-    <PortfolioList/>
+    <PortfolioList />
 
     <v-btn flat href="/projectwrite">projectwrite</v-btn>
   </div>
@@ -21,7 +21,7 @@
 <script>
 import MainBanner from "../components/MainPage/MainBanner";
 import PFilter from "../components/MainPage/PFilter";
-import GitRepList from "../components/GitRepList"
+import GitRepList from "../components/GitRepList";
 export default {
   name: "MainPage",
   components: {
