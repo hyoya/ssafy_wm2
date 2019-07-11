@@ -8,8 +8,6 @@
     <div class="notmine"><h2>이 글이 보인다면 나는 익명 또는 손님</h2></div><br>
     <!-- <v-btn class="mine" flat href="/projectwrite/">projectwrite</v-btn><br> -->
 
-
-
     <div class="userInfoMainContent">
 
       <SideUserInfo></SideUserInfo>
