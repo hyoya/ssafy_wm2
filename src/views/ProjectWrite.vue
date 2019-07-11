@@ -100,7 +100,7 @@
                 <v-layout row>
                   <v-flex xs12>
                     <ul row style="list-style:none;">
-                      <li v-for="(item) in projecttech" style="float:left">
+                      <li v-for="(item, index) in projecttech" style="float:left">
                         <v-btn small flat outline="black" round @click="deleteTech()">{{ item }}</v-btn>
                       </li>
                     </ul>
