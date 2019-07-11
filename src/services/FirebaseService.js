@@ -20,7 +20,12 @@ var login_user // 로그인 하면 email, 아니면 ''  처리
 var provider = new auth.FacebookAuthProvider()
 // console.log(provider)
 
-// 여기가 로그인 관련된 것
+
+var url = document.location.href
+console.log((login_user==null)?"익명":login_user)
+console.log(url)
+
+
 auth().onAuthStateChanged(function(user) {
 
   var whoareyous = document.querySelectorAll('.whoareyou')
@@ -36,7 +41,6 @@ auth().onAuthStateChanged(function(user) {
       usercantsee.style.display = 'none' })
     usercansees.forEach(function(usercansee) {
       usercansee.style.display = 'block' })
-
   } else {
     login_user = '익명'
     usercantsees.forEach(function(usercantsee) {
@@ -47,6 +51,11 @@ auth().onAuthStateChanged(function(user) {
   whoareyous.forEach(function(whoareyou) {
     whoareyou.innerText = login_user })
 
+    firestore.collection('weblog').add({
+      login_user,
+      url,
+      date: firebase.firestore.FieldValue.serverTimestamp()
+    })
 })
 
 

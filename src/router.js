@@ -29,7 +29,7 @@ export default new Router({
     {
       path: "/",
       name: "main",
-      component: MainPage
+      component: MainPage,
     },
     {
       // 헤더에 다 구현되어있지만, 여긴 개발환경이라고 생각하시면 됩니다.
@@ -40,12 +40,12 @@ export default new Router({
     {
       path: "/userInfoPage",
       name: "UserInfoPage",
-      component: UserInfoPage
+      component: UserInfoPage,
     },
     {
       path: "/userInfo/:id",
       name: "foruserInfo",
-      component: ForUserInfoPage
+      component: ForUserInfoPage,
     },
     {
       path: "/projectwrite",
