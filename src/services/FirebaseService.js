@@ -168,43 +168,32 @@ export default{
 
     firebase.auth().onAuthStateChanged(function(user) {
 
-      // var whoareyous = document.querySelectorAll('.whoareyou')
-      // var usercantsees = document.querySelectorAll('.usercantsee')
-      // var usercansees = document.querySelectorAll('.usercansee')
-      //
-      // var mines = document.querySelectorAll('.mine')
-      // var notmines = document.querySelectorAll('.notmine')
-
       if (user) {
         login_user = user.email
-        // usercantsees.forEach(function(usercantsee) {
-        //   usercantsee.style.display = 'none' })
-        // usercansees.forEach(function(usercansee) {
-        //   usercansee.style.display = 'block' })
-
       } else {
         login_user = '익명'}
-      //   usercantsees.forEach(function(usercantsee) {
-      //     usercantsee.style.display = 'block' })
-      //   usercansees.forEach(function(usercansee) {
-      //     usercansee.style.display = 'none' })
-      // }
-      // whoareyous.forEach(function(whoareyou) {
-      //   whoareyou.innerText = login_user })
-        // console.log(login_user, '현재 로그인한 사람')
-        var mine = document.querySelector('.mine')
-        var notmine = document.querySelector('.notmine')
+
+        var mines = document.querySelectorAll('.mine')
+        var notmines = document.querySelectorAll('.notmine')
 
         if (login_user == userinfo_user) {
           // console.log('나의 페이지가 맞다')
-          mine.style.display = 'block';
-          notmine.style.display = 'none';
+          mines.forEach(function(mine) {
+            mine.style.display = 'block';
+          })
+          notmines.forEach(function(notmine) {
+            notmine.style.display = 'none';
+          })
+
         } else {
           // console.log('여긴 남의 페이지이다')
-          mine.style.display = 'none';
-          notmine.style.display = 'block';
+          notmines.forEach(function(notmine) {
+            notmine.style.display = 'block';
+          })
+          mines.forEach(function(mine) {
+            mine.style.display = 'none';
+          })
         }
-
 
     })
   }

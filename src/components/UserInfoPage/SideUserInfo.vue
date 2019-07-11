@@ -1,5 +1,6 @@
 <template>
   <div class="SideUserInfo">
+    <v-btn class="mine" flat href="/projectwrite/">projectwrite</v-btn>
     <div class="SideUserInfo__intro box">
       <div class="SideUserInfo__intro__userImg box">
         userImg
