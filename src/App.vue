@@ -27,10 +27,8 @@ export default {
   components: {
     PHeader,
     PFooter,
-  },
-  data(){
-    return{}
-  },
+  }
+
 };
 </script>
 
