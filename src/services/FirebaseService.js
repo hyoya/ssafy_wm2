@@ -48,6 +48,22 @@ auth().onAuthStateChanged(function(user) {
 export default{
   // SXNGHo
   // --------------------------------------------------------
+  ADD_Project(projecttitle,
+    projectdescription,
+    projectterm,
+    projectcontent,
+    projecttech,
+    projectimage){
+    return firestore.collection('project').doc(projecttitle).set({
+      projecttitle,
+      projectdescription,
+      projectterm,
+      projectcontent,
+      projecttech,
+      projectimage,
+      date: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  },
   async getProjects() {
     return firestore.collection('project')
     .get()
@@ -58,6 +74,8 @@ export default{
       })
     })
   },
+
+  ///// unused function by sxngho
   async getData(){
     return firestore.collection("userImg").get().then((docSnapshots) => {
       return docSnapshots.docs.map((doc) => {
@@ -74,14 +92,7 @@ export default{
       date: firebase.firestore.FieldValue.serverTimestamp()
     });
   },
-  ADD_project(title, image,content){
-    return firestore.collection('project').add({
-      title,
-      image,
-      content,
-      date: firebase.firestore.FieldValue.serverTimestamp()
-    });
-  },
+
 // -----------------------------------------------------------------
 // seulgi
 

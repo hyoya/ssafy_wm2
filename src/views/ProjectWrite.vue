@@ -13,11 +13,11 @@
       slider-color="red"
     >
       <v-tab
-        v-for="n in steps"
-        :key="n"
+        v-for="step in steps"
+        :key="step.idx"
         ripple
       >
-        {{ n.step }}
+        {{ step.title }}
       </v-tab>
 
       <!-- 탭 아이템들 -->
@@ -36,9 +36,9 @@
                 <v-text-field
                 label="프로젝트 제목*"
                 single-line
-                required
                 outline
                 v-model="projecttitle"
+                required
                 ></v-text-field>
               </v-flex>
 
@@ -101,7 +101,7 @@
                   <v-flex xs12>
                     <ul row style="list-style:none;">
                       <li v-for="(item, index) in projecttech" style="float:left">
-                        <v-btn small flat outline="black" round @click="deleteTech()">{{ item }}</v-btn>
+                        <v-btn small flat outline round @click="deleteTech()">{{ item }}</v-btn>
                       </li>
                     </ul>
                   </v-flex>
@@ -120,7 +120,7 @@
                   <v-flex xs12>
                     <ul row style="list-style:none;">
                       <li v-for="(item, index) in techlist" style="float:left">
-                        <v-btn small flat outline="black" round @click="addTech(item)">{{ item }}</v-btn>
+                        <v-btn small flat outline round @click="addTech(item)">{{ item }}</v-btn>
                       </li>
                     </ul>
                   </v-flex>
@@ -134,24 +134,13 @@
             <!-- TODO project img upload ==> Main and thumbnail -->
             <v-container>
               <h3>프로젝트 대표이미지 등록</h3>
-              <v-layout column>
-                <v-layout row>
-                  <v-flex xs6 style="background:red;">
-                    미래의 나야
-                  </v-flex>
-                  <v-flex xs6 style="background:blue;">
-                    칸나누기때문에
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs6 style="background:yellow;">
-                    힘들어하지마
-                  </v-flex>
-                  <v-flex xs6 style="background:green;">
-                    이정도면 알겠지?
-                  </v-flex>
-                </v-layout>
-              </v-layout>
+              <div v-if="!projectimage">
+                <input type="file" @change="onFileChange" />
+              </div>
+              <div v-else>
+                <img :src="projectimage" width="100%" height="100%"/><br>
+                <v-btn @click="removeImage">Remove image</v-btn>
+              </div>
             </v-container>
 
             <hr/>
@@ -191,11 +180,16 @@
       <!-- Step 3 :: Set Project main Img, Thumbnail, description -->
       <v-tab-item :key="3">
         <v-card flat>
-          <v-card-text>
-            <h1>this is third card</h1>
+          <v-card-text style="overflow:auto">
+            <vue-editor v-model="projectcontent"></vue-editor>
+
             <div class="text-xs-center mt-3">
               <v-btn @click="prevent">이전으로</v-btn>
-              <v-btn @click="next">완성하기!</v-btn>
+              <v-btn @click="submit(projecttitle,
+                     projectdescription,
+                     projectterm,
+                     projectcontent,
+                     projecttech)" :editorToolbar="customToolbar">완성하기!</v-btn>
               <br/>
               <small>*언제든지 수정할 수 있습니다!</small>
             </div>
@@ -210,42 +204,27 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
+import FirebaseService from "@/services/FirebaseService";
 
   export default {
-    name: "MainPage",
+    name: "ProjectWrite",
     data () {
         return {
           active: null,
-          text: 'this is test',
           steps:[
-            {step:"step 1"},
-            {step:"step 2"},
-            {step:"step 3"},
+            {idx:1, title:"step 1"},
+            {idx:2, title:"step 2"},
+            {idx:3, title:"step 3"},
           ],
 
           picker: new Date().toISOString().substr(0, 10),
           landscape: true,
           pterm:[
-             "진행중",
-             "1주일",
-             "2주일",
-             "3주일",
-             "1개월",
-             "2개월",
-             "3개월",
-             "4개월",
-             "5개월",
-             "6개월",
-             "7개월",
-             "8개월",
-             "9개월",
-             "10개월",
-             "11개월",
-             "1년",
-             "2년",
-             "3년",
-             "4년",
-             "5년",
+             "진행중", "1주일", "2주일", "3주일", "1개월",
+             "2개월", "3개월", "4개월", "5개월", "6개월",
+             "7개월", "8개월", "9개월", "10개월", "11개월",
+             "1년", "2년", "3년", "4년", "5년",
           ],
           techlist:[
             "c",
@@ -266,6 +245,15 @@
             "연구",
             "개인프로젝트",
           ],
+          projecttitle:"",
+          projectdescription:"",
+          projectterm:"",
+          projectimage: "",
+          projectcontent: "<h1>Some initial content</h1>",
+          customToolbar: [
+            ["bold", "italic", "underline"],
+            [{ list: "ordered" }, { list: "bullet" }],
+          ]
         }
       },
       methods: {
@@ -292,15 +280,58 @@
         },
         selectRank(inputrank){
           this.projectrank = inputrank;
+        },
+        submit(projecttitle,
+               projectdescription,
+               projectterm,
+               projectcontent,
+               projecttech,
+               projectimage) {
+        FirebaseService.ADD_Project(
+          this.projecttitle,
+          this.projectdescription,
+          this.projectterm,
+          this.projectcontent,
+          this.projecttech,
+          this.projectimage);
+          alert("업로드 완료!");
+        },
+        //// IMAGE UPLOAD
+        removeImage(){
+          this.projectimage = "";
+        },
+        onFileChange(e) {
+          // file 세팅
+          let files = e.target.files || e.dataTransfer.files;
+          if (!files.length) {
+            return;
+          }
+          const apiUrl = "https://api.imgur.com/3/image";
+          const apiKey = "f96b8964f338658";
+          let data = new FormData();
+          let content = {
+            method: "POST",
+            headers: {
+              Authorization: "Client-ID " + apiKey,
+              Accept: "application/json"
+            },
+            body: data,
+            mimeType: "multipart/form-data"
+          };
+          data.append("image", files[0]);
+          fetch(apiUrl, content)
+            .then(response => response.json())
+            .then(success => {
+              this.projectimage = success.data.link;
+            })
+            .catch();
         }
       },
     components: {
+      VueEditor
     },
     props: {
-      projecttitle:{type:String, required:true, default:"sss"},
-      projectdescription:{type:String, default:"aaa"},
-      projectterm:{type:String, default:"-"}
 
-  	},
+     },
   };
 </script>
