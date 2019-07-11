@@ -20,13 +20,15 @@ var login_user // 로그인 하면 email, 아니면 ''  처리
 var provider = new auth.FacebookAuthProvider()
 // console.log(provider)
 
-
 // 여기가 로그인 관련된 것
 auth().onAuthStateChanged(function(user) {
 
-  var whoareyou = document.querySelector('#whoareyou')
+  var whoareyous = document.querySelectorAll('.whoareyou')
   var usercantsees = document.querySelectorAll('.usercantsee')
   var usercansees = document.querySelectorAll('.usercansee')
+
+  // var mines = document.querySelectorAll('.mine')
+  // var notmines = document.querySelectorAll('.notmine')
 
   if (user) {
     login_user = user.email
@@ -42,11 +44,15 @@ auth().onAuthStateChanged(function(user) {
     usercansees.forEach(function(usercansee) {
       usercansee.style.display = 'none' })
   }
-  // console.log(login_user)
-  whoareyou.innerText = login_user
+  whoareyous.forEach(function(whoareyou) {
+    whoareyou.innerText = login_user })
+
 })
 
+
+
 export default{
+
   // SXNGHo
   // --------------------------------------------------------
   async getProjects() {
@@ -88,7 +94,7 @@ export default{
   signup(id, password, first_name, last_name, phonenumber){
     auth().createUserWithEmailAndPassword(id, password)
     .then(function() {
-      console.log(`${id}`)
+      // console.log(`${id}`)
       firestore.collection('users').doc(id).set({
         email : id,
         first_name : first_name,
@@ -137,7 +143,7 @@ export default{
       // var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
-      console.log(user)
+      // console.log(user)
       alert(`페이스북 로그인 완료!, ${user.email}`);
       // ...
     }).catch(function(error) {
@@ -151,7 +157,55 @@ export default{
       // ...
       alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
     });
+  },
+  get_userinfo() {
+    var str = 'http://localhost:8080/userinfo/' + login_user
+    location.replace(str);
+  },
+  filter_userinfo(userinfo_user) {
+
+    // console.log(userinfo_user, '이 페이지의 주인')
+
+    firebase.auth().onAuthStateChanged(function(user) {
+
+      // var whoareyous = document.querySelectorAll('.whoareyou')
+      // var usercantsees = document.querySelectorAll('.usercantsee')
+      // var usercansees = document.querySelectorAll('.usercansee')
+      //
+      // var mines = document.querySelectorAll('.mine')
+      // var notmines = document.querySelectorAll('.notmine')
+
+      if (user) {
+        login_user = user.email
+        // usercantsees.forEach(function(usercantsee) {
+        //   usercantsee.style.display = 'none' })
+        // usercansees.forEach(function(usercansee) {
+        //   usercansee.style.display = 'block' })
+
+      } else {
+        login_user = '익명'}
+      //   usercantsees.forEach(function(usercantsee) {
+      //     usercantsee.style.display = 'block' })
+      //   usercansees.forEach(function(usercansee) {
+      //     usercansee.style.display = 'none' })
+      // }
+      // whoareyous.forEach(function(whoareyou) {
+      //   whoareyou.innerText = login_user })
+        // console.log(login_user, '현재 로그인한 사람')
+        var mine = document.querySelector('.mine')
+        var notmine = document.querySelector('.notmine')
+
+        if (login_user == userinfo_user) {
+          // console.log('나의 페이지가 맞다')
+          mine.style.display = 'block';
+          notmine.style.display = 'none';
+        } else {
+          // console.log('여긴 남의 페이지이다')
+          mine.style.display = 'none';
+          notmine.style.display = 'block';
+        }
+
+
+    })
   }
-
-
 }

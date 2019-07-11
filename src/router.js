@@ -6,6 +6,8 @@ import Router from "vue-router";
 import MainPage from "./views/MainPage.vue";
 import SignUpPage from "./views/SignUpPage.vue";
 import UserInfoPage from "./views/UserInfoPage.vue";
+import ForUserInfoPage from "./views/ForUserInfoPage.vue";
+
 Vue.use(Router);
 
 import Vuetify from "vuetify";
@@ -38,6 +40,11 @@ export default new Router({
       path: "/userInfo",
       name: "userInfo",
       component: UserInfoPage
-    }
+    },
+    {
+      path: "/userInfo/:id",
+      name: "foruserInfo",
+      component: ForUserInfoPage
+    },
   ]
 });

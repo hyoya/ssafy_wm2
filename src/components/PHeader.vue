@@ -17,7 +17,8 @@
           <SignInModal />
           <SignUpModal />
           <ProjectDetail />
-          <v-btn flat class="white--text" href="/userInfo">userInfo</v-btn>
+          <v-btn flat class="white--text" href="/userInfo/">userInfo</v-btn>
+
         </v-toolbar-items>
       </v-toolbar>
       <!-- toolbar end -->
@@ -30,7 +31,6 @@ import SignInModal from "./SignIn/SignIn";
 import SignUpModal from "./SignUp/SignUp";
 import ProjectDetail from "./ProjectDetail";
 
-
 export default {
   name: "PHeader",
   props: {},
@@ -39,5 +39,6 @@ export default {
     SignUpModal,
     ProjectDetail
   }
+
 };
 </script>
