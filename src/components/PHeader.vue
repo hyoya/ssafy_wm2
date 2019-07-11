@@ -16,7 +16,7 @@
         <v-toolbar-items>
           <SignInModal />
           <SignUpModal />
-          <v-btn flat class="white--text" href="/userInfoPage">userInfo</v-btn>
+          <!-- <v-btn flat class="white--text" href="/userInfoPage">userInfo</v-btn> -->
         </v-toolbar-items>
       </v-toolbar>
       <!-- toolbar end -->
