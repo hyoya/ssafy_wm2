@@ -3,18 +3,17 @@
 <template>
   <v-app>
     <v-content>
-    <!-- Header -->
+      <!-- Header -->
       <v-layout column>
         <v-flex xs12>
-          <PHeader/>
+          <PHeader />
         </v-flex>
       </v-layout>
 
-      <router-view/>
+      <router-view />
 
       <!-- Footer -->
-      <PFooter/>
-
+      <PFooter />
     </v-content>
   </v-app>
 </template>
@@ -23,14 +22,14 @@
 import PHeader from "./components/PHeader";
 import PFooter from "./components/PFooter";
 export default {
-  name:'App',
+  name: "App",
   components: {
     PHeader,
-    PFooter,
+    PFooter
   },
-  data(){
-    return{}
-  },
+  data() {
+    return {};
+  }
 };
 </script>
 
