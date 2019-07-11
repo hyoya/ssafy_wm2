@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import GitlabService from '@/services/GitlabService'
 
 export default {
    name: 'GitRepository',

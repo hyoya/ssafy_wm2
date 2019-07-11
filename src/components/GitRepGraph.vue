@@ -1,12 +1,9 @@
 <template>
   <div class="py-3">
     <div id="graph-container"></div>
-    <v-layout>
-      <v-flex xs12>
-        <p v-for="commit in commits.data">{{commit.message}}, {{commit.author_name}}</p>
-      </v-flex>
-    </v-layout>
+    <p v-for="commit in commits.data">{{commit.message}}, {{commit.author_email}}</p>
   </div>
+</div>
 </template>
 
 <script>
@@ -14,11 +11,8 @@ import GitlabService from '@/services/GitlabService'
 
 export default {
   name: 'GitRepGraph',
-  props: {
-  },
   data() {
     return {
-      stats: {},
       commits: '',
       branch: [],
     }
@@ -30,22 +24,27 @@ export default {
     async CommitGraph() {
       this.commits = await GitlabService.getCommits()
       const graphContainer = document.getElementById("graph-container");
-      const gitgraph = GitgraphJS.createGitgraph(graphContainer);
-      const master = gitgraph.branch("master");
-      master.commit("INIT The Project")
-      this.commits.data.forEach(commit => {
-        if (!(this.branch.includes(commit.author_email))) {
-          this.branch.push(commit.author_email)
-        }
-        gitgraph._graph.author = `${commit.author_name} <${commit.author_email}>`
-        const branch = gitgraph.branch(commit.author_email)
-        branch.commit(commit.title)
-      })
-      this.branch.forEach(branch => {
-        master.merge(branch)
-      })
-    },
-  }
+        const gitgraph = GitgraphJS.createGitgraph(graphContainer);
+        const master = gitgraph.branch("master");
+     gitgraph._graph.template.commit.message.displayAuthor = false
+     gitgraph._graph.template.commit.message.displayHash = false
+     console.log(gitgraph)
+     master.commit("커밋 Start")
+
+     this.commits.forEach(commit => {
+       if (!(this.branch.includes(commit.author_email))) {
+         this.branch.push(commit.author_email)
+       }
+       gitgraph._graph.author = `${commit.author_name} <${commit.author_email}>`
+       const branch = gitgraph.branch(commit.author_email)
+       branch.commit(commit.title)
+     })
+
+     this.branch.forEach(br => {
+       master.merge(br)
+     })
+   },
+ }
 }
 </script>
 <style>
