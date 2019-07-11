@@ -7,7 +7,7 @@ import MainPage from "./views/MainPage.vue";
 import SignUpPage from "./views/SignUpPage.vue";
 import ProjectWrite from "./views/ProjectWrite.vue";
 import ForUserInfoPage from "./views/ForUserInfoPage.vue";
-
+import UserInfoPage from "./views/UserInfoPage.vue";
 Vue.use(Router);
 
 import Vuetify from "vuetify";
@@ -38,7 +38,7 @@ export default new Router({
     {
       path: "/userInfopage",
       name: "foruserInfo",
-      component: ForUserInfoPage
+      component: UserInfoPage
     },
     {
       path: "/projectwrite",
