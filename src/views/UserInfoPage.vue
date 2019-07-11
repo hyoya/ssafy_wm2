@@ -7,6 +7,7 @@
       <v-layout class="userInfoPortfolioLayout">
         <v-flex xs12>
           <!-- <PortfolioList :limits="6" :load-more="true"></PortfolioList> -->
+          <GetUserProject/>
         </v-flex>
       </v-layout>
     </div>
@@ -16,11 +17,13 @@
 <script>
 import UserStateBar from "../components/UserInfoPage/UserStateBar";
 import SideUserInfo from "../components/UserInfoPage/SideUserInfo";
+import GetUserProject from "../components/UserInfoPage/GetUserProject";
 export default {
   name: "UserInfoPage",
   components: {
     UserStateBar,
-    SideUserInfo
+    SideUserInfo,
+    GetUserProject
   }
 };
 </script>
