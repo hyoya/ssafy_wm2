@@ -22,6 +22,9 @@ Vue.use(Vuetify, {
 		error: '#b71c1c'
 	}
 })
+Vue.use(Vuetify, {
+  iconfont: 'mdi' // 'md' || 'mdi' || 'fa' || 'fa4'
+})
 
 Vue.use(VueSimplemde)
 

@@ -5,6 +5,7 @@ import Router from "vue-router";
 // vue page
 import MainPage from "./views/MainPage.vue";
 import SignUpPage from "./views/SignUpPage.vue";
+import ProjectWrite from "./views/ProjectWrite.vue";
 import UserInfoPage from "./views/UserInfoPage.vue";
 import ForUserInfoPage from "./views/ForUserInfoPage.vue";
 
@@ -37,8 +38,8 @@ export default new Router({
       component: SignUpPage
     },
     {
-      path: "/userInfo",
-      name: "userInfo",
+      path: "/userInfoPage",
+      name: "UserInfoPage",
       component: UserInfoPage
     },
     {
@@ -46,5 +47,10 @@ export default new Router({
       name: "foruserInfo",
       component: ForUserInfoPage
     },
+    {
+      path: "/projectwrite",
+      name: "projectwrite",
+      component: ProjectWrite,
+    }
   ]
 });
