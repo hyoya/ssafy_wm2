@@ -36,6 +36,11 @@ export default new Router({
       component: ForUserInfoPage
     },
     {
+      path: "/userInfopage",
+      name: "foruserInfo",
+      component: ForUserInfoPage
+    },
+    {
       path: "/projectwrite",
       name: "projectwrite",
       component: ProjectWrite,
