@@ -51,7 +51,6 @@ export default {
           alert("업로드 되었습니다");
         })
         .catch();
-
     }
   }
 };

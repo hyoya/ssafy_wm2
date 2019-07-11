@@ -1,10 +1,11 @@
 <template>
   <v-layout py-4 h-100>
     <v-flex row>
-      <v-img :src="imglink" width=50 hegith=50
-      ></v-img>
-      <h2 class="color-333 headline font-weight-light">{{title}}</h2>
-      <p class="mb-1 color-666 font-weight-light subheading">{{content}}</p>
+      <p class="mb-1 color-666 font-weight-light subheading">{{projecttitle}}</p>
+      <p class="mb-1 color-666 font-weight-light subheading">{{projectdescription}}</p>
+      <p class="mb-1 color-666 font-weight-light subheading">{{projectterm}}</p>
+      <p class="mb-1 color-666 font-weight-light subheading">{{projectcontent}}</p>
+      <p class="mb-1 color-666 font-weight-light subheading">{{projecttech}}</p>
     </v-flex>
   </v-layout>
 </template>
@@ -13,9 +14,11 @@
 export default {
 	name: 'Project',
 	props: {
-		title: {type: String},
-    imglink: {type: String},
-		content: {type: String}
+    projecttitle: {type: String},
+    projectdescription: {type: String},
+    projectterm: {type: String},
+    projectcontent: {type: String},
+    projecttech: {type: Array}
 	},
 }
 </script>

@@ -10,17 +10,6 @@
       <span>99</span>
     </v-flex>
   </v-layout>
-
-  <!-- <div class="userState">
-    <div class="userState__info">
-      <div class="info__content">
-        <button class="btn">followers</button>
-        <span>123</span>
-      </div>
-      
-    </div>
-    <div></div>
-  </div>-->
 </template>
 
 <script>
