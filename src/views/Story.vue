@@ -1,21 +1,28 @@
 <template>
   <div>
-    <TopSide />
-    <div class="userInfoMainContent">
-      <v-layout>
-        <v-flex xs3>
-          <p> 이 유저의 데이터를 가지고 <br>오시면 됩니다 아시겠죠? ->  {{ changingTEXT }} </p>
-          <LeftSide />
-        </v-flex>
-        <v-flex xs9>
-          <div class="userInfoPortfolioLayout">
-            <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
-            <ProjectList v-if="!stateAdd"></ProjectList>
-            <ProjectEditor v-else> </ProjectEditor>
-          </div>
-        </v-flex>
-      </v-layout>
-    </div>
+    <!-- TODO 여백 -->
+    <v-layout><v-flex style="margin:50px;" /></v-layout>
+
+    <v-layout row wrap>
+      <v-flex xs12>
+        <p> 이 유저의 데이터를 가지고 <br>오시면 됩니다 아시겠죠? ->  {{ changingTEXT }} </p>
+      </v-flex>
+      <v-flex xs12>
+        <TopSide/>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row wrap>
+      <v-flex xs12 sm3>
+        <LeftSide xs12 sm3/>
+      </v-flex>
+      <v-flex xs12 sm9 >
+          <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
+          <ProjectList v-if="!stateAdd"></ProjectList>
+          <ProjectEditor v-else> </ProjectEditor>
+      </v-flex>
+    </v-layout>
+
   </div>
 </template>
 
@@ -72,10 +79,6 @@ export default {
 </script>
 
 <style scoped>
-.userInfoMainContent {
-  display: flex;
-  justify-content: center;
-}
 .userInfoPortfolioLayout {
   border: 1px solid #2c2c2c;
   background-color: white;
