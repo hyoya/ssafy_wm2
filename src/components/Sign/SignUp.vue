@@ -42,16 +42,19 @@ import SignupforUserModal from './SignUpForUser'
       SignupforCompanyModal,
       SignupforUserModal
     },
-    data () {
-      return {
+    data: () => ({
         signupforuser: false,
         signupforcompany: false,
         signupmodal: false,
-      }
-    },
+        check : false
+      }),
     methods: {
-      logout() {
-        FirebaseService.logout()
+      async logout() {
+        this.check = await FirebaseService.logout()
+        if (this.check == false) {
+          this.$session.set('session_id', '')
+        }
+
       },
       get_userinfo() {
         FirebaseService.get_userinfo()
