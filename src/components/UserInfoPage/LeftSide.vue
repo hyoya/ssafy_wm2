@@ -1,50 +1,50 @@
 <!-- UserSideInfo -->
 <template>
-  <v-layout column>
-    <v-layout row xs12>
-      <v-flex style="margin-left:120px">
-        <v-avatar size="150" class="grey lighten-2">
-          <img src="https://i.imgur.com/aTI4OeZ.png?1" v-if="userImage=='null'">
-          <img src="https://i.imgur.com/SSlPWnK.png" v-if="userImage !=='null'">
-        </v-avatar>
-      </v-flex>
+  <div style=" padding:1vw; background:white">
+    <!-- USER Profile Img -->
+    <v-layout wrap align-center justify-space-around>
+      <v-avatar size="150" class="grey lighten-2">
+        <img src="https://i.imgur.com/aTI4OeZ.png?1" v-if="userImage=='null'">
+        <img src="https://i.imgur.com/SSlPWnK.png" v-if="userImage !=='null'">
+      </v-avatar>
     </v-layout>
 
-    <!--USER 자기소개-->
-    <v-layout style="background:white;">
-      <v-card-text>
+    <!--USER Intro-->
+    <v-layout style="margin-top:1vw;">
+      <v-flex class="text-md-center">
         <p class="subheading grey--text text-md-center">{{userdata[0].userName}}</p>
-        <p class="subheading grey--text text-md-center">{{userIntro}}</p>
-        <!-- <IntroEditor/> -->
-      </v-card-text>
+        <div class="subheading grey--text">{{userIntro}}</div>
+      </v-flex>
     </v-layout>
 
     <!--USER SKILLS-->
-    <v-layout row xs12>
-      <v-flex style="background:white;">
-        <v-card-text>
-          <p class="subheading black--text text-md-center">SKILLS</p>
-        </v-card-text>
-        <v-flex>
-          <v-btn v-for="skill in userSkills" flat small round outline>{{ skill }}</v-btn>
-        </v-flex>
-            <hr/>
-        <v-card-text>
-          <p class="subheading black--text text-md-center"> 경력 </p>
-          <!-- <CareerEditor/> -->
-        </v-card-text>
-        <p v-for="career in userCareers">{{career}}</p>
-            <hr/>
-        <v-card-text>
-          <p class="subheading black--text text-md-center"> 교육 </p>
-          <!-- <EducationEditor/> -->
-        </v-card-text>
-        <p v-for="education in userEducations">{{education}}</p>
+    <div style="border-top:1px red dashed;"/>
+    <v-layout wrap style="margin-top:2vw;">
+      <v-flex xs12 class="text-md-center subheading">SKILLS</v-flex>
+      <v-flex xs12>
+        <!-- v-for skill -->
       </v-flex>
     </v-layout>
 
-    <!--USER 정보 추가 예정-->
-  </v-layout>
+    <!--USER Careers-->
+    <div style="border-top:1px red dashed;"/>
+    <v-layout wrap style="margin-top:2vw;">
+      <v-flex xs12 class="text-md-center subheading">Careers</v-flex>
+      <v-flex xs12>
+        <!-- v-for Career-->
+      </v-flex>
+    </v-layout>
+
+    <!--USER Education-->
+    <div style="border-top:1px red dashed;"/>
+    <v-layout wrap style="margin-top:2vw;">
+      <v-flex xs12 class="text-md-center subheading">Education</v-flex>
+      <v-flex xs12>
+        <!-- v-for Education -->
+      </v-flex>
+    </v-layout>
+
+  </div>
 </template>
 
 <script>
