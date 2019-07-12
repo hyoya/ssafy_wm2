@@ -13,7 +13,7 @@
     <Projects />
 
     <!-- <GitRepList /> -->
-    <PE/>
+
   </div>
 </template>
 

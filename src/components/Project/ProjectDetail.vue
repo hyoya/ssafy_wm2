@@ -4,13 +4,13 @@
         <!-- Thumbnail -->
         <template v-slot:activator="{ on }">
           <v-btn flat class="white--text" v-on="on">
-            <v-flex>
+            <v-flex >
               <v-card>
-                <v-img :src="projectimage" height="200px" width="200px"></v-img>
+                <v-img :src="projectimage" height="300px" width="300px"></v-img>
                 <v-card-title primary-title>
                   <div>
-                    <div class="black--text">{{projecttitle}}</div>
-                    <span class="grey--text">{{projectdescription}}</span>
+                    <!-- <div class="black--text">{{projecttitle}}</div>
+                    <span class="grey--text">{{projectdescription}}</span> -->
                   </div>
                 </v-card-title>
               </v-card>
@@ -26,7 +26,7 @@
             <v-btn icon to="/"/>
             <v-toolbar-title class="font-weight-medium">
 
-               <span class="font-weight-bold">{{projecttitle}} </span>
+               <span class="font-weight-bold">123123{{projecttitle}} </span>
                <span class="font-weight-thin font-italic subheading">{{developer}}</span>
                <v-flex class="caption">
                  {{ projectdescription }}
