@@ -22,9 +22,8 @@ var provider = new auth.FacebookAuthProvider()
 
 
 var url = document.location.href
-console.log((login_user==null)?"익명":login_user)
-console.log(url)
-
+// console.log((login_user==null)?"익명":login_user)
+// console.log(url)
 
 auth().onAuthStateChanged(function(user) {
 
@@ -51,11 +50,11 @@ auth().onAuthStateChanged(function(user) {
   whoareyous.forEach(function(whoareyou) {
     whoareyou.innerText = login_user })
 
-    firestore.collection('weblog').add({
-      login_user,
-      url,
-      date: firebase.firestore.FieldValue.serverTimestamp()
-    })
+    // firestore.collection('weblog').add({
+    //   login_user,
+    //   url,
+    //   date: firebase.firestore.FieldValue.serverTimestamp()
+    // })
 })
 
 
@@ -132,11 +131,13 @@ export default{
       alert(error)
     });
   },
-  login(id, password){
-    auth().signInWithEmailAndPassword(id, password)
+  async login(id, password){
+    return firebase.auth().signInWithEmailAndPassword(id, password)
     .then(function() {
       // console.log('로그인 성공한것이다')
-      alert('로그인 완료!');
+      // alert('로그인 완료!');
+      // console.log('true!!')
+      return true // 유저 관련된 결과값은 성공한 경우가 True
     })
     .catch(function(error) {
       // Handle Errors here.
@@ -147,14 +148,17 @@ export default{
       // console.log('로그인 실패한 것이다.')
       alert(`${errorCode}\n${errorMessage}`);
       });
+      return false
   },
-  logout() {
-    auth().signOut().then(function() {
+  async logout() {
+    return firebase.auth().signOut().then(function() {
       // Sign-out successful.
       alert('로그아웃 완료!');
+      return false
     }).catch(function(error) {
       // An error happened.
       alert(error);
+      return true
     });
   },
   signin_facebook(){
@@ -216,5 +220,7 @@ export default{
         }
 
     })
-  }
+  },
 }
+
+// auth().onAuthStateChanged(function(user)

@@ -26,8 +26,11 @@
 </template>
 
 <script>
+import FirebaseService from "@/services/FirebaseService"
+
 import SignIn from "../Sign/SignIn";
 import SignUp from "../Sign/SignUp";
+
 
 export default {
   name: "Header",
