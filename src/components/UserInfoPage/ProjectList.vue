@@ -5,7 +5,7 @@
       <h1 class="subheading grey--text text-md-center">PROJECT LIST</h1>
     </v-card-text>
     <v-layout row wrap>
-      <v-flex v-for="i in projects.length">
+      <v-flex v-for="i in projects.length" xs12 sm6 md4 lg3>
         <ProjectDetail
           :projectimage="projects[i-1].projectimage"
           :projecttitle="projects[i-1].projecttitle"
