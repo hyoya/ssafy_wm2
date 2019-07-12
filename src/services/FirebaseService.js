@@ -272,18 +272,5 @@ export default {
         });
       }
     });
-  },
-  // 이거 삭제하셔도 됩니다.-슬기
-  // async getUserdata() {
-  //   return firestore.collection('users')
-  //   .where()
-  //   .get()
-  //   .then((docSnapshots) => {
-  //     return docSnapshots.docs.map((doc) => {
-  //       let data = doc.data()
-  //
-  //       return data
-  //     })
-  //   })
-  // },
+  }
 };
