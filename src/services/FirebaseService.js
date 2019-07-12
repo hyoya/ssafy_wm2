@@ -144,9 +144,9 @@ export default {
 
   // -----------------------------------------------------------------
   // seulgi
-  signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
-    console.log(id)
-    auth()
+  async signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
+    return firebase
+      .auth()
       .createUserWithEmailAndPassword(id, password)
       .then(function() {
         // console.log(`${id}`)
@@ -166,6 +166,7 @@ export default {
             userEducations:userEducations
           });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
+        return true;
       })
       .catch(function(error) {
         // Handle Errors here.
@@ -175,6 +176,7 @@ export default {
         // console.log(errorMessage)
         alert(error);
       });
+      return false;
   },
   async login(id, password) {
     return firebase
