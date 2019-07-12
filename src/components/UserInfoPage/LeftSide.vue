@@ -68,6 +68,9 @@ export default {
     EducationEditor,
     IntroEditor,
   },
-
+  created() {
+    console.log(1)
+    console.log(this.$route.params.id)
+  }
 };
 </script>
