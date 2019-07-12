@@ -85,11 +85,24 @@ export default{
     .then((docSnapshots) => {
       return docSnapshots.docs.map((doc) => {
         let data = doc.data()
+
         return data
       })
     })
   },
-
+  async getmainProjects() {
+    // return firestore.collection('project')
+    return firestore.collection('project').orderBy('date')
+    .get()
+    .then((docSnapshots) => {
+      return docSnapshots.docs.map((doc) => {
+        // console.log((doc.id))
+        let data = [ doc.id, doc.data()]
+        // console.log((data))
+        return data
+      })
+    })
+  },
   ///// unused function by sxngho
   async getData(){
     return firestore.collection("userImg").get().then((docSnapshots) => {
