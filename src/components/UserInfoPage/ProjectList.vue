@@ -13,11 +13,14 @@
           :projectterm="projects[i-1].projectterm"
           :projectcontent="projects[i-1].projectcontent"
           :projecttech="projects[i-1].projecttech"
-        ></ProjectDetail>
-        <!-- <v-divider></v-divider> -->
-      </v-flex>
-    </v-layout>
-  </div>
+          :projectrank="projects[i-1].projectrank">
+      </ProjectDetail>
+      <v-divider></v-divider>
+    </v-flex>
+  </v-layout>
+</div>
+</v-container>
+
 </template>
 
 <script>

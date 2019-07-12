@@ -50,15 +50,14 @@ auth().onAuthStateChanged(function(user) {
     });
   }
   whoareyous.forEach(function(whoareyou) {
-    whoareyou.innerText = login_user;
-  });
+    whoareyou.innerText = login_user })
+})
 
   // firestore.collection('weblog').add({
   //   login_user,
   //   url,
   //   date: firebase.firestore.FieldValue.serverTimestamp()
   // })
-});
 
 export default {
   // SXNGHo
@@ -69,7 +68,8 @@ export default {
     projectterm,
     projectcontent,
     projecttech,
-    projectimage
+    projectimage,
+    projectrank,
   ) {
     return firestore
       .collection("project")
@@ -81,6 +81,7 @@ export default {
         projectcontent,
         projecttech,
         projectimage,
+        projectrank,
         date: firebase.firestore.FieldValue.serverTimestamp()
       });
   },

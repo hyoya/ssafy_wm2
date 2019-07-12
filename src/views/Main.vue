@@ -9,7 +9,7 @@
     <!-- 필터링 -->
     <Filters />
     <!-- <GitRepList /> -->
-    <!-- <PE/> -->
+    <PE/>
   </div>
 </template>
 
