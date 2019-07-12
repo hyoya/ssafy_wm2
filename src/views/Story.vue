@@ -27,6 +27,7 @@ import LeftSide from "../components/UserInfoPage/LeftSide";
 import ProjectList from "../components/UserInfoPage/ProjectList";
 import ProjectEditor from "../components/UserInfoPage/ProjectEditor"
 
+
 export default {
   name: "Story",
   data() {

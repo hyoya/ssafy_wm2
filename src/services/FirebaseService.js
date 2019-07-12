@@ -87,13 +87,24 @@ export default {
         date: firebase.firestore.FieldValue.serverTimestamp()
       });
   },
-  async getProjects() {
+  async getProjects(id) {
     return firestore.collection('project')
+    .where("session_id","==",id)
     .get()
     .then((docSnapshots) => {
       return docSnapshots.docs.map((doc) => {
         let data = doc.data()
-
+        return data
+      })
+    })
+  },
+  async getUserdata(id) {
+    return firestore.collection('users')
+    .where("email","==",id)
+    .get()
+    .then((docSnapshots) => {
+      return docSnapshots.docs.map((doc) => {
+        let data = doc.data()
         return data
       })
     })
