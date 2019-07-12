@@ -10,14 +10,11 @@
           <ContentSide />
         </v-flex>
       </v-layout>
-      <!-- <KakaoMap /> -->
-      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import KakaoMap from "../components/KakaoMap/KakaoMap";
 import ContentBody from "../components/CompanyIntroPage/ContentBody";
 import IntroCompanyBar from "../components/CompanyIntroPage/IntroCompanyBar";
 import ContentSide from "../components/CompanyIntroPage/ContentSide";
@@ -26,8 +23,7 @@ export default {
   components: {
     ContentBody,
     IntroCompanyBar,
-    ContentSide,
-    KakaoMap
+    ContentSide
   }
 };
 </script>

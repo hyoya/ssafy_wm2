@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import KakaoMap from "../KakaoMap/KakaoMap";
+import KakaoMap from "../API/KakaoMap";
 export default {
   name: "ContentSide",
   components: {

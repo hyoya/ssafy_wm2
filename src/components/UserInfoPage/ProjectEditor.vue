@@ -1,10 +1,7 @@
 <template>
   <div justify-center>
 
-    <!-- PHeader margin -->
-    <v-flex style="height:60px; background:red;"><h1>aaaaa</h1></v-flex>
-
-    <v-flex column xs11 >
+    <v-flex column xs12 sm10 >
     <v-tabs
       right
       v-model="active"
@@ -189,7 +186,8 @@
                      projectdescription,
                      projectterm,
                      projectcontent,
-                     projecttech)" :editorToolbar="customToolbar">완성하기!</v-btn>
+                     projecttech,
+                     projectrank)" :editorToolbar="customToolbar">완성하기!</v-btn>
               <br/>
               <small>*언제든지 수정할 수 있습니다!</small>
             </div>
@@ -286,14 +284,16 @@ import FirebaseService from "@/services/FirebaseService";
                projectterm,
                projectcontent,
                projecttech,
-               projectimage) {
+               projectimage,
+               projectrank) {
         FirebaseService.ADD_Project(
           this.projecttitle,
           this.projectdescription,
           this.projectterm,
           this.projectcontent,
           this.projecttech,
-          this.projectimage);
+          this.projectimage,
+          this.projectrank);
           alert("업로드 완료!");
         },
         //// IMAGE UPLOAD

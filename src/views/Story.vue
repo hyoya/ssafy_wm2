@@ -1,25 +1,17 @@
 <template>
-  <div>
-    <TopSide />
-
-    <h1>이 글이 나왔다면, id를 URL에 넣었다는 의미입니다. = 된 것이다.</h1>
-
-    <div class="mine"><h2>이 글이 보인다면 내가 주인</h2></div>
-    <div class="notmine"><h2>이 글이 보인다면 나는 익명 또는 손님</h2></div><br>
-    <!-- <v-btn class="mine" flat href="/projectwrite/">projectwrite</v-btn><br> -->
-
-    <div class="userInfoMainContent">
-
-      <LeftSide />
-
-      <v-layout class="userInfoPortfolioLayout">
-        <v-flex xs12>
-          <!-- <PortfolioList :limits="6" :load-more="true"></PortfolioList> -->
+  <v-app>
+    <v-content style="margin-top:100px">
+      <TopSide />
+      <v-layout xs12 rows wrap>
+        <v-flex xs3>
+          <LeftSide />
+        </v-flex>
+        <v-flex xs9>
           <ProjectList />
         </v-flex>
       </v-layout>
-    </div>
-  </div>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
@@ -28,11 +20,11 @@ import FirebaseService from "@/services/FirebaseService";
 import TopSide from "../components/UserInfoPage/TopSide";
 import LeftSide from "../components/UserInfoPage/LeftSide";
 import ProjectList from "../components/UserInfoPage/ProjectList";
-import ProjectEditor from "../components/UserInfoPage/ProjectEditor"
+import ProjectEditor from "../components/UserInfoPage/ProjectEditor";
 
-var url = document.location.href
-var userinfo_email = url.split('/')[4]
-FirebaseService.filter_userinfo(userinfo_email)
+var url = document.location.href;
+var userinfo_email = url.split("/")[4];
+FirebaseService.filter_userinfo(userinfo_email);
 
 export default {
   name: "Story",
@@ -40,19 +32,10 @@ export default {
     TopSide,
     LeftSide,
     ProjectList,
-    ProjectEditor,
+    ProjectEditor
   }
 };
 </script>
 
 <style scoped>
-.userInfoMainContent {
-  display: flex;
-  justify-content: center;
-}
-.userInfoPortfolioLayout {
-  border: 1px solid #2c2c2c;
-  background-color: white;
-  margin: 25px;
-}
 </style>
