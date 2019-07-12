@@ -6,11 +6,11 @@
           <v-btn flat class="white--text" v-on="on">
             <v-flex >
               <v-card>
-                <v-img :src="projectimage" height="300px" width="300px"></v-img>
+                <v-img :src="projectimage" height="200px" width="200px"></v-img>
                 <v-card-title primary-title>
                   <div>
-                    <!-- <div class="black--text">{{projecttitle}}</div>
-                    <span class="grey--text">{{projectdescription}}</span> -->
+                    <div class="black--text">{{projecttitle}}</div>
+                    <span class="grey--text">{{projectdescription}}</span>
                   </div>
                 </v-card-title>
               </v-card>
