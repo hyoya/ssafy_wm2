@@ -9,7 +9,8 @@
           :projectdescription="projects[i-1].projectdescription"
           :projectterm="projects[i-1].projectterm"
           :projectcontent="projects[i-1].projectcontent"
-          :projecttech="projects[i-1].projecttech">
+          :projecttech="projects[i-1].projecttech"
+          :projectrank="projects[i-1].projectrank">
       </ProjectDetail>
       <v-divider></v-divider>
     </v-flex>

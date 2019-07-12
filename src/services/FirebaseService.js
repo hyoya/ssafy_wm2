@@ -50,12 +50,13 @@ auth().onAuthStateChanged(function(user) {
   }
   whoareyous.forEach(function(whoareyou) {
     whoareyou.innerText = login_user })
-
+/*
     firestore.collection('weblog').add({
       login_user,
       url,
       date: firebase.firestore.FieldValue.serverTimestamp()
     })
+    */
 })
 
 
@@ -69,7 +70,8 @@ export default{
     projectterm,
     projectcontent,
     projecttech,
-    projectimage){
+    projectimage,
+    projectrank){
     return firestore.collection('project').doc(projecttitle).set({
       projecttitle,
       projectdescription,
@@ -77,6 +79,7 @@ export default{
       projectcontent,
       projecttech,
       projectimage,
+      projectrank,
       date: firebase.firestore.FieldValue.serverTimestamp()
     });
   },

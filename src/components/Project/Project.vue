@@ -18,7 +18,8 @@ export default {
     projectdescription: {type: String},
     projectterm: {type: String},
     projectcontent: {type: String},
-    projecttech: {type: Array}
+    projecttech: {type: Array},
+    projectrank:{type:String}
 	},
 }
 </script>
