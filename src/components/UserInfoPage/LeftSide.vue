@@ -14,7 +14,8 @@
     <v-layout style="background:white;">
       <v-card-text>
         <p class="subheading grey--text text-md-center">{{userName}}</p>
-        <p class="subheading grey--text text-md-center">{{userIntro}}</p> <IntroEditor/>
+        <p class="subheading grey--text text-md-center">{{userIntro}}</p>
+        <!-- <IntroEditor/> -->
       </v-card-text>
     </v-layout>
 
@@ -29,12 +30,14 @@
         </v-flex>
             <hr/>
         <v-card-text>
-          <p class="subheading black--text text-md-center"> 경력 </p> <CareerEditor/>
+          <p class="subheading black--text text-md-center"> 경력 </p>
+          <!-- <CareerEditor/> -->
         </v-card-text>
         <p v-for="career in userCareers">{{career}}</p>
             <hr/>
         <v-card-text>
-          <p class="subheading black--text text-md-center"> 교육 </p>  <EducationEditor/>
+          <p class="subheading black--text text-md-center"> 교육 </p>
+          <!-- <EducationEditor/> -->
         </v-card-text>
         <p v-for="education in userEducations">{{education}}</p>
       </v-flex>
