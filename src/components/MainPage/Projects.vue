@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       projects: [],
-      amount_projects : 3
+      amount_projects : 3,
     };
   },
   created() {
@@ -59,15 +59,14 @@ export default {
   methods: {
     async getmainProjects() {
       this.projects = await FirebaseService.getmainProjects()
-      console.log(this.projects)
+      // console.log(this.projects)
       // this.amount_projects = this.projects.length
       // console.log(this.amount_projects, '떳냐?')
     },
     more_projects() {
       this.amount_projects += 1;
 
-      }
     }
-
+  }
 };
 </script>

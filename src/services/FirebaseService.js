@@ -144,7 +144,8 @@ export default {
 
   // -----------------------------------------------------------------
   // seulgi
-  signup(id, password, first_name, last_name, phonenumber) {
+  signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
+    console.log(id)
     auth()
       .createUserWithEmailAndPassword(id, password)
       .then(function() {
@@ -156,7 +157,13 @@ export default {
             email: id,
             first_name: first_name,
             last_name: last_name,
-            phonenumber: phonenumber
+            phonenumber: phonenumber,
+            userSkills:userSkills,
+            userImage:userImage,
+            userName:first_name + last_name,
+            userIntro:userIntro,
+            userCareers:userCareers,
+            userEducations:userEducations
           });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
       })
@@ -265,5 +272,18 @@ export default {
         });
       }
     });
-  }
+  },
+  // 이거 삭제하셔도 됩니다.-슬기
+  // async getUserdata() {
+  //   return firestore.collection('users')
+  //   .where()
+  //   .get()
+  //   .then((docSnapshots) => {
+  //     return docSnapshots.docs.map((doc) => {
+  //       let data = doc.data()
+  //
+  //       return data
+  //     })
+  //   })
+  // },
 };
