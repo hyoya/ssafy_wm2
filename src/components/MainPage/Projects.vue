@@ -6,10 +6,10 @@
       <!-- {{amount_projects}} -->
       {{projects.length}}<br>
         <!-- <v-flex v-if="projects.length > 3" v-for="i in 3" > -->
-        <v-flex v-if="projects.length > 3" v-for='i in amount_projects' >
+        <v-flex v-if="projects.length > 1" v-for='i in amount_projects'>
           <div>
             <!-- {{projects[i-1][1].date}}<br> -->
-            <img :src="projects[i-1][1].projectimage" width=300px height=300px>
+            <img :src="projects[i-1][1].projectimage" width=250vw >
           </div>
 
 
@@ -42,9 +42,18 @@ export default {
       // this.amount_projects = this.projects.length
       // console.log(this.amount_projects, '떳냐?')
     },
+    // more_projects() {
+    //   this.amount_projects += 3;
+    //   let projects = [];
+    //   for (let i = 0; i < this.projets.length; i++) {
+    //     this.
+    //   }
+    // },
     more_projects() {
-      console.log(3)
+      this.amount_projects += 1;
+
+      }
     }
-  }
+
 };
 </script>
