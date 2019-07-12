@@ -13,7 +13,7 @@
     <!--USER 자기소개-->
     <v-layout style="background:white;">
       <v-card-text>
-        <p class="subheading grey--text text-md-center">{{userName}}</p>
+        <p class="subheading grey--text text-md-center">{{userdata[0].userName}}</p>
         <p class="subheading grey--text text-md-center">{{userIntro}}</p>
         <!-- <IntroEditor/> -->
       </v-card-text>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import FirebaseService from "@/services/FirebaseService";
 import CareerEditor from "./InputForm/CareerEditor";
 import EducationEditor from "./InputForm/EducationEditor";
 import IntroEditor from "./InputForm/IntroEditor";
@@ -61,6 +62,7 @@ export default {
       userIntro: "자기소개",
       userCareers: ["신입"],
       userEducations: ["2018.12.10 ~ :: SSAFY"],
+      userdata: [],
     }
   },
   components:{
@@ -68,6 +70,16 @@ export default {
     EducationEditor,
     IntroEditor,
   },
+  created() {
+    this.getUserdata();
+    console.log(this.userdata[0]);
+  },
+  methods: {
+    async getUserdata() {
+      this.id = this.$route.params.id;
+      this.userdata = await FirebaseService.getUserdata(this.id);
+    }
+  }
 
 };
 </script>
