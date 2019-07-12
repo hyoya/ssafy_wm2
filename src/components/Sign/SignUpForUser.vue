@@ -104,8 +104,8 @@ import FirebaseService from "@/services/FirebaseService";
       userName : "",
       userIntro: "",
       userCareers: [],
-      userEducations: []
-
+      userEducations: [],
+      check : false,
     }),
     methods : {
       addNewCareer(){
@@ -114,8 +114,13 @@ import FirebaseService from "@/services/FirebaseService";
       deleteCareer(index){
         this.careers.splice(index,1);
       },
-      signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
-        FirebaseService.signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations)
+      async signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
+        this.check = await FirebaseService.signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations)
+        if (this.check == true) {
+          this.$session.set('session_id', id)
+          this.$store.commit('setSession', id)
+          console.log(this.$store.getters.getSession,"setSession")
+        }
       }
     }
   }
