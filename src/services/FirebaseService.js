@@ -21,8 +21,8 @@ var provider = new auth.FacebookAuthProvider();
 // console.log(provider)
 
 var url = document.location.href;
-console.log(login_user == null ? "익명" : login_user);
-console.log(url);
+// console.log((login_user==null)?"익명":login_user)
+// console.log(url)
 
 auth().onAuthStateChanged(function(user) {
   var whoareyous = document.querySelectorAll(".whoareyou");
@@ -143,12 +143,15 @@ export default {
         alert(error);
       });
   },
-  login(id, password) {
-    auth()
+  async login(id, password) {
+    return firebase
+      .auth()
       .signInWithEmailAndPassword(id, password)
       .then(function() {
         // console.log('로그인 성공한것이다')
-        alert("로그인 완료!");
+        // alert('로그인 완료!');
+        // console.log('true!!')
+        return true; // 유저 관련된 결과값은 성공한 경우가 True
       })
       .catch(function(error) {
         // Handle Errors here.
@@ -159,17 +162,21 @@ export default {
         // console.log('로그인 실패한 것이다.')
         alert(`${errorCode}\n${errorMessage}`);
       });
+    return false;
   },
-  logout() {
-    auth()
+  async logout() {
+    return firebase
+      .auth()
       .signOut()
       .then(function() {
         // Sign-out successful.
         alert("로그아웃 완료!");
+        return false;
       })
       .catch(function(error) {
         // An error happened.
         alert(error);
+        return true;
       });
   },
   signin_facebook() {

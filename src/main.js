@@ -2,6 +2,7 @@ import App from './App.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import VueSimplemde from 'vue-simplemde'
+import VueSession from 'vue-session'
 import { VueEditor } from "vue2-editor";
 import axios from 'axios'
 import store from './store'
@@ -13,6 +14,7 @@ Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 Vue.use(VueSimplemde)
+Vue.use(VueSession)
 Vue.use(Vuetify, {
 	iconfont: 'fa',
 	theme: {

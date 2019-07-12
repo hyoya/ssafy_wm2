@@ -2,8 +2,11 @@
   <v-layout row justify-center>
     <v-dialog v-model="dialog" persistent max-width="600px">
 
+
       <template v-slot:activator="{ on }">
+
         <v-btn flat class="usercantsee white--text" v-on="on">Sign In</v-btn>
+
       </template>
 
       <v-card>
@@ -52,11 +55,16 @@ import FirebaseService from "@/services/FirebaseService";
     data: () => ({
       dialog: false,
       login_id : '',
-      login_password : ''
+      login_password : '',
+      check : false
     }),
     methods: {
-      signin(id, password) {
-        FirebaseService.login(id, password)
+      async signin(id, password) {
+        this.check = await FirebaseService.login(id, password)
+        if (this.check == true) {
+          this.$session.set('session_id', id)
+        }
+
       },
       signin_facebook() {
         FirebaseService.signin_facebook();
