@@ -26,7 +26,7 @@ export default {
     BigImg,
     Filters,
     GitRepList,
-    PE
+    PE,
   }
 };
 </script>
