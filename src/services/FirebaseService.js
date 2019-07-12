@@ -86,17 +86,29 @@ export default {
       });
   },
   async getProjects() {
-    return firestore
-      .collection("project")
-      .get()
-      .then(docSnapshots => {
-        return docSnapshots.docs.map(doc => {
-          let data = doc.data();
-          return data;
-        });
-      });
-  },
+    return firestore.collection('project')
+    .get()
+    .then((docSnapshots) => {
+      return docSnapshots.docs.map((doc) => {
+        let data = doc.data()
 
+        return data
+      })
+    })
+  },
+  async getmainProjects() {
+    // return firestore.collection('project')
+    return firestore.collection('project').orderBy('date')
+    .get()
+    .then((docSnapshots) => {
+      return docSnapshots.docs.map((doc) => {
+        // console.log((doc.id))
+        let data = [ doc.id, doc.data()]
+        // console.log((data))
+        return data
+      })
+    })
+  },
   ///// unused function by sxngho
   async getData() {
     return firestore
