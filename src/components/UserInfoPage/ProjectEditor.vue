@@ -1,7 +1,7 @@
 <template>
   <div justify-center>
 
-    <v-flex column xs12 sm10 >
+    <v-flex column xs12 sm12 >
     <v-tabs
       right
       v-model="active"

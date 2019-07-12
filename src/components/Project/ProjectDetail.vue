@@ -48,7 +48,7 @@
               <v-layout wrap>
                 <!-- Project Main Thumbnail -->
                 <v-flex xs12>
-                  <BigImg v-bind:imgSrc="projectThumbnailurl" />
+                  <BigImg v-bind:imgSrc="projectimage" />
                 </v-flex>
                 <!--  left detail -->
                 <v-flex xs12 md9>

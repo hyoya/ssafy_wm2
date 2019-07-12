@@ -2,7 +2,7 @@
 <template>
   <div class="Portfolio">
     <v-card-text>
-      <h1 class="subheading grey--text text-md-center">PortfolioList</h1>
+      <h1 class="subheading grey--text text-md-center">PROJECT LIST</h1>
     </v-card-text>
     <v-layout row wrap>
       <v-flex v-for="i in projects.length">
@@ -28,7 +28,7 @@ import FirebaseService from "@/services/FirebaseService";
 import Project from "../Project/Project";
 import ProjectDetail from "../Project/ProjectDetail";
 export default {
-  name: "GetUserProject",
+  name: "ProjectList",
   data() {
     return {
       projects: []

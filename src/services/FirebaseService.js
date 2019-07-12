@@ -218,7 +218,7 @@ export default {
       });
   },
   get_userinfo() {
-    var str = "http://localhost:8080/userinfo/" + login_user;
+    var str = "http://localhost:8080/story/" + login_user;
     location.replace(str);
   },
   filter_userinfo(userinfo_user) {
