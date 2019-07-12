@@ -63,6 +63,8 @@ import FirebaseService from "@/services/FirebaseService";
         this.check = await FirebaseService.login(id, password)
         if (this.check == true) {
           this.$session.set('session_id', id)
+          this.$store.commit('setSession',id);
+          console.log(this.$store.getters.getSession,"setSession")
         }
 
       },

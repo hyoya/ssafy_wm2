@@ -11,7 +11,6 @@
 
 <!-- 여기에다가 프로젝트들은 그냥 띄우면 되지 않ㅇ르까..?? -->
     <Projects />
-
     <!-- <GitRepList /> -->
 
   </div>
@@ -22,8 +21,6 @@
 import BigImg from "../components/Common/BigImg";
 import Filters from "../components/MainPage/Filters";
 import GitRepList from "../components/GitRep/GitRepList";
-import PE from "../components/UserInfoPage/ProjectEditor"
-
 import Projects from "../components/MainPage/Projects";
 
 export default {
@@ -33,7 +30,6 @@ export default {
     Filters,
     GitRepList,
     Projects,
-    PE
   }
 };
 </script>
