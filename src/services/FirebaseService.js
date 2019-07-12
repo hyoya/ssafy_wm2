@@ -70,6 +70,7 @@ export default {
     projecttech,
     projectimage,
     projectrank,
+    session_id,
   ) {
     return firestore
       .collection("project")
@@ -82,6 +83,7 @@ export default {
         projecttech,
         projectimage,
         projectrank,
+        session_id,
         date: firebase.firestore.FieldValue.serverTimestamp()
       });
   },

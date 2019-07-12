@@ -187,7 +187,8 @@
                      projectterm,
                      projectcontent,
                      projecttech,
-                     projectrank)" :editorToolbar="customToolbar">완성하기!</v-btn>
+                     projectrank,
+                     session_id)" :editorToolbar="customToolbar">완성하기!</v-btn>
               <br/>
               <small>*언제든지 수정할 수 있습니다!</small>
             </div>
@@ -251,10 +252,17 @@ import FirebaseService from "@/services/FirebaseService";
           customToolbar: [
             ["bold", "italic", "underline"],
             [{ list: "ordered" }, { list: "bullet" }],
-          ]
+          ],
+          session_id : "",
         }
       },
+      created() {
+        this.getSessionid()
+      },
       methods: {
+        getSessionid() {
+          this.session_id = this.$session.get('session_id')
+        },
         next () {
           const active = parseInt(this.active)
           this.active = (active < 2 ? active + 1 : 2)
@@ -285,7 +293,8 @@ import FirebaseService from "@/services/FirebaseService";
                projectcontent,
                projecttech,
                projectimage,
-               projectrank) {
+               projectrank,
+             session_id) {
         FirebaseService.ADD_Project(
           this.projecttitle,
           this.projectdescription,
@@ -293,7 +302,8 @@ import FirebaseService from "@/services/FirebaseService";
           this.projectcontent,
           this.projecttech,
           this.projectimage,
-          this.projectrank);
+          this.projectrank,
+        this.session_id);
           alert("업로드 완료!");
         },
         //// IMAGE UPLOAD
