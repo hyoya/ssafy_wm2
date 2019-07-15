@@ -39,12 +39,12 @@ export default {
     ProjectDetail
   },
   created() {
-    this.getProjects();
+    this.SELECT_Projects();
   },
   methods: {
-    async getProjects() {
+    async SELECT_Projects() {
       this.id = this.$route.params.id;
-      this.projects = await FirebaseService.getProjects(this.id);
+      this.projects = await FirebaseService.SELECT_Projects(this.id);
     }
   }
 };

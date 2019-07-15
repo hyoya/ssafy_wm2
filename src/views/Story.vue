@@ -5,9 +5,6 @@
 
     <v-layout row wrap>
       <v-flex xs12>
-        <p> 이 유저의 데이터를 가지고 <br>오시면 됩니다 아시겠죠? ->  {{ changingTEXT }} </p>
-      </v-flex>
-      <v-flex xs12>
         <TopSide/>
       </v-flex>
     </v-layout>
@@ -58,6 +55,7 @@ export default {
       }
     },
     fetchData() {
+      // 라우터가 바뀔떄마다 데이터가져오는기능은 이것처럼 쓰면 됩니다.
       this.changingTEXT = this.$route.params.id;
     },
     changeComponent(){

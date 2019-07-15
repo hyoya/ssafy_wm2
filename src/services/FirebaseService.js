@@ -51,7 +51,7 @@ auth().onAuthStateChanged(function(user) {
   }
   whoareyous.forEach(function(whoareyou) {
     whoareyou.innerText = login_user })
-})
+  })
 
   // firestore.collection('weblog').add({
   //   login_user,
@@ -59,112 +59,67 @@ auth().onAuthStateChanged(function(user) {
   //   date: firebase.firestore.FieldValue.serverTimestamp()
   // })
 
-export default {
-  // SXNGHo
-  // --------------------------------------------------------
-  ADD_Project(
-    projecttitle,
-    projectdescription,
-    projectterm,
-    projectcontent,
-    projecttech,
-    projectimage,
-    projectrank,
-    session_id,
-  ) {
-    return firestore
-      .collection("project")
-      .doc(projecttitle)
-      .set({
-        projecttitle,
-        projectdescription,
-        projectterm,
-        projectcontent,
-        projecttech,
-        projectimage,
-        projectrank,
-        session_id,
-        date: firebase.firestore.FieldValue.serverTimestamp()
-      });
-  },
-  async getProjects(id) {
-    return firestore.collection('project')
-    .where("session_id","==",id)
-    .get()
-    .then((docSnapshots) => {
-      return docSnapshots.docs.map((doc) => {
-        let data = doc.data()
-        return data
-      })
-    })
-  },
-  async getUserdata(id) {
-    return firestore.collection('users')
-    .where("email","==",id)
-    .get()
-    .then((docSnapshots) => {
-      return docSnapshots.docs.map((doc) => {
-        let data = doc.data()
-        return data
-      })
-    })
-  },
-  async getmainProjects() {
-    // return firestore.collection('project')
-    return firestore.collection('project').orderBy('date')
-    .get()
-    .then((docSnapshots) => {
-      return docSnapshots.docs.map((doc) => {
-        // console.log((doc.id))
-        let data = [ doc.id, doc.data()]
-        // console.log((data))
-        return data
-      })
-    })
-  },
-  ///// unused function by sxngho
-  async getData() {
-    return firestore
-      .collection("userImg")
-      .get()
-      .then(docSnapshots => {
-        return docSnapshots.docs.map(doc => {
-          let data = doc.data();
-          let id = doc.id;
-          return { id, data };
-        });
-      });
-  },
-  ADD_userImg(image) {
-    return firestore.collection("userImg").add({
-      image,
-      date: firebase.firestore.FieldValue.serverTimestamp()
-    });
-  },
 
-  // -----------------------------------------------------------------
-  // seulgi
-  async signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
-    return firebase
+  export default {
+    // SXNGHO's Function ---------------------------------------------------------
+
+    // Function :: 프로젝트를 작성합니다.
+    // Parameter :: 제목,간략설명,진행기간,내용,사용기술,대표이미지,프로젝트수준,작성자아이디입니다.
+    INSERT_Projects(projecttitle,projectdescription,projectterm,projectcontent,projecttech,projectimage,projectrank,session_id) {
+      return firestore.collection("projects").doc(projecttitle).set({
+        projecttitle,projectdescription,projectterm,projectcontent,projecttech,
+        projectimage,projectrank,session_id,date: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    },
+
+    // Function :: 개인 프로젝트를 가져옵니다.
+    // Parameter :: Story 페이지의 주인의 아이디를 가져와서 개인프로젝트를 검색합니다.
+    async SELECT_Projects(id) {
+      return firestore.collection('projects')
+      .where("session_id","==",id).get().then((docSnapshots) => {
+        return docSnapshots.docs.map((doc) => {
+          let data = doc.data()
+          return data
+        })
+      })
+    },
+
+    // Function :: 유저의 정보를 가져옵니다.
+    // Parameter :: Story 페이지의 주인의 아이디를 개인정보를 가져옵니다.
+    async SELECT_Userdata(id) {
+      return firestore.collection('users').where("email","==",id)
+      .get().then((docSnapshots) => {
+        return docSnapshots.docs.map((doc) => {
+          let data = doc.data()
+          return data
+        })
+      })
+    },
+
+    // -----------------------------------------------------------------
+
+    // seulgi
+    async signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
+      return firebase
       .auth()
       .createUserWithEmailAndPassword(id, password)
       .then(function() {
         // console.log(`${id}`)
         firestore
-          .collection("users")
-          .doc(id)
-          .set({
-            email: id,
-            first_name: first_name,
-            last_name: last_name,
-            phonenumber: phonenumber,
-            userSkills:userSkills,
-            userImage:userImage,
-            userName:first_name + last_name,
-            userIntro:userIntro,
-            userCareers:userCareers,
-            userEducations:userEducations
-          });
+        .collection("users")
+        .doc(id)
+        .set({
+          email: id,
+          first_name: first_name,
+          last_name: last_name,
+          phonenumber: phonenumber,
+          userSkills:userSkills,
+          userImage:userImage,
+          userName:first_name + last_name,
+          userIntro:userIntro,
+          userCareers:userCareers,
+          userEducations:userEducations
+        });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
         return true;
       })
@@ -177,9 +132,9 @@ export default {
         alert(error);
       });
       return false;
-  },
-  async login(id, password) {
-    return firebase
+    },
+    async login(id, password) {
+      return firebase
       .auth()
       .signInWithEmailAndPassword(id, password)
       .then(function() {
@@ -197,10 +152,10 @@ export default {
         // console.log('로그인 실패한 것이다.')
         alert(`${errorCode}\n${errorMessage}`);
       });
-    return false;
-  },
-  async logout() {
-    return firebase
+      return false;
+    },
+    async logout() {
+      return firebase
       .auth()
       .signOut()
       .then(function() {
@@ -213,9 +168,9 @@ export default {
         alert(error);
         return true;
       });
-  },
-  signin_facebook() {
-    firebase
+    },
+    signin_facebook() {
+      firebase
       .auth()
       .signInWithPopup(provider)
       .then(function(result) {
@@ -238,41 +193,54 @@ export default {
         // ...
         alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
       });
-  },
-  get_userinfo() {
-    var str = "http://localhost:8080/story/" + login_user;
-    location.replace(str);
-  },
-  filter_userinfo(userinfo_user) {
-    // console.log(userinfo_user, '이 페이지의 주인')
+    },
+    get_userinfo() {
+      var str = "http://localhost:8080/story/" + login_user;
+      location.replace(str);
+    },
+    async getmainProjects() {
+      // return firestore.collection('project')
+      return firestore.collection('projects').orderBy('date')
+      .get()
+      .then((docSnapshots) => {
+        return docSnapshots.docs.map((doc) => {
+          // console.log((doc.id))
+          let data = [ doc.id, doc.data()]
+          // console.log((data))
+          return data
+        })
+      })
+    },
+    filter_userinfo(userinfo_user) {
+      // console.log(userinfo_user, '이 페이지의 주인')
 
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        login_user = user.email;
-      } else {
-        login_user = "익명";
-      }
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          login_user = user.email;
+        } else {
+          login_user = "익명";
+        }
 
-      var mines = document.querySelectorAll(".mine");
-      var notmines = document.querySelectorAll(".notmine");
+        var mines = document.querySelectorAll(".mine");
+        var notmines = document.querySelectorAll(".notmine");
 
-      if (login_user == userinfo_user) {
-        // console.log('나의 페이지가 맞다')
-        mines.forEach(function(mine) {
-          mine.style.display = "block";
-        });
-        notmines.forEach(function(notmine) {
-          notmine.style.display = "none";
-        });
-      } else {
-        // console.log('여긴 남의 페이지이다')
-        notmines.forEach(function(notmine) {
-          notmine.style.display = "block";
-        });
-        mines.forEach(function(mine) {
-          mine.style.display = "none";
-        });
-      }
-    });
-  }
-};
+        if (login_user == userinfo_user) {
+          // console.log('나의 페이지가 맞다')
+          mines.forEach(function(mine) {
+            mine.style.display = "block";
+          });
+          notmines.forEach(function(notmine) {
+            notmine.style.display = "none";
+          });
+        } else {
+          // console.log('여긴 남의 페이지이다')
+          notmines.forEach(function(notmine) {
+            notmine.style.display = "block";
+          });
+          mines.forEach(function(mine) {
+            mine.style.display = "none";
+          });
+        }
+      });
+    }
+  };

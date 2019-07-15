@@ -295,7 +295,7 @@ import FirebaseService from "@/services/FirebaseService";
                projectimage,
                projectrank,
              session_id) {
-        FirebaseService.ADD_Project(
+        FirebaseService.INSERT_Projects(
           this.projecttitle,
           this.projectdescription,
           this.projectterm,
