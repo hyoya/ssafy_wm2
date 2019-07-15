@@ -1,50 +1,63 @@
 <!-- UserSideInfo -->
 <template>
-  <v-layout column>
-    <v-layout row xs12>
-      <v-flex style="margin-left:120px">
+  <div style=" padding:1vw; background:white">
+    <!-- USER Profile Img -->
+    <v-layout wrap align-center justify-space-around>
         <v-avatar size="150" class="grey lighten-2">
           <img src="https://i.imgur.com/aTI4OeZ.png?1" v-if="userImage=='null'">
           <img src="https://i.imgur.com/SSlPWnK.png" v-if="userImage !=='null'">
         </v-avatar>
-      </v-flex>
     </v-layout>
 
-    <!--USER 자기소개-->
-    <v-layout style="background:white;">
-      <v-card-text>
-        <p class="subheading grey--text text-md-center">{{userName}}</p>
-        <p class="subheading grey--text text-md-center">{{userIntro}}</p>
-        <!-- <IntroEditor/> -->
-      </v-card-text>
+    <!--USER Intro-->
+    <v-layout style="margin-top:1vw;">
+      <v-flex class="text-md-center">
+        <span class="subheading grey--text">{{userName}}</span>
+        <div class="subheading grey--text">{{userIntro}}</div>
+      </v-flex>
     </v-layout>
 
     <!--USER SKILLS-->
-    <v-layout row xs12>
-      <v-flex style="background:white;">
-        <v-card-text>
-          <p class="subheading black--text text-md-center">SKILLS</p>
-        </v-card-text>
-        <v-flex>
-          <v-btn v-for="skill in userSkills" flat small round outline>{{ skill }}</v-btn>
-        </v-flex>
-            <hr/>
-        <v-card-text>
-          <p class="subheading black--text text-md-center"> 경력 </p>
-          <!-- <CareerEditor/> -->
-        </v-card-text>
-        <p v-for="career in userCareers">{{career}}</p>
-            <hr/>
-        <v-card-text>
-          <p class="subheading black--text text-md-center"> 교육 </p>
-          <!-- <EducationEditor/> -->
-        </v-card-text>
-        <p v-for="education in userEducations">{{education}}</p>
+    <div style="border-top:1px red dashed;"/>
+    <v-layout wrap style="margin-top:2vw;">
+      <v-flex xs12 class="text-md-center subheading">SKILLS</v-flex>
+      <v-flex xs12>
+        <v-btn  flat small outline radius v-for="s in userSkills">{{s}}</v-btn>
       </v-flex>
     </v-layout>
 
-    <!--USER 정보 추가 예정-->
-  </v-layout>
+    <!--USER Careers-->
+    <div style="border-top:1px red dashed;"/>
+    <v-layout wrap style="margin-top:2vw;">
+      <v-flex xs12 class="text-md-center subheading">Careers</v-flex>
+      <v-layout align-center>
+        <v-flex xs12 >
+          <div v-for="c in userCareers" class="caption">
+            {{c.carcompany}}<br/>
+            {{c.carposition}}<br/>
+            {{c.carstartday}} ~ {{c.carendday}}<br/>
+            {{c.cardescription}}
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-layout>
+
+    <!--USER Education-->
+    <div style="border-top:1px red dashed;"/>
+    <v-layout wrap style="margin-top:2vw;">
+      <v-flex xs12 class="text-md-center subheading">Education</v-flex>
+      <v-layout align-center>
+        <v-flex xs12 >
+          <div v-for="e in userEducations" class="caption">
+            {{e.eduagency}}<br/>
+            {{e.edudegree}}<br/>
+            {{e.edustartday}} ~ {{e.eduendday}}<br/>
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-layout>
+
+  </div>
 </template>
 
 <script>
@@ -55,12 +68,40 @@ import IntroEditor from "./InputForm/IntroEditor";
 export default {
   data() {
     return {
-      userSkills: ["자바","C","Vue"],
+      userSkills: ["자바sdfsdfsfsdf","C","Vue"],
       userImage: "null",
       userName : "unknown",
       userIntro: "자기소개",
-      userCareers: ["신입"],
-      userEducations: ["2018.12.10 ~ :: SSAFY"],
+      userCareers: [
+        {
+        carcompany:"어딘가회사",
+        carposition:"무슨직책",
+        carstartday:"2018-12-09",
+        carendday:"2019-12-09",
+        cardescription:"노동력을 착취당하였다."
+      },
+      {
+      carcompany:"어딘가회사",
+      carposition:"무슨직책",
+      carstartday:"2018-12-09",
+      carendday:"2019-12-09",
+      cardescription:"노동력을 착취당하였다."
+      },
+    ],
+      userEducations: [
+        {
+        eduagency:"싸피",
+        edudegree:"1기",
+        edustartday:"2018-12-09",
+        eduendday:"2019-12-09",
+        },
+        {
+        eduagency:"싸피",
+        edudegree:"2기",
+        edustartday:"2018-12-09",
+        eduendday:"2019-12-09",
+        }
+      ],
     }
   },
   components:{
@@ -68,6 +109,9 @@ export default {
     EducationEditor,
     IntroEditor,
   },
+  props:{
+
+  }
 
 };
 </script>

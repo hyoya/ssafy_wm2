@@ -1,21 +1,24 @@
 <template>
-  <v-flex xs3>
+  <v-flex class="text-xs-center">
       <v-dialog v-model="popol" max-width="60vw" hide-overlay >
         <!-- Thumbnail -->
         <template v-slot:activator="{ on }">
-          <v-btn flat class="white--text" v-on="on">
-            <v-flex>
-              <v-card>
-                <v-img :src="projectimage" height="200px" width="200px"></v-img>
-                <v-card-title primary-title>
-                  <div>
-                    <div class="black--text">{{projecttitle}}</div>
-                    <span class="grey--text">{{projectdescription}}</span>
-                  </div>
-                </v-card-title>
-              </v-card>
+          <button flat class="white--text" v-on="on" style="height:80%;width:80%;">
+            <v-flex hidden-xs-only>
+              <v-img :src="projectimage" height="20vw" width="100%"></v-img>
+                <div>
+                  <div class="black--text">{{projecttitle}}</div>
+                  <span class="grey--text" v-line-clamp:10="1">{{projectdescription}}</span>
+                </div>
             </v-flex>
-          </v-btn>
+            <v-flex hidden-sm-and-up>
+              <v-img :src="projectimage" height="45vw" width="100%"></v-img>
+                <div>
+                  <div class="black--text">{{projecttitle}}</div>
+                  <span class="grey--text">{{projectdescription}}</span>
+                </div>
+            </v-flex>
+          </button>
         </template>
 
 

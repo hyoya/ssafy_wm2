@@ -4,11 +4,7 @@
   <v-app>
     <v-content>
     <!-- Header -->
-      <v-layout column>
-        <v-flex xs12>
-          <Header/>
-        </v-flex>
-      </v-layout>
+      <Header/>
 
       <router-view/>
 
