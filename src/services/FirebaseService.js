@@ -18,7 +18,7 @@ const firestore = firebase.firestore();
 const auth = firebase.auth;
 var provider = new auth.FacebookAuthProvider();
 // console.log(provider)
-
+var login_user; // 로그인 하면 email, 아니면 ''  처리
 var url = document.location.href;
 // console.log((login_user==null)?"익명":login_user)
 // console.log(url)
@@ -28,6 +28,31 @@ var url = document.location.href;
   //   url,
   //   date: firebase.firestore.FieldValue.serverTimestamp()
   // })
+
+  auth().onAuthStateChanged(function(user) {
+
+    var usercantsees = document.querySelectorAll(".usercantsee");
+    var usercansees = document.querySelectorAll(".usercansee");
+
+    if (user) {
+      // login_user = user.email;
+      usercantsees.forEach(function(usercantsee) {
+        usercantsee.style.display = "none";
+      });
+      usercansees.forEach(function(usercansee) {
+        usercansee.style.display = "block";
+      });
+    } else {
+      // login_user = "익명";
+      usercantsees.forEach(function(usercantsee) {
+        usercantsee.style.display = "block";
+      });
+      usercansees.forEach(function(usercansee) {
+        usercansee.style.display = "none";
+      });
+    }
+  })
+
 
 export default {
   // SXNGHo
@@ -135,6 +160,31 @@ export default {
       });
       return false;
   },
+  async SignupCompany(company_name, id, password, interests) {
+    return firebase
+      .auth()
+      .createUserWithEmailAndPassword(id, password)
+      .then(function() {
+        // console.log(`${id}`)
+        firestore
+          .collection("companys")
+          .doc(id)
+          .set({
+            company_name: company_name,
+            id: id,
+            interests: interests
+          });
+        alert(`${id}님, 회원가입이 완료되었습니다.`);
+        return true;
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        // var errorCode = error.code;
+        // var errorMessage = error.message;
+        alert(error);
+      });
+      return false;
+  },
   async Signin(id, password) {
     return firebase
       .auth()
@@ -186,7 +236,11 @@ export default {
         alert(error);
         return true;
       });
-  }
+  },
+  GetUserinfo(user) {
+    var str = "http://localhost:8080/story/" + user;
+    location.replace(str);
 
+  }
   // -----------------------------------------------------------------
 };

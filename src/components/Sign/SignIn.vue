@@ -51,12 +51,13 @@
 <script>
 import FirebaseService from "@/services/FirebaseService";
 
+import SignUp from './SignUp'
+
   export default {
     data: () => ({
       dialog: false,
       LoginId : '',
       LoginPassword : '',
-      check : false
     }),
     methods: {
       async Signin(id, password) {
@@ -78,6 +79,7 @@ import FirebaseService from "@/services/FirebaseService";
           // console.log(this.$session.get('session_id'))
         }
       }
-  }
+    }
+
 }
 </script>
