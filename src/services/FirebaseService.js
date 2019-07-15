@@ -31,6 +31,7 @@ var url = document.location.href;
 
   auth().onAuthStateChanged(function(user) {
 
+    var whoareyou = document.querySelector('.whoareyou')
     var usercantsees = document.querySelectorAll(".usercantsee");
     var usercansees = document.querySelectorAll(".usercansee");
 
@@ -42,6 +43,9 @@ var url = document.location.href;
       usercansees.forEach(function(usercansee) {
         usercansee.style.display = "block";
       });
+
+      whoareyou.innerText = user.email
+
     } else {
       // login_user = "익명";
       usercantsees.forEach(function(usercantsee) {

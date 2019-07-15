@@ -4,7 +4,7 @@
 
       <template v-slot:activator="{ on }">
         <v-btn class="usercantsee white--text" flat v-on="on">Sign Up</v-btn>
-        <v-btn class="usercansee white--text" flat @click="GetUserinfo(user)">{{user}}</v-btn>
+        <v-btn class="whoareyou usercansee white--text" flat @click="GetUserinfo(user)">{{user}}</v-btn>
         <v-btn class="usercansee white--text" flat @click="Logout()">Log Out</v-btn>
       </template>
 
