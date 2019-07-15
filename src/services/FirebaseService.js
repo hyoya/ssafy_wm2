@@ -238,9 +238,8 @@ export default {
       });
   },
   GetUserinfo(user) {
-    var str = "http://localhost:8080/story/" + user;
+    var str = location.origin +'/story/'+ user;
     location.replace(str);
-
   }
   // -----------------------------------------------------------------
 };
