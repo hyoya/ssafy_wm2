@@ -16,13 +16,71 @@ firebase.initializeApp(firebase_config);
 
 const firestore = firebase.firestore();
 const auth = firebase.auth;
-var login_user; // 로그인 하면 email, 아니면 ''  처리
 var provider = new auth.FacebookAuthProvider();
 // console.log(provider)
-
+var login_user; // 로그인 하면 email, 아니면 ''  처리
 var url = document.location.href;
 // console.log((login_user==null)?"익명":login_user)
 // console.log(url)
+
+
+
+//// 김슬기가 지금 댓글 작성하기 위해서 작업하고 있는 곳입니다.
+
+// 1. 컬렉션에서 각 문서의 id와 데이터를 가져오는 방법
+// firestore.collection('project')
+// .where("session_id","==","rla99@rla.com").get().then((snap) => {
+//   return snap.docs.map((doc) => {
+//     let data = doc.data()
+//     console.log(data)
+//     console.log(doc.id)
+//     return data
+//   })
+// })
+
+
+// 2. 해당 사람의 컬렉션 갯수
+// firestore.collection('project')
+//   .where("session_id","==","rla99@rla.com")
+//   .get()
+//   .then(snap => {
+//    var size = snap.size // will return the collection size
+//    console.log(snap)
+//    console.log(size)
+// });
+
+
+// 3. 해당 사람의 프로젝트 다 가져오기
+// firestore.collection('project')
+//   .where("session_id","==","rla99@rla.com")
+//   .get()
+//   .then((snap) => {
+//     console.log(snap)
+//     return snap.docs.map((doc) => {
+//       let data = doc.data()
+//       console.log(snap)
+//       console.log(data)
+//       console.log(doc.id)
+//       return data
+//     })
+//   })
+
+// 4. 해당 사람의 것 num 기준으로 역순으로 배열 : 아직 해결 못함.
+// firestore.collection('projects')
+//   .where("session_id","==","rla99@rla.com")
+//   .orderBy("num","desc")
+//   .limit(2)
+//   // .orderBy("num", 'desc')
+//   .get()
+//   .then((snap) => {
+//
+//     console.log(snap)
+    // console.log(snap.docs)
+  })
+
+
+//// 김슬기 작업장 끝
+
 
 auth().onAuthStateChanged(function(user) {
   var whoareyous = document.querySelectorAll(".whoareyou");
@@ -52,6 +110,7 @@ auth().onAuthStateChanged(function(user) {
   whoareyous.forEach(function(whoareyou) {
     whoareyou.innerText = login_user })
   })
+
 
   // firestore.collection('weblog').add({
   //   login_user,
@@ -112,7 +171,7 @@ auth().onAuthStateChanged(function(user) {
     // -----------------------------------------------------------------
 
     // seulgi
-    async signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
+    async SignupUser(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
       return firebase
       .auth()
       .createUserWithEmailAndPassword(id, password)
@@ -140,35 +199,73 @@ auth().onAuthStateChanged(function(user) {
         // Handle Errors here.
         // var errorCode = error.code;
         // var errorMessage = error.message;
-        // console.log(errorCode)
-        // console.log(errorMessage)
         alert(error);
       });
       return false;
-    },
-    async login(id, password) {
-      return firebase
+  },
+  async SignupCompany(company_name, id, password, interests) {
+    return firebase
+      .auth()
+      .createUserWithEmailAndPassword(id, password)
+      .then(function() {
+        // console.log(`${id}`)
+        firestore
+          .collection("companys")
+          .doc(id)
+          .set({
+            company_name: company_name,
+            id: id,
+            interests: interests
+          });
+        alert(`${id}님, 회원가입이 완료되었습니다.`);
+        return true;
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        // var errorCode = error.code;
+        // var errorMessage = error.message;
+        alert(error);
+      });
+      return false;
+  },
+  async Signin(id, password) {
+    return firebase
       .auth()
       .signInWithEmailAndPassword(id, password)
       .then(function() {
-        // console.log('로그인 성공한것이다')
-        // alert('로그인 완료!');
-        // console.log('true!!')
         return true; // 유저 관련된 결과값은 성공한 경우가 True
       })
       .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        // console.log(errorCode)
-        // console.log(errorMessage)
-        // console.log('로그인 실패한 것이다.')
         alert(`${errorCode}\n${errorMessage}`);
       });
-      return false;
-    },
-    async logout() {
-      return firebase
+    return false;
+  },
+  async SigninFacebook() {
+    return firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(function(result) {
+        var user = result.user.email
+        alert(`페이스북 로그인 완료!, ${result.user.email}`);
+        var answer = {'user':user, 'result':true};
+        return answer;
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        var email = error.email;
+        var credential = error.credential;
+        // ...
+        alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
+        return false;
+      });
+  },
+  async Logout() {
+    return firebase
       .auth()
       .signOut()
       .then(function() {
@@ -181,79 +278,10 @@ auth().onAuthStateChanged(function(user) {
         alert(error);
         return true;
       });
-    },
-    signin_facebook() {
-      firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(function(result) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        // var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        // console.log(user)
-        alert(`페이스북 로그인 완료!, ${user.email}`);
-        // ...
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
-        alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
-      });
-    },
-    get_userinfo() {
-      var str = "http://localhost:8080/story/" + login_user;
-      location.replace(str);
-    },
-    async getmainProjects() {
-      // return firestore.collection('project')
-      return firestore.collection('projects').orderBy('date')
-      .get()
-      .then((docSnapshots) => {
-        return docSnapshots.docs.map((doc) => {
-          // console.log((doc.id))
-          let data = [ doc.id, doc.data()]
-          // console.log((data))
-          return data
-        })
-      })
-    },
-    filter_userinfo(userinfo_user) {
-      // console.log(userinfo_user, '이 페이지의 주인')
-
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          login_user = user.email;
-        } else {
-          login_user = "익명";
-        }
-
-        var mines = document.querySelectorAll(".mine");
-        var notmines = document.querySelectorAll(".notmine");
-
-        if (login_user == userinfo_user) {
-          // console.log('나의 페이지가 맞다')
-          mines.forEach(function(mine) {
-            mine.style.display = "block";
-          });
-          notmines.forEach(function(notmine) {
-            notmine.style.display = "none";
-          });
-        } else {
-          // console.log('여긴 남의 페이지이다')
-          notmines.forEach(function(notmine) {
-            notmine.style.display = "block";
-          });
-          mines.forEach(function(mine) {
-            mine.style.display = "none";
-          });
-        }
-      });
-    }
-  };
+  },
+  GetUserinfo(user) {
+    var str = location.origin +'/story/'+ user;
+    location.replace(str);
+  }
+  // -----------------------------------------------------------------
+};

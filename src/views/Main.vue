@@ -10,7 +10,10 @@
     <Filters />
 
     <!-- 여기에다가 프로젝트들은 그냥 띄우면 되지 않ㅇ르까..?? -->
-    <Projects />
+    <!-- <Projects /> -->
+
+    <v-btn @click="GetSession()">세션 가져오기</v-btn>
+
     <!-- <GitRepList /> -->
 
   </div>
@@ -18,10 +21,12 @@
 
 
 <script>
+import FirebaseService from "@/services/FirebaseService";
+
 import BigImg from "../components/Common/BigImg";
 import Filters from "../components/MainPage/Filters";
 import GitRepList from "../components/GitRep/GitRepList";
-import Projects from "../components/MainPage/Projects";
+// import Projects from "../components/MainPage/Projects";
 
 export default {
   name: "Main",
@@ -29,7 +34,12 @@ export default {
     BigImg,
     Filters,
     GitRepList,
-    Projects,
+    // Projects,
+  },
+  methods: {
+    GetSession() {
+      console.log(this.$session.get('session_id'), ' : 현재 아이디')
+    }
   }
 };
 </script>

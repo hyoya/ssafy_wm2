@@ -10,8 +10,9 @@ export default new Vuex.Store({
     // 정의 -> this.$store.state.변수명
     state: {
       session_id: '',
+      check_false : false,
+      check_true : true
     },
-
 
     // Getter : get 함수 정의
     // 정의 -> return state.변수명
@@ -22,7 +23,6 @@ export default new Vuex.Store({
         }
     },
 
-
     // Mutations : 값변경 / 동기
     // 호출 -> this.$store.commit('함수명');
     mutations: {
@@ -31,10 +31,8 @@ export default new Vuex.Store({
         }
     },
 
-
     // Action : 값변경 / 비동기
     // 보통 http.get 이나 axios는 action에서 처리함.
     actions: {
-
     }
 })
