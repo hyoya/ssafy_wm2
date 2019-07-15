@@ -23,7 +23,6 @@ var url = document.location.href;
 // console.log((login_user==null)?"익명":login_user)
 // console.log(url)
 
-
   // firestore.collection('weblog').add({
   //   login_user,
   //   url,
@@ -101,8 +100,10 @@ export default {
   },
 
   // -----------------------------------------------------------------
+
   // seulgi
-  async signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
+  // -----------------------------------------------------------------
+  async SignupUser(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
     return firebase
       .auth()
       .createUserWithEmailAndPassword(id, password)
@@ -130,34 +131,48 @@ export default {
         // Handle Errors here.
         // var errorCode = error.code;
         // var errorMessage = error.message;
-        // console.log(errorCode)
-        // console.log(errorMessage)
         alert(error);
       });
       return false;
   },
-  async login(id, password) {
+  async Signin(id, password) {
     return firebase
       .auth()
       .signInWithEmailAndPassword(id, password)
       .then(function() {
-        // console.log('로그인 성공한것이다')
-        // alert('로그인 완료!');
-        // console.log('true!!')
         return true; // 유저 관련된 결과값은 성공한 경우가 True
       })
       .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        // console.log(errorCode)
-        // console.log(errorMessage)
-        // console.log('로그인 실패한 것이다.')
         alert(`${errorCode}\n${errorMessage}`);
       });
     return false;
   },
-  async logout() {
+  async SigninFacebook() {
+    return firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(function(result) {
+        var user = result.user.email
+        alert(`페이스북 로그인 완료!, ${result.user.email}`);
+        var answer = {'user':user, 'result':true};
+        return answer;
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        console.log('이게뜨면안되는데??')
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        var email = error.email;
+        var credential = error.credential;
+        // ...
+        alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
+        return false;
+      });
+  },
+  async Logout() {
     return firebase
       .auth()
       .signOut()
@@ -171,31 +186,7 @@ export default {
         alert(error);
         return true;
       });
-  },
-  signin_facebook() {
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(function(result) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        // var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        // console.log(user)
-        alert(`페이스북 로그인 완료!, ${user.email}`);
-        // ...
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
-        alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
-      });
   }
 
+  // -----------------------------------------------------------------
 };

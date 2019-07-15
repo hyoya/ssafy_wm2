@@ -4,8 +4,7 @@
 
       <template v-slot:activator="{ on }">
         <v-btn class="usercantsee white--text" flat v-on="on">Sign Up</v-btn>
-        <v-btn class="usercansee whoareyou white--text" flat @click="get_userinfo()">누구십니까</v-btn>
-        <v-btn class="usercansee white--text" flat @click="logout()">Log Out</v-btn>
+        <v-btn class="usercansee white--text" flat @click="Logout()">Log Out</v-btn>
       </template>
 
       <v-card>
@@ -49,14 +48,14 @@ import SignupforUserModal from './SignUpForUser'
         check : false
       }),
     methods: {
-      async logout() {
-        this.check = await FirebaseService.logout()
+      async Logout() {
+        this.check = await FirebaseService.Logout()
         if (this.check == false) {
           this.$session.set('session_id', '')
+          this.$store.commit('setSession', '');
+          // console.log(this.$store.getters.getSession,"setSession")
+          // console.log(this.$session.get('session_id'))
         }
-      },
-      get_userinfo() {
-        FirebaseService.get_userinfo()
       }
     }
   }
