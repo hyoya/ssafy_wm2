@@ -24,6 +24,64 @@ var url = document.location.href;
 // console.log(url)
 
 
+
+//// 김슬기가 지금 댓글 작성하기 위해서 작업하고 있는 곳입니다.
+
+// 1. 컬렉션에서 각 문서의 id와 데이터를 가져오는 방법
+// firestore.collection('project')
+// .where("session_id","==","rla99@rla.com").get().then((snap) => {
+//   return snap.docs.map((doc) => {
+//     let data = doc.data()
+//     console.log(data)
+//     console.log(doc.id)
+//     return data
+//   })
+// })
+
+
+// 2. 해당 사람의 컬렉션 갯수
+// firestore.collection('project')
+//   .where("session_id","==","rla99@rla.com")
+//   .get()
+//   .then(snap => {
+//    var size = snap.size // will return the collection size
+//    console.log(snap)
+//    console.log(size)
+// });
+
+
+// 3. 해당 사람의 프로젝트 다 가져오기
+// firestore.collection('project')
+//   .where("session_id","==","rla99@rla.com")
+//   .get()
+//   .then((snap) => {
+//     console.log(snap)
+//     return snap.docs.map((doc) => {
+//       let data = doc.data()
+//       console.log(snap)
+//       console.log(data)
+//       console.log(doc.id)
+//       return data
+//     })
+//   })
+
+// 4. 해당 사람의 것 num 기준으로 역순으로 배열 : 아직 해결 못함.
+// firestore.collection('projects')
+//   .where("session_id","==","rla99@rla.com")
+//   .orderBy("num","desc")
+//   .limit(2)
+//   // .orderBy("num", 'desc')
+//   .get()
+//   .then((snap) => {
+//
+//     console.log(snap)
+    // console.log(snap.docs)
+  })
+
+
+//// 김슬기 작업장 끝
+
+
 auth().onAuthStateChanged(function(user) {
   var whoareyous = document.querySelectorAll(".whoareyou");
   var usercantsees = document.querySelectorAll(".usercantsee");
@@ -184,7 +242,6 @@ auth().onAuthStateChanged(function(user) {
       })
       .catch(function(error) {
         // Handle Errors here.
-        console.log('이게뜨면안되는데??')
         var errorCode = error.code;
         var errorMessage = error.message;
         var email = error.email;
