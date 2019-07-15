@@ -87,13 +87,24 @@ export default {
         date: firebase.firestore.FieldValue.serverTimestamp()
       });
   },
-  async getProjects() {
+  async getProjects(id) {
     return firestore.collection('project')
+    .where("session_id","==",id)
     .get()
     .then((docSnapshots) => {
       return docSnapshots.docs.map((doc) => {
         let data = doc.data()
-
+        return data
+      })
+    })
+  },
+  async getUserdata(id) {
+    return firestore.collection('users')
+    .where("email","==",id)
+    .get()
+    .then((docSnapshots) => {
+      return docSnapshots.docs.map((doc) => {
+        let data = doc.data()
         return data
       })
     })
@@ -133,8 +144,9 @@ export default {
 
   // -----------------------------------------------------------------
   // seulgi
-  signup(id, password, first_name, last_name, phonenumber) {
-    auth()
+  async signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
+    return firebase
+      .auth()
       .createUserWithEmailAndPassword(id, password)
       .then(function() {
         // console.log(`${id}`)
@@ -145,9 +157,16 @@ export default {
             email: id,
             first_name: first_name,
             last_name: last_name,
-            phonenumber: phonenumber
+            phonenumber: phonenumber,
+            userSkills:userSkills,
+            userImage:userImage,
+            userName:first_name + last_name,
+            userIntro:userIntro,
+            userCareers:userCareers,
+            userEducations:userEducations
           });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
+        return true;
       })
       .catch(function(error) {
         // Handle Errors here.
@@ -157,6 +176,7 @@ export default {
         // console.log(errorMessage)
         alert(error);
       });
+      return false;
   },
   async login(id, password) {
     return firebase

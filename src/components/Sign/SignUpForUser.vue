@@ -80,7 +80,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click="signupforusermodal = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="signupforusermodal = false, signup(signup_id, signup_password, first_name, last_name, phonenumber)">SignUp</v-btn>
+          <v-btn color="blue darken-1" flat @click="signupforusermodal = false, signup(signup_id, signup_password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations)">SignUp</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -98,7 +98,14 @@ import FirebaseService from "@/services/FirebaseService";
       signup_password : '',
       first_name : '',
       last_name : '',
-      phonenumber : ''
+      phonenumber : '',
+      userSkills: [],
+      userImage: "",
+      userName : "",
+      userIntro: "",
+      userCareers: [],
+      userEducations: [],
+      check : false,
     }),
     methods : {
       addNewCareer(){
@@ -107,8 +114,13 @@ import FirebaseService from "@/services/FirebaseService";
       deleteCareer(index){
         this.careers.splice(index,1);
       },
-      signup(id, password, first_name, last_name, phonenumber) {
-        FirebaseService.signup(id, password, first_name, last_name, phonenumber)
+      async signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
+        this.check = await FirebaseService.signup(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations)
+        if (this.check == true) {
+          this.$session.set('session_id', id)
+          this.$store.commit('setSession', id)
+          console.log(this.$store.getters.getSession,"setSession")
+        }
       }
     }
   }

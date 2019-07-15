@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import FirebaseService from "@/services/FirebaseService";
 import CareerEditor from "./InputForm/CareerEditor";
 import EducationEditor from "./InputForm/EducationEditor";
 import IntroEditor from "./InputForm/IntroEditor";
@@ -109,8 +110,15 @@ export default {
     EducationEditor,
     IntroEditor,
   },
-  props:{
-
+  created() {
+    this.getUserdata();
+    console.log(this.userdata);
+  },
+  methods: {
+    async getUserdata() {
+      this.id = this.$route.params.id;
+      this.userdata = await FirebaseService.getUserdata(this.id);
+    }
   }
 
 };

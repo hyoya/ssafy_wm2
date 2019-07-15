@@ -5,10 +5,10 @@
 
     <v-layout row wrap>
       <v-flex xs12>
-        <TopSide/>
+        <p> 이 유저의 데이터를 가지고 <br>오시면 됩니다 아시겠죠? ->  {{ changingTEXT }} </p>
       </v-flex>
       <v-flex xs12>
-        <p> 이 유저의 데이터를 가지고 <br>오시면 됩니다 아시겠죠? ->  {{ changingTEXT }} </p>
+        <TopSide/>
       </v-flex>
     </v-layout>
 

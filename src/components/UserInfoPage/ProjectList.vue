@@ -43,7 +43,8 @@ export default {
   },
   methods: {
     async getProjects() {
-      this.projects = await FirebaseService.getProjects();
+      this.id = this.$route.params.id;
+      this.projects = await FirebaseService.getProjects(this.id);
     }
   }
 };
