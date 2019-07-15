@@ -42,9 +42,6 @@ import FirebaseService from "@/services/FirebaseService";
       intro : '',
       componentKeys : 0,
     }),
-    created() {
-      this.SELECT_UserIntro();
-    },
     methods : {
       addNewCareer(){
         this.careers.push(this.career);
