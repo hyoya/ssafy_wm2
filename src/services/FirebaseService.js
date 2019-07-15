@@ -23,136 +23,104 @@ var url = document.location.href;
 // console.log((login_user==null)?"익명":login_user)
 // console.log(url)
 
+
+auth().onAuthStateChanged(function(user) {
+  var whoareyous = document.querySelectorAll(".whoareyou");
+  var usercantsees = document.querySelectorAll(".usercantsee");
+  var usercansees = document.querySelectorAll(".usercansee");
+
+  // var mines = document.querySelectorAll('.mine')
+  // var notmines = document.querySelectorAll('.notmine')
+
+  if (user) {
+    login_user = user.email;
+    usercantsees.forEach(function(usercantsee) {
+      usercantsee.style.display = "none";
+    });
+    usercansees.forEach(function(usercansee) {
+      usercansee.style.display = "block";
+    });
+  } else {
+    login_user = "익명";
+    usercantsees.forEach(function(usercantsee) {
+      usercantsee.style.display = "block";
+    });
+    usercansees.forEach(function(usercansee) {
+      usercansee.style.display = "none";
+    });
+  }
+  whoareyous.forEach(function(whoareyou) {
+    whoareyou.innerText = login_user })
+  })
+
+
   // firestore.collection('weblog').add({
   //   login_user,
   //   url,
   //   date: firebase.firestore.FieldValue.serverTimestamp()
   // })
 
-  auth().onAuthStateChanged(function(user) {
 
-    var whoareyou = document.querySelector('.whoareyou')
-    var usercantsees = document.querySelectorAll(".usercantsee");
-    var usercansees = document.querySelectorAll(".usercansee");
+  export default {
+    // SXNGHO's Function ---------------------------------------------------------
 
-    if (user) {
-      // login_user = user.email;
-      usercantsees.forEach(function(usercantsee) {
-        usercantsee.style.display = "none";
+    // Function :: 프로젝트를 작성합니다.
+    // Parameter :: 제목,간략설명,진행기간,내용,사용기술,대표이미지,프로젝트수준,작성자아이디입니다.
+    INSERT_Projects(projecttitle,projectdescription,projectterm,projectcontent,projecttech,projectimage,projectrank,session_id) {
+      return firestore.collection("projects").doc(projecttitle).set({
+        projecttitle,projectdescription,projectterm,projectcontent,projecttech,
+        projectimage,projectrank,session_id,date: firebase.firestore.FieldValue.serverTimestamp()
       });
-      usercansees.forEach(function(usercansee) {
-        usercansee.style.display = "block";
-      });
+    },
 
-      whoareyou.innerText = user.email
-
-    } else {
-      // login_user = "익명";
-      usercantsees.forEach(function(usercantsee) {
-        usercantsee.style.display = "block";
-      });
-      usercansees.forEach(function(usercansee) {
-        usercansee.style.display = "none";
-      });
-    }
-  })
-
-
-export default {
-  // SXNGHo
-  // --------------------------------------------------------
-  ADD_Project(
-    projecttitle,
-    projectdescription,
-    projectterm,
-    projectcontent,
-    projecttech,
-    projectimage,
-    projectrank,
-    session_id,
-  ) {
-    return firestore
-      .collection("project")
-      .doc(projecttitle)
-      .set({
-        projecttitle,
-        projectdescription,
-        projectterm,
-        projectcontent,
-        projecttech,
-        projectimage,
-        projectrank,
-        session_id,
-        date: firebase.firestore.FieldValue.serverTimestamp()
-      });
-  },
-  async getProjects(id) {
-    return firestore.collection('project')
-    .where("session_id","==",id)
-    .get()
-    .then((docSnapshots) => {
-      return docSnapshots.docs.map((doc) => {
-        let data = doc.data()
-        return data
+    // Function :: 개인 프로젝트를 가져옵니다.
+    // Parameter :: Story 페이지의 주인의 아이디를 가져와서 개인프로젝트를 검색합니다.
+    async SELECT_Projects(id) {
+      return firestore.collection('projects')
+      .where("session_id","==",id).get().then((docSnapshots) => {
+        return docSnapshots.docs.map((doc) => {
+          let data = doc.data()
+          return data
+        })
       })
-    })
-  },
-  async getUserdata(id) {
-    return firestore.collection('users')
-    .where("email","==",id)
-    .get()
-    .then((docSnapshots) => {
-      return docSnapshots.docs.map((doc) => {
-        let data = doc.data()
-        return data
+    },
+
+    // Function :: 유저의 정보를 가져옵니다.
+    // Parameter :: Story 페이지의 주인의 아이디를 개인정보를 가져옵니다.
+    async SELECT_Userdata(id) {
+      return firestore.collection('users').where("email","==",id)
+      .get().then((docSnapshots) => {
+        return docSnapshots.docs.map((doc) => {
+          let data = doc.data()
+          return data
+        })
       })
-    })
-  },
-  ///// unused function by sxngho
-  async getData() {
-    return firestore
-      .collection("userImg")
-      .get()
-      .then(docSnapshots => {
-        return docSnapshots.docs.map(doc => {
-          let data = doc.data();
-          let id = doc.id;
-          return { id, data };
-        });
-      });
-  },
-  ADD_userImg(image) {
-    return firestore.collection("userImg").add({
-      image,
-      date: firebase.firestore.FieldValue.serverTimestamp()
-    });
-  },
+    },
 
-  // -----------------------------------------------------------------
+    // -----------------------------------------------------------------
 
-  // seulgi
-  // -----------------------------------------------------------------
-  async SignupUser(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
-    return firebase
+    // seulgi
+    async SignupUser(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
+      return firebase
       .auth()
       .createUserWithEmailAndPassword(id, password)
       .then(function() {
         // console.log(`${id}`)
         firestore
-          .collection("users")
-          .doc(id)
-          .set({
-            email: id,
-            first_name: first_name,
-            last_name: last_name,
-            phonenumber: phonenumber,
-            userSkills:userSkills,
-            userImage:userImage,
-            userName:first_name + last_name,
-            userIntro:userIntro,
-            userCareers:userCareers,
-            userEducations:userEducations
-          });
+        .collection("users")
+        .doc(id)
+        .set({
+          email: id,
+          first_name: first_name,
+          last_name: last_name,
+          phonenumber: phonenumber,
+          userSkills:userSkills,
+          userImage:userImage,
+          userName:first_name + last_name,
+          userIntro:userIntro,
+          userCareers:userCareers,
+          userEducations:userEducations
+        });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
         return true;
       })

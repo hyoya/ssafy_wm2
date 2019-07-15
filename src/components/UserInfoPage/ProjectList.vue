@@ -1,11 +1,12 @@
 <!--GetProjectByUserId-->
 <template>
-  <div class="Portfolio">
-    <v-card-text>
+  <div>
+    <v-layout>
       <h1 class="subheading grey--text text-md-center">PROJECT LIST</h1>
-    </v-card-text>
-    <v-layout row wrap>
-      <v-flex v-for="i in projects.length" xs12 sm6 md4 lg3>
+    </v-layout>
+
+    <v-layout row wrap justify-center>
+      <v-flex v-for="i in projects.length" xs12 sm6 md4>
         <ProjectDetail
           :projectimage="projects[i-1].projectimage"
           :projecttitle="projects[i-1].projecttitle"
@@ -14,13 +15,12 @@
           :projectcontent="projects[i-1].projectcontent"
           :projecttech="projects[i-1].projecttech"
           :projectrank="projects[i-1].projectrank">
-      </ProjectDetail>
-      <v-divider></v-divider>
-    </v-flex>
-  </v-layout>
-</div>
-</v-container>
+        </ProjectDetail>
+        <v-divider></v-divider>
+      </v-flex>
+    </v-layout>
 
+  </div>
 </template>
 
 <script>
@@ -39,12 +39,12 @@ export default {
     ProjectDetail
   },
   created() {
-    this.getProjects();
+    this.SELECT_Projects();
   },
   methods: {
-    async getProjects() {
+    async SELECT_Projects() {
       this.id = this.$route.params.id;
-      this.projects = await FirebaseService.getProjects(this.id);
+      this.projects = await FirebaseService.SELECT_Projects(this.id);
     }
   }
 };

@@ -65,10 +65,15 @@
 </template>
 
 <script>
+import FirebaseService from "@/services/FirebaseService";
 
   export default {
     data: () => ({
       edumodal:false,
+      eduagency : '', //프로젝트 메인 이미지
+      edudegree : '',  // 프로젝트 이름
+      edustartday : '', //프로젝트 간단 설명
+      eduendday : '', // 프로젝트 기간
     }),
     methods : {
       addNewCareer(){
@@ -77,15 +82,6 @@
       deleteCareer(index){
         this.careers.splice(index,1);
       },
-      signup(id, password, first_name, last_name, phonenumber) {
-        FirebaseService.signup(id, password, first_name, last_name, phonenumber)
-      }
-    },
-    props : {
-      eduagency: {type: String}, //프로젝트 메인 이미지
-      edudegree: {type: String}, // 프로젝트 이름
-      edustartday: {type: String}, //프로젝트 간단 설명
-      eduendday: {type: String}, // 프로젝트 기간
     },
   }
 </script>
