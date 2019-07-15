@@ -22,7 +22,7 @@
     <v-layout wrap style="margin-top:2vw;">
       <v-flex xs12 class="text-md-center subheading">SKILLS</v-flex>
       <v-flex xs12>
-        <!-- v-for skill -->
+        <v-btn  flat small outline radius v-for="s in userSkills">{{s}}</v-btn>
       </v-flex>
     </v-layout>
 

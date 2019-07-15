@@ -18,6 +18,7 @@
           <SignUp />
           <v-btn flat class="white--text" href="/story">Story</v-btn>
           <v-btn flat class="white--text" href="/companyIntro">Company</v-btn>
+          <v-btn flat class="white--text" href="/git">Git</v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <!-- toolbar end -->

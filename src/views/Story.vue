@@ -10,10 +10,10 @@
     </v-layout>
 
     <v-layout row wrap>
-      <v-flex xs12 sm3>
-        <LeftSide xs12 sm3/>
+      <v-flex xs12 sm4 md3>
+        <LeftSide xs12 sm4 md3/>
       </v-flex>
-      <v-flex xs12 sm9 >
+      <v-flex xs12 sm8 md9 >
           <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
           <ProjectList v-if="!stateAdd"></ProjectList>
           <ProjectEditor v-else> </ProjectEditor>

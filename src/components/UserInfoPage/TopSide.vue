@@ -1,23 +1,15 @@
 <!--userState -->
 <template>
-  <v-flex style="background:white;">
-    <v-card-text>
-      <p
-        class="subheading grey--text text-md-center"
-      >followers {{user.followers}} stars {{user.stars}}</p>
-    </v-card-text>
-  </v-flex>
+    <v-flex class="subheading grey--text text-md-center" >
+      followers {{followers}} stars {{stars}}
+    </v-flex>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      user: {
-        followers: 10,
-        stars: 20
-      }
-    };
+  props:{
+    followers:{type:Number, default:0},
+    stars:{type:Number, default:0}
   }
 };
 </script>
