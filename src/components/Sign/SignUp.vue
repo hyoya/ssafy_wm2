@@ -54,7 +54,6 @@ import SignupforUserModal from './SignUpForUser'
         if (this.check == false) {
           this.$session.set('session_id', '')
         }
-
       },
       get_userinfo() {
         FirebaseService.get_userinfo()

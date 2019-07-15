@@ -16,7 +16,6 @@ firebase.initializeApp(firebase_config);
 
 const firestore = firebase.firestore();
 const auth = firebase.auth;
-var login_user; // 로그인 하면 email, 아니면 ''  처리
 var provider = new auth.FacebookAuthProvider();
 // console.log(provider)
 
@@ -24,34 +23,6 @@ var url = document.location.href;
 // console.log((login_user==null)?"익명":login_user)
 // console.log(url)
 
-auth().onAuthStateChanged(function(user) {
-  var whoareyous = document.querySelectorAll(".whoareyou");
-  var usercantsees = document.querySelectorAll(".usercantsee");
-  var usercansees = document.querySelectorAll(".usercansee");
-
-  // var mines = document.querySelectorAll('.mine')
-  // var notmines = document.querySelectorAll('.notmine')
-
-  if (user) {
-    login_user = user.email;
-    usercantsees.forEach(function(usercantsee) {
-      usercantsee.style.display = "none";
-    });
-    usercansees.forEach(function(usercansee) {
-      usercansee.style.display = "block";
-    });
-  } else {
-    login_user = "익명";
-    usercantsees.forEach(function(usercantsee) {
-      usercantsee.style.display = "block";
-    });
-    usercansees.forEach(function(usercansee) {
-      usercansee.style.display = "none";
-    });
-  }
-  whoareyous.forEach(function(whoareyou) {
-    whoareyou.innerText = login_user })
-})
 
   // firestore.collection('weblog').add({
   //   login_user,
@@ -105,19 +76,6 @@ export default {
     .then((docSnapshots) => {
       return docSnapshots.docs.map((doc) => {
         let data = doc.data()
-        return data
-      })
-    })
-  },
-  async getmainProjects() {
-    // return firestore.collection('project')
-    return firestore.collection('project').orderBy('date')
-    .get()
-    .then((docSnapshots) => {
-      return docSnapshots.docs.map((doc) => {
-        // console.log((doc.id))
-        let data = [ doc.id, doc.data()]
-        // console.log((data))
         return data
       })
     })
@@ -238,41 +196,6 @@ export default {
         // ...
         alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
       });
-  },
-  get_userinfo() {
-    var str = "http://localhost:8080/story/" + login_user;
-    location.replace(str);
-  },
-  filter_userinfo(userinfo_user) {
-    // console.log(userinfo_user, '이 페이지의 주인')
-
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        login_user = user.email;
-      } else {
-        login_user = "익명";
-      }
-
-      var mines = document.querySelectorAll(".mine");
-      var notmines = document.querySelectorAll(".notmine");
-
-      if (login_user == userinfo_user) {
-        // console.log('나의 페이지가 맞다')
-        mines.forEach(function(mine) {
-          mine.style.display = "block";
-        });
-        notmines.forEach(function(notmine) {
-          notmine.style.display = "none";
-        });
-      } else {
-        // console.log('여긴 남의 페이지이다')
-        notmines.forEach(function(notmine) {
-          notmine.style.display = "block";
-        });
-        mines.forEach(function(mine) {
-          mine.style.display = "none";
-        });
-      }
-    });
   }
+
 };
