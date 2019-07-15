@@ -13,7 +13,7 @@
     <v-layout style="margin-top:1vw;">
       <v-flex class="text-md-center">
         <p class="subheading grey--text text-md-center">{{userdata[0].userName}}</p>
-        <div class="subheading grey--text"> <IntroEditor /></div>
+        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" /></div>
       </v-flex>
     </v-layout>
 
@@ -40,7 +40,7 @@
     <!--USER Education-->
     <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading">Education <EducationEditor /></v-flex>
+      <v-flex xs12 class="text-md-center subheading">Education <EducationEditor v-on:sendEdu="receiveEdu" /></v-flex>
       <v-flex xs12>
         <!-- v-for Education -->
       </v-flex>
@@ -63,7 +63,8 @@ export default {
       userIntro: "",
       userCareers: [],
       userEducations: [],
-      userdata: [],
+      userdata: [ {userName : ''} , {userIntro : ''} ],
+      userIntroKEY: 0,
     }
   },
   components:{
@@ -77,7 +78,14 @@ export default {
   methods: {
     async SELECT_Userdata() {
       this.userdata = await FirebaseService.SELECT_Userdata(this.$route.params.id);
-    }
+    },
+    receiveIntro(intro) {
+      FirebaseService.UPDATE_userIntro(intro,this.$route.params.id);
+      this.userdata[0].userIntro = intro;
+    },
+    receiveEdu(edu) {
+      FirebaseService.UPDATE_userEdu(edu,this.$route.params.id);
+    },
   }
 
 };

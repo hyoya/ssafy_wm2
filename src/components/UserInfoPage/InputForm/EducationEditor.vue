@@ -53,12 +53,9 @@
                   ></input></div>
               </v-flex>
             </v-layout>
-
-
           <v-card-actions>
-            <v-btn>등록</v-btn>
+            <v-btn v-on:click="sendEdu(eduagency,edudegree,edustartday,eduendday)">등록</v-btn>
           </v-card-actions>
-
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -82,6 +79,17 @@ import FirebaseService from "@/services/FirebaseService";
       deleteCareer(index){
         this.careers.splice(index,1);
       },
+      sendEdu(eduagency,edudegree,edustartday,eduendday) {
+        var Arr = new Array();
+        var Json = new Object();
+        Json.eduagency = eduagency;
+        Json.edudegree = edudegree;
+        Json.edustartday = edustartday;
+        Json.eduendday = eduendday;
+        Arr.push(Json);
+        console.log(JSON.stringify(Arr))
+        this.$emit('sendEdu',Arr);
+      }
     },
   }
 </script>

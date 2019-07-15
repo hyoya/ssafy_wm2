@@ -155,6 +155,19 @@ auth().onAuthStateChanged(function(user) {
       })
     },
 
+    UPDATE_userIntro(intro,userId) {
+      return firestore.collection("users").doc(userId).update({
+        userIntro : intro
+      });
+    },
+
+    UPDATE_userEdu(edu,userId) {
+      return firestore.collection("users").doc(userId).push().set({
+        edu
+      });
+    },
+
+
     // -----------------------------------------------------------------
 
     // seulgi
