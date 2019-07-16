@@ -98,7 +98,7 @@
 
                       <!-- comment list -->
                       <v-list>
-                        <v-list-tile v-for="(com, index) in real_comments">
+                        <v-list-tile v-for="(com, index) in comments">
                           <v-list-tile-content>
                             <v-list-tile-title v-html="com.Comment"></v-list-tile-title>
                             <v-list-tile-title v-html="com.User"></v-list-tile-title>
@@ -169,12 +169,7 @@ export default {
     projectThumbnail: "../assets/logo.png",
     date : '',
     // description: "여기에는 프로젝트 디스크립션이 들어갈 공간입니다앙널민얼미;나어림ㄴ어라ㅣ;아아아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ글자수늘리기ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
-    comments: [
-      { nick: "닉네임", content: "댓글1" },
-      { nick: "닉네임", content: "댓글2" },
-      { nick: "닉네임", content: "댓글3" }
-    ],
-    real_comments:[],
+    comments:[],
     comment: "",
     etcproject: [
       { url: "https://source.unsplash.com/random/100x100" },
@@ -184,11 +179,6 @@ export default {
     projectData : ''
   }),
   methods: {
-    // 아직 있어야하는지 모르겟음.
-    // async SELECT_Project(project_id) {
-    //   this.userdata = await FirebaseService.SELECT_Project(project_id);
-    // },
-
     async INSERT_Comment(comment) {
       var user = this.$session.get('session_id')
 
@@ -198,21 +188,22 @@ export default {
         Json.Comment = this.comment;
         Json.User = user;
         FirebaseService.INSERT_Comment(Json, this.projectData, this.project_id);
-
-        // this.SELECT_Project(this.project_id); 아직 있어야하는지 모르겠음
-
         const newcommnet = {
         User : user,
         Comment : this.comment
         };
-        this.real_comments.push(newcommnet)
+        this.comments.push(newcommnet)
 
       } else {
         // 로그인 안했으면 안했다고 알려줘야지 헤헤
         alert('너 로그인안했다. 댓글못쓴다~')
       }
-
     },
+
+    async get_comments() {
+      this.comments = await FirebaseService.SELECT_Comments(this.project_id)
+    },
+
     InfoProject() {
       var user = this.$session.get('session_id')
       FirebaseService.info_Projects(user, this.projecttitle)
@@ -220,16 +211,13 @@ export default {
     likeit(index) {},
     test(temp) {
       alert(temp);
-    },
-    async get_comments() {
-      this.real_comments = await FirebaseService.SELECT_Comments(this.project_id)
-
-
     }
   },
+
   mounted () {
     this.get_comments()
   }
+
 };
 </script>
 
