@@ -1,4 +1,5 @@
 <template>
+  <!-- Modal -->
   <v-card >
     <v-toolbar>
       <!-- profile img -->
@@ -116,12 +117,13 @@
 export default {
 	name: 'Project',
 	props: {
-    projecttitle: {type: String},
-    projectdescription: {type: String},
-    projectterm: {type: String},
-    projectcontent: {type: String},
-    projecttech: {type: Array},
-    projectrank:{type:String}
+    projectimage: { type: String }, //프로젝트 메인 이미지
+    projecttitle: { type: String }, // 프로젝트 이름
+    projectdescription: { type: String }, //프로젝트 간단 설명
+    projectterm: { type: String }, // 프로젝트 기간
+    projectcontent: { type: String }, //프로젝트 설명(상세-위지윅으로 작성한 내용)
+    projecttech: { type: Array }, //프로젝트 텍크 스택
+    projectrank: { type: String }
 	},
 }
 </script>

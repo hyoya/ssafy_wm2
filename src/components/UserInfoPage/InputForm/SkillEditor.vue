@@ -43,7 +43,7 @@
 
         <!-- action -->
         <v-card-actions>
-          <v-btn v-on:click="sendIntro(intro)"> 등록 </v-btn>
+          <v-btn v-on:click="sendSkill(skills)"> 등록 </v-btn>
         </v-card-actions>
 
       </v-card>
@@ -51,22 +51,34 @@
 </template>
 
 <script>
+import FirebaseService from "@/services/FirebaseService";
 
   export default {
-    data: () => ({
-      skillmodal:false,
-      techlist:[
-        "C",
-        "C++",
-        "java",
-        "javascript",
-      ],
-      tech:"",
-      skills:[],
-    }),
+    data() {
+        return {
+        skillmodal:false,
+        techlist:[
+          "C",
+          "C++",
+          "java",
+          "javascript",
+        ],
+        tech:"",
+        skills: "",
+      }
+    },
+    created() {
+      this.SELECT_Userdata();
+    },
     methods : {
+      async SELECT_Userdata() {
+        var userdata = await FirebaseService.SELECT_Userdata(this.$route.params.id);
+        this.skills = userdata[0].userSkills
+      },
       addNewTech(){
-        this.skills.push(this.tech);
+        if( this.tech !==  "" ) {
+          this.skills.push(this.tech);
+        }
         this.tech="";
       },
       deleteTech(item){
@@ -75,9 +87,11 @@
       addTech(tech){
         this.skills.push(tech);
       },
-      sendTech(intro) {
-        this.$emit('sendIntro',intro);
+      sendSkill(skills) {
+        this.$emit('sendSkill',skills);
+        this.skillmodal = false;
       }
     },
+
   }
 </script>
