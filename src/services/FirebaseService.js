@@ -51,11 +51,10 @@ var url = document.location.href;
 
 
 // 3. 해당 사람의 프로젝트 다 가져오기
-// firestore.collection('project')
+// firestore.collection('projects')
 //   .where("session_id","==","rla99@rla.com")
 //   .get()
 //   .then((snap) => {
-//     console.log(snap)
 //     return snap.docs.map((doc) => {
 //       let data = doc.data()
 //       console.log(snap)
@@ -65,18 +64,33 @@ var url = document.location.href;
 //     })
 //   })
 
-// 4. 해당 사람의 것 num 기준으로 역순으로 배열 : 아직 해결 못함.
-// firestore.collection('projects')
-//   .where("session_id","==","rla99@rla.com")
-//   .orderBy("num","desc")
-//   .limit(2)
-//   // .orderBy("num", 'desc')
-//   .get()
-//   .then((snap) => {
-//
-//     console.log(snap)
-    // console.log(snap.docs)
+// 4. 해당 사람의 것 num 기준으로 역순으로 배열 : 아직 해결 완료
+firestore.collection('projects')
+  .where("session_id","==","rla99@rla.com")
+  .orderBy("num","asc")
+  .get()
+  .then((snap) => {
+    return snap.docs.map((doc) => {
+      let data = doc.data()
+      console.log(data)
+      console.log(doc.id)
+    })
   })
+
+// 5. 4번의 출처이다.
+
+// var userId = "rla99@rla.com"
+// console.log(userId)
+// async function getUploadsByUser(userId) {
+//   const query = firestore
+//     .collection('projects')
+//     .where('session_id', '==', userId)
+//     .orderBy('num', 'asc');
+//   const snapshot = await query.get()
+//   return snapshot.docs.map(doc => console.log(doc.data()));
+// }
+//
+// getUploadsByUser(userId)
 
 
 //// 김슬기 작업장 끝
