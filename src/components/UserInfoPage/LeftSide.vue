@@ -29,11 +29,15 @@
     <!--USER Careers-->
     <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading">Careers
-        <!-- <CareerEditor /> -->
+      <v-flex xs12 class="text-md-center subheading"> <CareerEditor v-on:sendCar="receiveCar"/>
       </v-flex>
       <v-flex xs12>
         <!-- v-for Career-->
+        <div v-for="c in userdata[0].userCareers" class="caption">
+          {{c.Company}} {{c.Position}}<br/>
+          {{c.Description}}<br/>
+          {{c.Startday}} ~ {{c.Endday}}<br/>
+        </div>
       </v-flex>
     </v-layout>
 
@@ -43,6 +47,11 @@
       <v-flex xs12 class="text-md-center subheading">Education <EducationEditor v-on:sendEdu="receiveEdu" /></v-flex>
       <v-flex xs12>
         <!-- v-for Education -->
+        <div v-for="e in userdata[0].userEducations" class="caption">
+          {{e.Agency}}<br/>
+          {{e.Degree}}<br/>
+          {{e.Startday}} ~ {{e.Endday}}<br/>
+        </div>
       </v-flex>
     </v-layout>
 
@@ -61,9 +70,9 @@ export default {
       userSkills: [],
       userImage: "",
       userIntro: "",
-      userCareers: [],
-      userEducations: [],
-      userdata: [ {userName : ''} , {userIntro : ''} ],
+      userCareers: "",
+      userEducations: "",
+      userdata: [ {userName : ''} , {userIntro : ''} , {userEducations : ''} ],
       userIntroKEY: 0,
     }
   },
@@ -83,9 +92,20 @@ export default {
       FirebaseService.UPDATE_userIntro(intro,this.$route.params.id);
       this.userdata[0].userIntro = intro;
     },
-    receiveEdu(edu) {
-      FirebaseService.UPDATE_userEdu(edu,this.$route.params.id);
+    async receiveEdu(edu) {
+      this.userEducations = await FirebaseService.SELECT_Userdata(this.$route.params.id);
+      FirebaseService.UPDATE_userEdu(edu,this.userEducations[0].userEducations,this.$route.params.id);
+      // 새로운 데이터 값을 가지는 유저데이터를 가져옴
+      this.SELECT_Userdata();
     },
+
+    async receiveCar(car) {
+      this.userCareers = await FirebaseService.SELECT_Userdata(this.$route.params.id);
+      FirebaseService.UPDATE_userCar(car,this.userCareers[0].userCareers,this.$route.params.id);
+      // 새로운 데이터 값을 가지는 유저데이터를 가져옴
+      this.SELECT_Userdata();
+    },
+
   }
 
 };

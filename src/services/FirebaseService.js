@@ -75,8 +75,8 @@ var url = document.location.href;
 //   .then((snap) => {
 //
 //     console.log(snap)
-    // console.log(snap.docs)
-  })
+// console.log(snap.docs)
+// })
 
 
 //// 김슬기 작업장 끝
@@ -155,16 +155,30 @@ auth().onAuthStateChanged(function(user) {
       })
     },
 
+    // Function :: 유저의 자기소개 정보를 업데이트합니다.
+    // Parameter :: Story 페이지의 주인의 아이디와 새로운 인트로 정보를 가져옵니다.
     UPDATE_userIntro(intro,userId) {
       return firestore.collection("users").doc(userId).update({
         userIntro : intro
       });
     },
 
-    UPDATE_userEdu(edu,userId) {
-      return firestore.collection("users").doc(userId).push().set({
-        edu
-      });
+    // Function :: 유저의 교육정보를 업데이트합니다.
+    // Parameter :: 기존 교육정보, 새로 추가된 교육정보, Story 페이지 주인의 아이디를 가져옵니다.
+    UPDATE_userEdu(edu,old,userId) {
+      old.push(edu)
+        return firestore.collection("users").doc(userId).update({
+          userEducations : old
+        });
+    },
+
+    // Function :: 유저의 경력정보 업데이트합니다.
+    // Parameter :: 기존 경력정보, 새로 추가된 경력정보, Story 페이지 주인의 아이디를 가져옵니다.
+    UPDATE_userCar(car,old,userId) {
+      old.push(car)
+        return firestore.collection("users").doc(userId).update({
+          userCareers : old
+        });
     },
 
 
@@ -202,21 +216,21 @@ auth().onAuthStateChanged(function(user) {
         alert(error);
       });
       return false;
-  },
-  async SignupCompany(company_name, id, password, interests) {
-    return firebase
+    },
+    async SignupCompany(company_name, id, password, interests) {
+      return firebase
       .auth()
       .createUserWithEmailAndPassword(id, password)
       .then(function() {
         // console.log(`${id}`)
         firestore
-          .collection("companys")
-          .doc(id)
-          .set({
-            company_name: company_name,
-            id: id,
-            interests: interests
-          });
+        .collection("companys")
+        .doc(id)
+        .set({
+          company_name: company_name,
+          id: id,
+          interests: interests
+        });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
         return true;
       })
@@ -227,9 +241,9 @@ auth().onAuthStateChanged(function(user) {
         alert(error);
       });
       return false;
-  },
-  async Signin(id, password) {
-    return firebase
+    },
+    async Signin(id, password) {
+      return firebase
       .auth()
       .signInWithEmailAndPassword(id, password)
       .then(function() {
@@ -241,10 +255,10 @@ auth().onAuthStateChanged(function(user) {
         var errorMessage = error.message;
         alert(`${errorCode}\n${errorMessage}`);
       });
-    return false;
-  },
-  async SigninFacebook() {
-    return firebase
+      return false;
+    },
+    async SigninFacebook() {
+      return firebase
       .auth()
       .signInWithPopup(provider)
       .then(function(result) {
@@ -263,9 +277,9 @@ auth().onAuthStateChanged(function(user) {
         alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
         return false;
       });
-  },
-  async Logout() {
-    return firebase
+    },
+    async Logout() {
+      return firebase
       .auth()
       .signOut()
       .then(function() {
@@ -278,10 +292,10 @@ auth().onAuthStateChanged(function(user) {
         alert(error);
         return true;
       });
-  },
-  GetUserinfo(user) {
-    var str = location.origin +'/story/'+ user;
-    location.replace(str);
-  }
-  // -----------------------------------------------------------------
-};
+    },
+    GetUserinfo(user) {
+      var str = location.origin +'/story/'+ user;
+      location.replace(str);
+    }
+    // -----------------------------------------------------------------
+  };
