@@ -178,25 +178,30 @@ export default {
       { url: "https://source.unsplash.com/random/100x100" },
       { url: "https://source.unsplash.com/random/100x100" },
       { url: "https://source.unsplash.com/random/100x100" }
-    ]
+    ],
+    projectData : ''
   }),
   methods: {
-    INSERT_Comment(comment) {
-      // 현재 댓글을 남기고자 하는 사람을 찾고
+    // async SELECT_Project(project_id) {
+    //   this.userdata = await FirebaseService.SELECT_Project(project_id);
+    // },
+
+    async INSERT_Comment(comment) {
       var user = this.$session.get('session_id')
 
-      // 댓글을 쓰고자 하는 사람이 존재한다면??
       if (user) {
-        FirebaseService.INSERT_Comment(this.project_id, this.projecttitle, user, comment)
-        const newcommnet = {
-          nick: user,
-          content: this.comment
-        };
-        this.comments.push(newcommnet)
+        this.projectData = await FirebaseService.SELECT_Project(this.project_id);
+        var Json = new Object();
+        Json.Comment = this.comment;
+        Json.User = user;
+        FirebaseService.INSERT_Comment(Json, this.projectData, this.project_id);
+        // this.SELECT_Project(this.project_id);
+
       } else {
         // 로그인 안했으면 안했다고 알려줘야지 헤헤
         alert('너 로그인안했다. 댓글못쓴다~')
       }
+
     },
     InfoProject() {
       var user = this.$session.get('session_id')

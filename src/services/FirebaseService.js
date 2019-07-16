@@ -121,6 +121,16 @@ export default {
       })
     },
 
+    // 특정 프로젝트를 찾는 것입니다. - 슬기
+    async SELECT_Project(id) {
+      return firestore.collection('projects')
+      .doc(id).get().then((docSnapshots) => {
+          let data = docSnapshots.data()
+          // console.log(data)
+          return data
+      })
+    },
+
   // Function :: 유저의 정보를 가져옵니다.
   // Parameter :: Story 페이지의 주인의 아이디를 개인정보를 가져옵니다.
   async SELECT_Userdata(id) {
@@ -166,14 +176,19 @@ export default {
   // -----------------------------------------------------------------
 
     // seulgi
-    INSERT_Comment(project_id, projecttitle, user, comment) {
-      return firestore.collection("comments").add({
-        project_id:project_id,
-        projecttitle:projecttitle,
-        user:user,
-        comment:comment
-      });
+    INSERT_Comment(comment, old, project_id) {
+      var old = old
+      // console.log(old.comments)
+      // console.log(comment)
+      old.comments.push(comment)
+      // console.log(old, '에/')
+      // console.log(old.comments)
+      // console.log(comments)
+        return firestore.collection('projects').doc(project_id).update({
+          comments : old.comments
+        });
     },
+
     async info_Projects(id, title) {
       return firestore.collection('projects')
       .where("session_id","==",id)
