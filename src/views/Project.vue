@@ -5,10 +5,11 @@
       <v-btn icon to="/"/>
       <v-toolbar-title class="font-weight-medium">
 
-         <span class="font-weight-bold">{{this.project.projecttitle}} </span>
-         <span class="font-weight-thin font-italic subheading">{{this.project.developer}}</span>
+         <span class="font-weight-bold">{{project.projecttitle}} </span>
+
+         <span class="font-weight-thin font-italic subheading">{{project.developer}}</span>
          <v-flex class="caption">
-           {{ this.project.projectdescription }}
+           {{ project.projectdescription }}
          </v-flex>
        </v-toolbar-title>
       <v-spacer/>
@@ -26,7 +27,7 @@
         <v-layout wrap>
           <!-- Project Main Thumbnail -->
           <v-flex xs12>
-            <BigImg v-bind:imgSrc="this.project.projectimage" />
+            <BigImg v-bind:imgSrc="project.projectimage" />
           </v-flex>
           <!--  left detail -->
           <v-flex xs12 md9>
@@ -37,18 +38,18 @@
 
               <!--comment -->
                 <v-flex>
-                  <span class="title">{{this.project.projecttitle}}</span>
-                  <v-flex class="d-inline caption tag" round outline>{{ this.project.projectterm }}</v-flex>
-                  <v-flex class="d-inline caption tag" round outline>{{ this.project.projectrank }}</v-flex>
+                  <span class="title">{{project.projecttitle}}</span>
+                  <v-flex class="d-inline caption tag" round outline>{{ project.projectterm }}</v-flex>
+                  <v-flex class="d-inline caption tag" round outline>{{ project.projectrank }}</v-flex>
                   <br />
                   <v-layout class="d-block" style="padding: 1vw 0vw;">
                     <v-flex
-                      v-for="tech in this.project.projecttech"
+                      v-for="tech in project.projecttech"
                       class="tech d-inline-block caption"
                     >{{ tech }}</v-flex>
                   </v-layout>
 
-                  <p v-html="this.project.projectcontent" />
+                  <p v-html="project.projectcontent" />
                 </v-flex>
               </v-layout>
 
@@ -73,7 +74,8 @@
 
                 <!-- comment list -->
                 <v-list>
-                  <v-list-tile v-for="(com, index) in comments">
+                  <v-list-tile v-for="(com, index) in project.comments">
+
                     <v-list-tile-content>
                       <v-list-tile-title v-html="com.content"></v-list-tile-title>
                     </v-list-tile-content>
@@ -93,7 +95,7 @@
         <v-flex xs12 md3 justify-center>
           <v-flex>Etc Project</v-flex>
           <img
-            v-for="e in this.project.etcproject"
+            v-for="e in project.etcproject"
             xs4
             md1
             :src="e.url"
@@ -115,16 +117,23 @@ import BigImg from "../components/Common/BigImg";
 
 export default {
   name: "Project",
-  data:{
+  data() {
+    return {
     project_id:"",
-    project:{},
+    project: "",
+  }
   },
   components: {
     BigImg,
   },
+  created(){
+    this.project_id = this.$route.params.pcode;
+    this.bindData();
+  },
   methods: {
     async bindData(){
       this.project = await FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
+      vm.$forceUpdate();
       console.log(this.project);
     },
     INSERT_Comment(comment){
@@ -136,12 +145,6 @@ export default {
     likeit(index){
       console.log("this is test tag");
     }
-  },
-  created(){
-    this.project_id = this.$route.params.pcode;
-    this.bindData();
-  },
-  props: {
   },
 };
 </script>

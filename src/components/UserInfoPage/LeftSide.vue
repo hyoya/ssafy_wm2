@@ -6,9 +6,6 @@
       <v-avatar size="150" class="grey lighten-2">
         <!-- <img src="https://i.imgur.com/aTI4OeZ.png?1" v-if="userImage =='null'">
         <img src="https://i.imgur.com/SSlPWnK.png" v-if="userImage !=='null'"> -->
-        <div v-if="isMine">
-          나의것이니라!!!!!!!!!!!
-        </div>
       </v-avatar>
     </v-layout>
 
@@ -18,14 +15,14 @@
         <span class="subheading grey--text text-md-center">{{userdata[0].userName}}</span>
         <v-btn fab flat outline small v-if="!isMine && !isFollow" @click="follow()">팔로우!</v-btn>
         <v-btn fab flat outline small v-if="!isMine && isFollow" @click="unfollow()">언팔!</v-btn>
-        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" v-if="isMine"/></div>
+        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" :introinput="userdata[0].userIntro" v-if="isMine"/></div>
       </v-flex>
     </v-layout>
 
     <!--USER SKILLS-->
     <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading">SKILLS <SkillEditor v-on:sendSkill="receiveSkill" v-if="isMine"/> </v-flex>
+      <v-flex xs12 class="text-md-center subheading">Skills <SkillEditor v-on:sendSkill="receiveSkill" v-if="isMine"/> </v-flex>
       <v-flex xs12>
         <div v-if="skillToggle" class="caption">
           <p> 등록된 기술이 없습니다. </p>
@@ -92,6 +89,7 @@ export default {
       userEducations: "",
       educationToggle : false,
       careerToggle : false,
+      skillToggle : false,
       userdata: [ {userName : ''} , {userIntro : ''} , {userEducations : ''} ],
       userIntroKEY: 0,
     }
@@ -140,7 +138,6 @@ export default {
     receiveSkill(skill) {
       FirebaseService.UPDATE_userSkill(skill,this.$route.params.id);
       this.userdata[0].userSkills = skill;
-      this.SELECT_Userdata();
     },
 
     async receiveEdu(edu) {
