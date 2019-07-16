@@ -1,23 +1,21 @@
 <template>
-  <div class="pfooter">
-    <div class="pfooter__content">
-      <span>도시 : {{ city }}</span>
-      <span>현재 습도 : {{ humidity }}% / 100%</span>
-      <span>날씨 : {{ weather }}</span>
-
-      <!-- <p>도시 : {{ city }}</p>
-      <p>현재 습도 : {{ humidity }}% / 100%</p>
-      <p>날씨 : {{ weather }}</p>
-      <p>2019.07.08 - 2019.08.16</p>-->
+  <div class="footer__container">
+    <hr />
+    <div class="container__content">
+      <div class="content__intro">
+        <h2>Production period 2019.07.01 - 2019.08.16 &copy;hyoya,sxngho,seulgi,palkim</h2>
+        <a href="https://lab.ssafy.com/Kim-Seul-Gi/webmobile-sub2">
+          <i class="fab fa-gitlab fa-2x" style="color:#999999"></i>
+        </a>
+      </div>
+      <div class="content__icon content"></div>
     </div>
-    <div class="pfooter__period">
-      <span>2019.07.08 - 2019.08.16</span>
-    </div>
-
-    <div class="pfooter__icon">
-      <v-btn href="https://lab.ssafy.com/Kim-Seul-Gi/webmobile-sub2">
-        <i class="fab fa-gitlab fa-2x"></i>
-      </v-btn>
+    <div class="container__weather">
+      <div class="weather__content">
+        <p>도시 : {{city}}</p>
+        <p>습도 : {{humidity}}%</p>
+        <p>현재날씨 : {{weather}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -48,26 +46,23 @@ export default {
   }
 };
 </script>
-
 <style>
-.pfooter {
-  width: 100%;
-  height: 140px;
-  color: white;
-  background-color: black;
-  bottom: 0;
-}
-.pfooter__content {
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
-}
-.pfooter__icon {
+.content__intro {
   display: flex;
   justify-content: center;
+  align-items: center;
+  color: #999999;
+  font-size: 10px;
+  height: 80px;
 }
-.pfooter__period {
+.footer__container {
+  height: 150px;
+  background-color: white;
+}
+.weather__content {
   display: flex;
   justify-content: center;
+  align-items: center;
+  color: #999999;
 }
 </style>
