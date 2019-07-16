@@ -3,7 +3,7 @@
     <hr />
     <div class="container__content">
       <div class="content__intro">
-        <h2>Production period 2019.07.01 - 2019.08.16 &copy;hyoya,sxngho,seulgi,palkim</h2>
+        <h2>Production period 2019.07.01 - 2019.08.16 &copy;hyoya,sxngho,seulgi,palkim &nbsp</h2>
         <a href="https://lab.ssafy.com/Kim-Seul-Gi/webmobile-sub2">
           <i class="fab fa-gitlab fa-2x" style="color:#999999"></i>
         </a>
@@ -12,8 +12,8 @@
     </div>
     <div class="container__weather">
       <div class="weather__content">
-        <p>도시 : {{city}}</p>
-        <p>습도 : {{humidity}}%</p>
+        <p>도시 : {{city}} &nbsp</p>
+        <p>습도 : {{humidity}}% &nbsp</p>
         <p>현재날씨 : {{weather}}</p>
       </div>
     </div>
