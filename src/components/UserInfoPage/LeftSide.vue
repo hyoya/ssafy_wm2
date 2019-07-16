@@ -28,6 +28,7 @@
       <v-flex xs12 class="text-md-center subheading">SKILLS</v-flex>
       <v-flex xs12>
         <v-btn  flat small outline radius v-for="s in userSkills">{{s}}</v-btn>
+        <SkillEditor/>
       </v-flex>
     </v-layout>
 
@@ -74,6 +75,7 @@ import FirebaseService from "@/services/FirebaseService";
 import CareerEditor from "./InputForm/CareerEditor";
 import EducationEditor from "./InputForm/EducationEditor";
 import IntroEditor from "./InputForm/IntroEditor";
+import SkillEditor from "./InputForm/SkillEditor";
 
 export default {
   data() {
@@ -97,6 +99,7 @@ export default {
     CareerEditor,
     EducationEditor,
     IntroEditor,
+    SkillEditor,
   },
   created() {
     this.SELECT_Userdata();
