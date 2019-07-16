@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h1>this<br/> is<br/><br/><br/><br/> test!!!</h1>
     <v-layout>
       <!-- profile img -->
       <v-btn icon to="/"/>
       <v-toolbar-title class="font-weight-medium">
 
-         <span class="font-weight-bold">{{project.projecttitle}}</span>
+         <span class="font-weight-bold">{{project.projecttitle}} </span>
+
          <span class="font-weight-thin font-italic subheading">{{project.developer}}</span>
          <v-flex class="caption">
            {{ project.projectdescription }}
@@ -75,6 +75,7 @@
                 <!-- comment list -->
                 <v-list>
                   <v-list-tile v-for="(com, index) in project.comments">
+
                     <v-list-tile-content>
                       <v-list-tile-title v-html="com.content"></v-list-tile-title>
                     </v-list-tile-content>
@@ -104,6 +105,7 @@
       </v-layout>
     </v-container>
   </v-layout>
+
   </div>
 </template>
 
@@ -117,16 +119,21 @@ export default {
   name: "Project",
   data() {
     return {
-      project : {},
-      project_id : "",
-    }
+    project_id:"",
+    project: "",
+  }
   },
   components: {
     BigImg,
   },
+  created(){
+    this.project_id = this.$route.params.pcode;
+    this.bindData();
+  },
   methods: {
     async bindData(){
       this.project = await FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
+
       console.log(this.project);
     },
     INSERT_Comment(comment){
@@ -138,14 +145,6 @@ export default {
     likeit(index){
       console.log("this is test tag");
     }
-  },
-  created(){
-    this.project_id = this.$route.params.pcode;
-    this.bindData();
-    //this.project = FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
-    //console.log("gg", this.project);
-  },
-  props: {
   },
 };
 </script>

@@ -87,7 +87,7 @@ export default {
       alert(temp);
     },
     popdetail(pcode){
-      window.open("../project/"+pcode,"testpage");
+      window.open("../project/"+pcode);
     }
   },
 
