@@ -14,9 +14,9 @@
         </v-toolbar>
 
         <v-card-text>
-            <v-layout row justify-center>
+            <v-layout row justify-center wrap>
               {{eduagency}} {{edudegree}} {{edustartday}} {{eduendday}}
-              <v-flex xs12 sm5>
+              <v-flex xs10 sm5>
                 <span>*기관명</span>
                 <v-text-field
                   single-line
@@ -26,7 +26,7 @@
                   ></v-text-field>
               </v-flex>
               <v-flex hidden-only-xs sm1/>
-              <v-flex xs12 sm5>
+              <v-flex xs10 sm5>
                 <span>학위</span>
                 <v-text-field
                   single-line
@@ -35,8 +35,9 @@
                   ></v-text-field>
               </v-flex>
             </v-layout>
-            <v-layout row>
-              <v-flex xs12 sm6>
+
+            <v-layout row justify-center wrap>
+              <v-flex xs10 sm5>
                 <span>시작일</span>
                 <div><input type="date"
                   single-line
@@ -44,7 +45,8 @@
                   v-model="edustartday"
                   ></input></div>
               </v-flex>
-              <v-flex xs12 sm6>
+              <v-flex hidden-xs-only sm1/>
+              <v-flex xs10 sm5>
                 <span>종료일</span>
                 <div><input type="date"
                   single-line
@@ -53,10 +55,12 @@
                   ></input></div>
               </v-flex>
             </v-layout>
-          <v-card-actions>
+
+          <v-layout row wrap justify-center>
             <v-btn v-on:click="sendEdu(eduagency,edudegree,edustartday,eduendday)">등록</v-btn>
-          </v-card-actions>
+          </v-layout>
         </v-card-text>
+
       </v-card>
     </v-dialog>
 </template>

@@ -4,7 +4,7 @@
       <div class="content__followerImg box"></div>
       <div class="content__followerInfo box"></div>
       <div class="content__followerPortfolioList box">
-        <MPortfolio />
+      <MPortfolio />
       </div>
     </div>
   </div>
