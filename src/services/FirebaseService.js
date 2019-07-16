@@ -105,7 +105,7 @@ export default {
     INSERT_Projects(projecttitle,projectdescription,projectterm,projectcontent,projecttech,projectimage,projectrank,session_id) {
       return firestore.collection("projects").add({
         projecttitle,projectdescription,projectterm,projectcontent,projecttech,
-        projectimage,projectrank,session_id,date: firebase.firestore.FieldValue.serverTimestamp()
+        projectimage,projectrank,session_id,date: firebase.firestore.FieldValue.serverTimestamp(), comments:[]
       });
   },
 
