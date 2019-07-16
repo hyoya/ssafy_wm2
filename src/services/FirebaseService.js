@@ -76,36 +76,6 @@ var url = document.location.href;
 
 //// 김슬기 작업장 끝
 
-auth().onAuthStateChanged(function(user) {
-  var whoareyous = document.querySelectorAll(".whoareyou");
-  var usercantsees = document.querySelectorAll(".usercantsee");
-  var usercansees = document.querySelectorAll(".usercansee");
-
-  // var mines = document.querySelectorAll('.mine')
-  // var notmines = document.querySelectorAll('.notmine')
-
-  if (user) {
-    login_user = user.email;
-    usercantsees.forEach(function(usercantsee) {
-      usercantsee.style.display = "none";
-    });
-    usercansees.forEach(function(usercansee) {
-      usercansee.style.display = "block";
-    });
-  } else {
-    login_user = "익명";
-    usercantsees.forEach(function(usercantsee) {
-      usercantsee.style.display = "block";
-    });
-    usercansees.forEach(function(usercansee) {
-      usercansee.style.display = "none";
-    });
-  }
-  whoareyous.forEach(function(whoareyou) {
-    whoareyou.innerText = login_user;
-  });
-});
-
 // firestore.collection('weblog').add({
 //   login_user,
 //   url,
