@@ -47,11 +47,10 @@ var url = document.location.href;
 // });
 
 // 3. 해당 사람의 프로젝트 다 가져오기
-// firestore.collection('project')
+// firestore.collection('projects')
 //   .where("session_id","==","rla99@rla.com")
 //   .get()
 //   .then((snap) => {
-//     console.log(snap)
 //     return snap.docs.map((doc) => {
 //       let data = doc.data()
 //       console.log(snap)
@@ -61,18 +60,34 @@ var url = document.location.href;
 //     })
 //   })
 
-// 4. 해당 사람의 것 num 기준으로 역순으로 배열 : 아직 해결 못함.
+// 4. 해당 사람의 것 num 기준으로 역순으로 배열 : 아직 해결 완료
 // firestore.collection('projects')
 //   .where("session_id","==","rla99@rla.com")
-//   .orderBy("num","desc")
-//   .limit(2)
-//   // .orderBy("num", 'desc')
+//   .orderBy("num","asc")
 //   .get()
 //   .then((snap) => {
+//     return snap.docs.map((doc) => {
+//       let data = doc.data()
+//       console.log(data)
+//       console.log(doc.id)
+//     })
+//   })
+
+// 5. 4번의 출처이다.
+
+// var userId = "rla99@rla.com"
+// console.log(userId)
+// async function getUploadsByUser(userId) {
+//   const query = firestore
+//     .collection('projects')
+//     .where('session_id', '==', userId)
+//     .orderBy('num', 'asc');
+//   const snapshot = await query.get()
+//   return snapshot.docs.map(doc => console.log(doc.data()));
+// }
 //
-//     console.log(snap)
-// console.log(snap.docs)
-// })
+// getUploadsByUser(userId)
+
 
 //// 김슬기 작업장 끝
 
@@ -85,48 +100,26 @@ var url = document.location.href;
 export default {
   // SXNGHO's Function ---------------------------------------------------------
 
-  // Function :: 프로젝트를 작성합니다.
-  // Parameter :: 제목,간략설명,진행기간,내용,사용기술,대표이미지,프로젝트수준,작성자아이디입니다.
-  INSERT_Projects(
-    projecttitle,
-    projectdescription,
-    projectterm,
-    projectcontent,
-    projecttech,
-    projectimage,
-    projectrank,
-    session_id
-  ) {
-    return firestore
-      .collection("projects")
-      .doc(projecttitle)
-      .set({
-        projecttitle,
-        projectdescription,
-        projectterm,
-        projectcontent,
-        projecttech,
-        projectimage,
-        projectrank,
-        session_id,
-        date: firebase.firestore.FieldValue.serverTimestamp()
+    // Function :: 프로젝트를 작성합니다.
+    // Parameter :: 제목,간략설명,진행기간,내용,사용기술,대표이미지,프로젝트수준,작성자아이디입니다.
+    INSERT_Projects(projecttitle,projectdescription,projectterm,projectcontent,projecttech,projectimage,projectrank,session_id) {
+      return firestore.collection("projects").add({
+        projecttitle,projectdescription,projectterm,projectcontent,projecttech,
+        projectimage,projectrank,session_id,date: firebase.firestore.FieldValue.serverTimestamp()
       });
   },
 
-  // Function :: 개인 프로젝트를 가져옵니다.
-  // Parameter :: Story 페이지의 주인의 아이디를 가져와서 개인프로젝트를 검색합니다.
-  async SELECT_Projects(id) {
-    return firestore
-      .collection("projects")
-      .where("session_id", "==", id)
-      .get()
-      .then(docSnapshots => {
-        return docSnapshots.docs.map(doc => {
-          let data = doc.data();
-          return data;
-        });
-      });
-  },
+    // Function :: 개인 프로젝트를 가져옵니다.
+    // Parameter :: Story 페이지의 주인의 아이디를 가져와서 개인프로젝트를 검색합니다.
+    async SELECT_Projects(id) {
+      return firestore.collection('projects')
+      .where("session_id","==",id).get().then((docSnapshots) => {
+        return docSnapshots.docs.map((doc) => {
+          let data = doc.data()
+          return { 'project_id' : doc.id, 'data': data}
+        })
+      })
+    },
 
   // Function :: 유저의 정보를 가져옵니다.
   // Parameter :: Story 페이지의 주인의 아이디를 개인정보를 가져옵니다.
@@ -172,21 +165,31 @@ export default {
 
   // -----------------------------------------------------------------
 
-  // seulgi
-  async SignupUser(
-    id,
-    password,
-    first_name,
-    last_name,
-    phonenumber,
-    userSkills,
-    userImage,
-    userName,
-    userIntro,
-    userCareers,
-    userEducations
-  ) {
-    return firebase
+    // seulgi
+    INSERT_Comment(project_id, projecttitle, user, comment) {
+      return firestore.collection("comments").add({
+        project_id:project_id,
+        projecttitle:projecttitle,
+        user:user,
+        comment:comment
+      });
+    },
+    async info_Projects(id, title) {
+      return firestore.collection('projects')
+      .where("session_id","==",id)
+      .where("projecttitle","==",title)
+      .get().then((docSnapshots) => {
+        return docSnapshots.docs.map((doc) => {
+          let data = doc.data()
+          // console.log(data.date)
+          console.log(data)
+          return data
+        })
+      })
+    },
+
+    async SignupUser(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
+      return firebase
       .auth()
       .createUserWithEmailAndPassword(id, password)
       .then(function() {
@@ -204,7 +207,9 @@ export default {
             userName: first_name + last_name,
             userIntro: userIntro,
             userCareers: userCareers,
-            userEducations: userEducations
+            userEducations: userEducations,
+            followerlist:[],
+            followinglist:[]
           });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
         return true;
@@ -229,7 +234,9 @@ export default {
         .set({
           company_name: company_name,
           id: id,
-          interests: interests
+          interests: interests,
+          followerlist:[],
+          followinglist:[]
         });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
         return true;

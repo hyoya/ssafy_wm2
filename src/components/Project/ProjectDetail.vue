@@ -19,6 +19,8 @@
 
 
 <script>
+import FirebaseService from "@/services/FirebaseService";
+
 import BigImg from "../Common/BigImg";
 
 export default {
@@ -32,7 +34,9 @@ export default {
     projectterm: { type: String }, // 프로젝트 기간
     projectcontent: { type: String }, //프로젝트 설명(상세-위지윅으로 작성한 내용)
     projecttech: { type: Array }, //프로젝트 텍크 스택
-    projectrank: { type: String }
+    projectrank: { type: String },
+    projectrank: { type: String },
+    project_id: { type: String }
   },
   data: () => ({
     popol: false,
@@ -40,6 +44,7 @@ export default {
     projectThumbnailurl: "https://source.unsplash.com/random/1600x900",
     developer: "개발자이름",
     projectThumbnail: "../assets/logo.png",
+    date : '',
     // description: "여기에는 프로젝트 디스크립션이 들어갈 공간입니다앙널민얼미;나어림ㄴ어라ㅣ;아아아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ글자수늘리기ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
     comments: [
       { nick: "닉네임", content: "댓글1" },
@@ -54,13 +59,26 @@ export default {
     ]
   }),
   methods: {
-    addNewComment() {
-      const newcommnet = {
-        nick: "유저닉네임",
-        content: this.comment
-      };
-      this.comments.push(newcommnet);
-      console.log(item);
+    INSERT_Comment(comment) {
+      // 현재 댓글을 남기고자 하는 사람을 찾고
+      var user = this.$session.get('session_id')
+
+      // 댓글을 쓰고자 하는 사람이 존재한다면??
+      if (user) {
+        FirebaseService.INSERT_Comment(this.project_id, this.projecttitle, user, comment)
+        const newcommnet = {
+          nick: user,
+          content: this.comment
+        };
+        this.comments.push(newcommnet)
+      } else {
+        // 로그인 안했으면 안했다고 알려줘야지 헤헤
+        alert('너 로그인안했다. 댓글못쓴다~')
+      }
+    },
+    InfoProject() {
+      var user = this.$session.get('session_id')
+      FirebaseService.info_Projects(user, this.projecttitle)
     },
     likeit(index) {},
     test(temp) {
