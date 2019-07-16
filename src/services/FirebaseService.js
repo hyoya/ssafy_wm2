@@ -131,6 +131,16 @@ export default {
       })
     },
 
+    // 특정 프로젝트의 댓글들을 찾는 것입니다. id = 프로젝트 id - 슬기
+    async SELECT_Comments(id) {
+      return firestore.collection('projects')
+      .doc(id).get().then((docSnapshots) => {
+          let data = docSnapshots.data().comments
+          console.log(data)
+          return data
+      })
+    },
+
   // Function :: 유저의 정보를 가져옵니다.
   // Parameter :: Story 페이지의 주인의 아이디를 개인정보를 가져옵니다.
   async SELECT_Userdata(id) {
@@ -178,12 +188,7 @@ export default {
     // seulgi
     INSERT_Comment(comment, old, project_id) {
       var old = old
-      // console.log(old.comments)
-      // console.log(comment)
       old.comments.push(comment)
-      // console.log(old, '에/')
-      // console.log(old.comments)
-      // console.log(comments)
         return firestore.collection('projects').doc(project_id).update({
           comments : old.comments
         });

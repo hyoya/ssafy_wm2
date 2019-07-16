@@ -98,9 +98,10 @@
 
                       <!-- comment list -->
                       <v-list>
-                        <v-list-tile v-for="(com, index) in comments">
+                        <v-list-tile v-for="(com, index) in real_comments">
                           <v-list-tile-content>
-                            <v-list-tile-title v-html="com.content"></v-list-tile-title>
+                            <v-list-tile-title v-html="com.Comment"></v-list-tile-title>
+                            <v-list-tile-title v-html="com.User"></v-list-tile-title>
                           </v-list-tile-content>
 
                           <v-list-tile-action>
@@ -173,6 +174,7 @@ export default {
       { nick: "닉네임", content: "댓글2" },
       { nick: "닉네임", content: "댓글3" }
     ],
+    real_comments:[],
     comment: "",
     etcproject: [
       { url: "https://source.unsplash.com/random/100x100" },
@@ -182,6 +184,7 @@ export default {
     projectData : ''
   }),
   methods: {
+    // 아직 있어야하는지 모르겟음.
     // async SELECT_Project(project_id) {
     //   this.userdata = await FirebaseService.SELECT_Project(project_id);
     // },
@@ -195,7 +198,14 @@ export default {
         Json.Comment = this.comment;
         Json.User = user;
         FirebaseService.INSERT_Comment(Json, this.projectData, this.project_id);
-        // this.SELECT_Project(this.project_id);
+
+        // this.SELECT_Project(this.project_id); 아직 있어야하는지 모르겠음
+
+        const newcommnet = {
+        User : user,
+        Comment : this.comment
+        };
+        this.real_comments.push(newcommnet)
 
       } else {
         // 로그인 안했으면 안했다고 알려줘야지 헤헤
@@ -210,7 +220,15 @@ export default {
     likeit(index) {},
     test(temp) {
       alert(temp);
+    },
+    async get_comments() {
+      this.real_comments = await FirebaseService.SELECT_Comments(this.project_id)
+
+
     }
+  },
+  mounted () {
+    this.get_comments()
   }
 };
 </script>
