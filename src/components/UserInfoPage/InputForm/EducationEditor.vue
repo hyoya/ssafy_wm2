@@ -81,11 +81,11 @@ import FirebaseService from "@/services/FirebaseService";
         Json.Endday = eduendday;
         this.$emit('sendEdu',Json);
 
-        eduagency = '';
-        edudegree = '';
-        edustartday = '';
-        eduendday = '';
-        edumodal = false;
+        this.eduagency = '';
+        this.edudegree = '';
+        this.edustartday = '';
+        this.eduendday = '';
+        this.edumodal = false;
       },
       clearEdu() {
         this.eduagency = '';
