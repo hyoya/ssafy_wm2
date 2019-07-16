@@ -136,7 +136,7 @@ export default {
       return firestore.collection('projects')
       .doc(id).get().then((docSnapshots) => {
           let data = docSnapshots.data().comments
-          console.log(data)
+          // console.log(data)
           return data
       })
     },
@@ -202,7 +202,7 @@ export default {
         return docSnapshots.docs.map((doc) => {
           let data = doc.data()
           // console.log(data.date)
-          console.log(data)
+          // console.log(data)
           return data
         })
       })

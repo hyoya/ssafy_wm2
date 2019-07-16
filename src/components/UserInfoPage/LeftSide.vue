@@ -152,7 +152,7 @@ export default {
     async isFollowCheck() {
       var following = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       var tmp = following[0].followerlist.includes(this.$session.get('session_id'));
-      console.log(tmp);
+      // console.log(tmp);
       this.isFollow=tmp;
     },
   },
