@@ -15,8 +15,10 @@
     <!--USER Intro-->
     <v-layout style="margin-top:1vw;">
       <v-flex class="text-md-center">
-        <p class="subheading grey--text text-md-center">{{userdata[0].userName}}</p>
-        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" v-if="isMine"/></div>
+        <span class="subheading grey--text text-md-center">{{userdata[0].userName}}</span>
+        <v-btn fab flat outline small v-if="!isMine && !isFollow" @click="follow()">팔로우!</v-btn>
+        <v-btn fab flat outline small v-if="!isMine && isFollow" @click="unfollow()">언팔!</v-btn>
+        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" /></div>
       </v-flex>
     </v-layout>
 
@@ -70,6 +72,8 @@ import IntroEditor from "./InputForm/IntroEditor";
 export default {
   data() {
     return {
+      isMine:false,
+      isFollow:false,
       userSkills: [],
       userImage: "",
       userIntro: "",
@@ -89,6 +93,8 @@ export default {
   },
   created() {
     this.SELECT_Userdata();
+    this.isMineCheck();
+    this.isFollowCheck();
   },
   methods: {
     async SELECT_Userdata() {
@@ -112,8 +118,45 @@ export default {
       // 새로운 데이터 값을 가지는 유저데이터를 가져옴
       this.SELECT_Userdata();
     },
+    isMineCheck() {
+      if ( this.$route.params.id == this.$session.get('session_id') ) {
+        this.isMine = true;
+      } else {
+        this.isMine = false;
+      }
+    },
+    async follow(){
+      var follower = await FirebaseService.SELECT_Userdata(this.$route.params.id);
+      var following = await FirebaseService.SELECT_Userdata(this.$session.get('session_id'));
+      //console.log("this is test :: ", follower[0].followerlist, following[0].followinglist);
+      await FirebaseService.follow(
+        this.$route.params.id,
+        this.$session.get('session_id'),
+        follower[0].followerlist,
+        following[0].followinglist
+      );
+      this.isFollowCheck();
+    },
+    async unfollow(){
+      var follower = await FirebaseService.SELECT_Userdata(this.$route.params.id);
+      var following = await FirebaseService.SELECT_Userdata(this.$session.get('session_id'));
+      //console.log("this is test :: ", follower[0].followerlist, following[0].followinglist);
+      await FirebaseService.unfollow(
+        this.$route.params.id,
+        this.$session.get('session_id'),
+        follower[0].followerlist,
+        following[0].followinglist
+      );
+      this.isFollowCheck();
+    },
+    async isFollowCheck() {
+      var following = await FirebaseService.SELECT_Userdata(this.$route.params.id);
+      var tmp = following[0].followerlist.includes(this.$session.get('session_id'));
+      console.log(tmp);
+      this.isFollow=tmp;
+    },
+  },
 
-  }
 
 };
 </script>
