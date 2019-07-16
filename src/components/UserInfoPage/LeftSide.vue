@@ -18,7 +18,7 @@
         <span class="subheading grey--text text-md-center">{{userdata[0].userName}}</span>
         <v-btn fab flat outline small v-if="!isMine && !isFollow" @click="follow()">팔로우!</v-btn>
         <v-btn fab flat outline small v-if="!isMine && isFollow" @click="unfollow()">언팔!</v-btn>
-        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" /></div>
+        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" v-if="isMine"/></div>
       </v-flex>
     </v-layout>
 
@@ -28,6 +28,7 @@
       <v-flex xs12 class="text-md-center subheading">SKILLS</v-flex>
       <v-flex xs12>
         <v-btn  flat small outline radius v-for="s in userSkills">{{s}}</v-btn>
+        <SkillEditor/>
       </v-flex>
     </v-layout>
 
@@ -38,7 +39,10 @@
       </v-flex>
       <v-flex xs12>
         <!-- v-for Career-->
-        <div v-for="c in userdata[0].userCareers" class="caption">
+        <div v-if="careerToggle" class="caption">
+          <p> 등록된 경력이 없습니다. </p>
+        </div>
+        <div v-for="c in userdata[0].userCareers" class="caption" v-else>
           {{c.Company}} {{c.Position}}<br/>
           {{c.Description}}<br/>
           {{c.Startday}} ~ {{c.Endday}}<br/>
@@ -52,7 +56,10 @@
       <v-flex xs12 class="text-md-center subheading">Education <EducationEditor v-on:sendEdu="receiveEdu" v-if="isMine"/></v-flex>
       <v-flex xs12>
         <!-- v-for Education -->
-        <div v-for="e in userdata[0].userEducations" class="caption">
+        <div v-if="educationToggle" class="caption">
+          <p> 등록된 교육이력이 없습니다. </p>
+        </div>
+        <div v-for="e in userdata[0].userEducations" class="caption" v-else>
           {{e.Agency}}<br/>
           {{e.Degree}}<br/>
           {{e.Startday}} ~ {{e.Endday}}<br/>
@@ -68,28 +75,31 @@ import FirebaseService from "@/services/FirebaseService";
 import CareerEditor from "./InputForm/CareerEditor";
 import EducationEditor from "./InputForm/EducationEditor";
 import IntroEditor from "./InputForm/IntroEditor";
+import SkillEditor from "./InputForm/SkillEditor";
 
 export default {
   data() {
     return {
-      isMine:false,
       isFollow:false,
       userSkills: [],
       userImage: "",
       userIntro: "",
       userCareers: "",
       userEducations: "",
+      educationToggle : false,
+      careerToggle : false,
       userdata: [ {userName : ''} , {userIntro : ''} , {userEducations : ''} ],
       userIntroKEY: 0,
     }
   },
   props: {
-    isMine : {type:String,default:false}
+    isMine : {type:Boolean ,default:false}
   },
   components:{
     CareerEditor,
     EducationEditor,
     IntroEditor,
+    SkillEditor,
   },
   created() {
     this.SELECT_Userdata();
@@ -99,6 +109,19 @@ export default {
   methods: {
     async SELECT_Userdata() {
       this.userdata = await FirebaseService.SELECT_Userdata(this.$route.params.id);
+      if ( this.userdata[0].userIntro == "" )
+      this.userdata[0].userIntro = "소개말이 없습니다."
+      if ( this.userdata[0].userEducations.length == 0 ) {
+        this.educationToggle = true;
+      } else {
+        this.educationToggle = false;
+      }
+      if ( this.userdata[0].userCareers.length == 0 ) {
+        this.careerToggle = true;
+      } else {
+        this.careerToggle = false;
+      }
+
     },
     receiveIntro(intro) {
       FirebaseService.UPDATE_userIntro(intro,this.$route.params.id);
@@ -152,7 +175,6 @@ export default {
     async isFollowCheck() {
       var following = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       var tmp = following[0].followerlist.includes(this.$session.get('session_id'));
-      console.log(tmp);
       this.isFollow=tmp;
     },
   },
