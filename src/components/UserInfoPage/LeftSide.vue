@@ -38,7 +38,10 @@
       </v-flex>
       <v-flex xs12>
         <!-- v-for Career-->
-        <div v-for="c in userdata[0].userCareers" class="caption">
+        <div v-if="careerToggle" class="caption">
+          <p> 등록된 경력이 없습니다. </p>
+        </div>
+        <div v-for="c in userdata[0].userCareers" class="caption" v-else>
           {{c.Company}} {{c.Position}}<br/>
           {{c.Description}}<br/>
           {{c.Startday}} ~ {{c.Endday}}<br/>
@@ -52,7 +55,10 @@
       <v-flex xs12 class="text-md-center subheading">Education <EducationEditor v-on:sendEdu="receiveEdu" v-if="isMine"/></v-flex>
       <v-flex xs12>
         <!-- v-for Education -->
-        <div v-for="e in userdata[0].userEducations" class="caption">
+        <div v-if="educationToggle" class="caption">
+          <p> 등록된 교육이력이 없습니다. </p>
+        </div>
+        <div v-for="e in userdata[0].userEducations" class="caption" v-else>
           {{e.Agency}}<br/>
           {{e.Degree}}<br/>
           {{e.Startday}} ~ {{e.Endday}}<br/>
@@ -72,19 +78,20 @@ import IntroEditor from "./InputForm/IntroEditor";
 export default {
   data() {
     return {
-      isMine:false,
       isFollow:false,
       userSkills: [],
       userImage: "",
       userIntro: "",
       userCareers: "",
       userEducations: "",
+      educationToggle : false,
+      careerToggle : false,
       userdata: [ {userName : ''} , {userIntro : ''} , {userEducations : ''} ],
       userIntroKEY: 0,
     }
   },
   props: {
-    isMine : {type:String,default:false}
+    isMine : {type:Boolean ,default:false}
   },
   components:{
     CareerEditor,
@@ -99,6 +106,19 @@ export default {
   methods: {
     async SELECT_Userdata() {
       this.userdata = await FirebaseService.SELECT_Userdata(this.$route.params.id);
+      if ( this.userdata[0].userIntro == "" )
+      this.userdata[0].userIntro = "소개말이 없습니다."
+      if ( this.userdata[0].userEducations.length == 0 ) {
+        this.educationToggle = true;
+      } else {
+        this.educationToggle = false;
+      }
+      if ( this.userdata[0].userCareers.length == 0 ) {
+        this.careerToggle = true;
+      } else {
+        this.careerToggle = false;
+      }
+
     },
     receiveIntro(intro) {
       FirebaseService.UPDATE_userIntro(intro,this.$route.params.id);
@@ -152,7 +172,6 @@ export default {
     async isFollowCheck() {
       var following = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       var tmp = following[0].followerlist.includes(this.$session.get('session_id'));
-      console.log(tmp);
       this.isFollow=tmp;
     },
   },

@@ -70,7 +70,7 @@ export default {
   },
   watch: {
     // 라우터 객체를 감시하고 있다가 fetchData() 함수를 호출한다
-    '$route()': 'fetchData'
+    '$route': 'fetchData'
   },
 };
 
