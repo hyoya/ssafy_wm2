@@ -3,7 +3,8 @@ import Router from "vue-router";
 import Main from "./views/Main.vue";
 import Story from "./views/Story.vue";
 import CompanyIntro from "./views/CompanyIntro.vue";
-import Git from "./views/Git.vue"
+import Git from "./views/Git.vue";
+import Followers from "./views/Followers.vue";
 
 Vue.use(Router);
 
@@ -37,7 +38,12 @@ export default new Router({
     {
       path: "/git",
       name: "git",
-      component:Git
+      component: Git
+    },
+    {
+      path: "/followers",
+      name: "followers",
+      component: Followers
     }
   ]
 });
