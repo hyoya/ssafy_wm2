@@ -326,6 +326,36 @@ export default {
     GetUserinfo(user) {
       var str = location.origin +'/story/'+ user;
       location.replace(str);
-    }
-    // -----------------------------------------------------------------
-  };
+    },
+
+// -----------------------------------------------------------------
+//hyoya
+  // Function :: 팔로우를 추가합니다.
+  // Parameter :: 팔로잉을 당한사람, 현재 유저의 아이디,
+  //              팔로잉 당하는 사람의 기존 팔로워 리스트,  현재 유저의 팔로잉 리스트를 가져옵니다.
+  async follow(follow, user, followerlist, followinglist){
+    followerlist.push(user);
+    followinglist.push(follow);
+    firestore.collection("users").doc(follow).update({
+      followerlist : followerlist
+    });
+    firestore.collection("users").doc(user).update({
+      followinglist : followinglist
+    });
+  },
+
+  // Function :: 언팔로우합니다.
+  // Parameter :: 팔로우 헸던 사람, 현재 유저의 아이디,
+  //              팔로잉 당하는 사람의 기존 팔로워 리스트,  현재 유저의 팔로잉 리스트를 가져옵니다.
+  async unfollow(follow, user, followerlist, followinglist){
+    followerlist.splice(followerlist.indexOf(user),1);
+    followinglist.splice(followinglist.indexOf(follow),1);
+    firestore.collection("users").doc(follow).update({
+      followerlist : followerlist
+    });
+    firestore.collection("users").doc(user).update({
+      followinglist : followinglist
+    });
+  },
+
+};
