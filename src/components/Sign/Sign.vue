@@ -117,6 +117,7 @@ export default {
         this.user = this.$session.get("session_id");
         // console.log(this.$store.getters.getSession,"setSession")
         // console.log(this.$session.get('session_id'))
+        console.log(this.user);
       }
     },
     async SigninFacebook() {
