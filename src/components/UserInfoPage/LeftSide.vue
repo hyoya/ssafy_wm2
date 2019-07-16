@@ -18,9 +18,7 @@
         <span class="subheading grey--text text-md-center">{{userdata[0].userName}}</span>
         <v-btn fab flat outline small v-if="!isMine && !isFollow" @click="follow()">팔로우!</v-btn>
         <v-btn fab flat outline small v-if="!isMine && isFollow" @click="unfollow()">언팔!</v-btn>
-        <div class="subheading grey--text"> {{userdata[0].userIntro}}
-           <IntroEditor v-on:sendIntro="receiveIntro" />
-        </div>
+        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" /></div>
       </v-flex>
     </v-layout>
 
