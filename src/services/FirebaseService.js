@@ -343,4 +343,12 @@ export default {
     });
   },
 
+  async SELECT_ProjectsByPcode(pcode) {
+    return firestore.collection('projects').doc(pcode).get()
+    .then(docSnapshots => {
+        //console.log(docSnapshots.data(), '맞냐??')
+        return docSnapshots.data()
+    });
+  },
+
 };

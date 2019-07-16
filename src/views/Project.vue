@@ -1,15 +1,14 @@
 <template>
-  <!-- Modal -->
-  <v-card >
-    <v-toolbar>
+  <div>
+    <v-layout>
       <!-- profile img -->
       <v-btn icon to="/"/>
       <v-toolbar-title class="font-weight-medium">
 
-         <span class="font-weight-bold">{{projecttitle}} </span>
-         <span class="font-weight-thin font-italic subheading">{{developer}}</span>
+         <span class="font-weight-bold">{{this.project.projecttitle}} </span>
+         <span class="font-weight-thin font-italic subheading">{{this.project.developer}}</span>
          <v-flex class="caption">
-           {{ projectdescription }}
+           {{ this.project.projectdescription }}
          </v-flex>
        </v-toolbar-title>
       <v-spacer/>
@@ -19,15 +18,15 @@
       <v-btn flat icon color="yellow">
         <i class="fa fa-star fa-2x"></i>
       </v-btn>
-    </v-toolbar>
+    </v-layout>
 
     <!-- card -->
-    <v-card-text>
+    <v-layout>
       <v-container grid-list-md>
         <v-layout wrap>
           <!-- Project Main Thumbnail -->
           <v-flex xs12>
-            <BigImg v-bind:imgSrc="projectimage" />
+            <BigImg v-bind:imgSrc="this.project.projectimage" />
           </v-flex>
           <!--  left detail -->
           <v-flex xs12 md9>
@@ -38,18 +37,18 @@
 
               <!--comment -->
                 <v-flex>
-                  <span class="title">{{projecttitle}}</span>
-                  <v-flex class="d-inline caption tag" round outline>{{ projectterm }}</v-flex>
-                  <v-flex class="d-inline caption tag" round outline>{{ projectrank }}</v-flex>
+                  <span class="title">{{this.project.projecttitle}}</span>
+                  <v-flex class="d-inline caption tag" round outline>{{ this.project.projectterm }}</v-flex>
+                  <v-flex class="d-inline caption tag" round outline>{{ this.project.projectrank }}</v-flex>
                   <br />
                   <v-layout class="d-block" style="padding: 1vw 0vw;">
                     <v-flex
-                      v-for="tech in projecttech"
+                      v-for="tech in this.project.projecttech"
                       class="tech d-inline-block caption"
                     >{{ tech }}</v-flex>
                   </v-layout>
 
-                  <p v-html="projectcontent" />
+                  <p v-html="this.project.projectcontent" />
                 </v-flex>
               </v-layout>
 
@@ -94,7 +93,7 @@
         <v-flex xs12 md3 justify-center>
           <v-flex>Etc Project</v-flex>
           <img
-            v-for="e in etcproject"
+            v-for="e in this.project.etcproject"
             xs4
             md1
             :src="e.url"
@@ -103,38 +102,46 @@
         </v-flex>
       </v-layout>
     </v-container>
-  </v-card-text>
+  </v-layout>
 
-  <v-card-actions>
-    <v-spacer></v-spacer>
-    <v-btn color="blue darken-1" flat @click="popol = false">Close</v-btn>
-  </v-card-actions>
-
-</v-card>
+  </div>
 </template>
 
+
 <script>
+import FirebaseService from "@/services/FirebaseService";
+import BigImg from "../components/Common/BigImg";
+
+
 export default {
-	name: 'Project',
-	props: {
-    projectimage: { type: String }, //프로젝트 메인 이미지
-    projecttitle: { type: String }, // 프로젝트 이름
-    projectdescription: { type: String }, //프로젝트 간단 설명
-    projectterm: { type: String }, // 프로젝트 기간
-    projectcontent: { type: String }, //프로젝트 설명(상세-위지윅으로 작성한 내용)
-    projecttech: { type: Array }, //프로젝트 텍크 스택
-    projectrank: { type: String }
-	},
-}
+  name: "Project",
+  data:{
+    project_id:"",
+    project:{},
+  },
+  components: {
+    BigImg,
+  },
+  methods: {
+    async bindData(){
+      this.project = await FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
+      console.log(this.project);
+    },
+    INSERT_Comment(comment){
+      console.log(comment);
+    },
+    InfoProject(){
+      console.log("this is test tag");
+    },
+    likeit(index){
+      console.log("this is test tag");
+    }
+  },
+  created(){
+    this.project_id = this.$route.params.pcode;
+    this.bindData();
+  },
+  props: {
+  },
+};
 </script>
-<style>
-  .color-666 {
-    color: #666;
-  }
-  .color-333 {
-    color: #333;
-  }
-  .h-100 {
-    height: 100%;
-  }
-</style>

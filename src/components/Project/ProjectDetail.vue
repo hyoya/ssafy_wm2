@@ -1,26 +1,28 @@
 <template>
-  <button flat class="white--text" style="height:80%;width:80%;">
-    <v-flex hidden-xs-only>
-      <v-img :src="projectimage" height="20vw" width="100%"></v-img>
-      <div>
-        <div class="black--text">{{projecttitle}}</div>
-        <span class="grey--text" v-line-clamp:10="1">{{projectdescription}}</span>
-      </div>
-    </v-flex>
-    <v-flex hidden-sm-and-up>
-      <v-img :src="projectimage" height="45vw" width="100%"></v-img>
-      <div>
-        <div class="black--text">{{projecttitle}}</div>
-        <span class="grey--text">{{projectdescription}}</span>
-      </div>
-    </v-flex>
-  </button>
+  <v-flex class="text-xs-center">
+    <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
+      <v-flex hidden-xs-only>
+        <v-img :src="projectimage" height="20vw" width="100%"></v-img>
+          <div>
+            <div class="black--text">{{projecttitle}}</div>
+            <span class="grey--text" >{{projectdescription}}</span>
+            <!-- <span class="grey--text" v-line-clamp:10="1">{{projectdescription}}</span> -->
+          </div>
+      </v-flex>
+      <v-flex hidden-sm-and-up>
+        <v-img :src="projectimage" height="45vw" width="100%"></v-img>
+          <div>
+            <div class="black--text">{{projecttitle}}</div>
+            <span class="grey--text">{{projectdescription}}</span>
+          </div>
+      </v-flex>
+    </button>
+  </v-flex>
 </template>
 
 
 <script>
 import FirebaseService from "@/services/FirebaseService";
-
 import BigImg from "../Common/BigImg";
 
 export default {
@@ -31,11 +33,6 @@ export default {
     projectimage: { type: String }, //프로젝트 메인 이미지
     projecttitle: { type: String }, // 프로젝트 이름
     projectdescription: { type: String }, //프로젝트 간단 설명
-    projectterm: { type: String }, // 프로젝트 기간
-    projectcontent: { type: String }, //프로젝트 설명(상세-위지윅으로 작성한 내용)
-    projecttech: { type: Array }, //프로젝트 텍크 스택
-    projectrank: { type: String },
-    projectrank: { type: String },
     project_id: { type: String }
   },
   data: () => ({
@@ -83,6 +80,9 @@ export default {
     likeit(index) {},
     test(temp) {
       alert(temp);
+    },
+    popdetail(pcode){
+      window.open("../project/"+pcode,"testpage");
     }
   }
 };
