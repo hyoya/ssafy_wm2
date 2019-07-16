@@ -12,6 +12,7 @@
       <v-btn flat class="font-bold-light" href="/followers">followers</v-btn>
       <v-btn flat class="font-bold-light" href="/git">Git</v-btn>
     </div>
+    <hr />
   </div>
 </template>
 
