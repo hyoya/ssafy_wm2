@@ -10,7 +10,7 @@
         <v-toolbar>
           <span class="font-weight-regular headline">교육 추가</span>
           <v-spacer/>
-          <div @click="edumodal = false"><i class="fa fa-close"/></div>
+          <div @click="clearEdu"><i class="fa fa-close"/></div>
         </v-toolbar>
 
         <v-card-text>
@@ -73,22 +73,26 @@ import FirebaseService from "@/services/FirebaseService";
       eduendday : '', // 프로젝트 기간
     }),
     methods : {
-      addNewCareer(){
-        this.careers.push(this.career);
-      },
-      deleteCareer(index){
-        this.careers.splice(index,1);
-      },
       sendEdu(eduagency,edudegree,edustartday,eduendday) {
-        var Arr = new Array();
         var Json = new Object();
-        Json.eduagency = eduagency;
-        Json.edudegree = edudegree;
-        Json.edustartday = edustartday;
-        Json.eduendday = eduendday;
-        Arr.push(Json);
-        console.log(JSON.stringify(Arr))
-        this.$emit('sendEdu',Arr);
+        Json.Agency = eduagency;
+        Json.Degree = edudegree;
+        Json.Startday = edustartday;
+        Json.Endday = eduendday;
+        this.$emit('sendEdu',Json);
+
+        eduagency = '';
+        edudegree = '';
+        edustartday = '';
+        eduendday = '';
+        edumodal = false;
+      },
+      clearEdu() {
+        this.eduagency = '';
+        this.edudegree = '';
+        this.edustartday = '';
+        this.eduendday = '';
+        this.edumodal = false;
       }
     },
   }

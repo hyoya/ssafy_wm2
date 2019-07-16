@@ -1,10 +1,8 @@
 <template>
     <v-dialog v-model="intromodal"  max-width="600px">
-
       <template v-slot:activator="{ on }">
         <v-btn fab small outline v-on="on"><i class="fa fa-pencil"/></v-btn>
       </template>
-
       <v-card>
         <v-toolbar>
           <span class="font-weight-regular headline">자기소개 수정</span>
@@ -50,8 +48,6 @@ import FirebaseService from "@/services/FirebaseService";
       },
       sendIntro(intro) {
         this.$emit('sendIntro',intro);
-        // this.$emit('show-log');
-        // 'show-log' -> 상위 컴포넌트에서 실행 시킬 함수 이름
       }
     },
     props : {
