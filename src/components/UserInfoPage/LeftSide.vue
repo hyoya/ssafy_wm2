@@ -25,17 +25,21 @@
     <!--USER SKILLS-->
     <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading">SKILLS</v-flex>
+      <v-flex xs12 class="text-md-center subheading">SKILLS <SkillEditor v-on:sendSkill="receiveSkill" v-if="isMine"/> </v-flex>
       <v-flex xs12>
-        <v-btn  flat small outline radius v-for="s in userSkills">{{s}}</v-btn>
-        <SkillEditor/>
+        <div v-if="skillToggle" class="caption">
+          <p> 등록된 기술이 없습니다. </p>
+        </div>
+        <div v-else>
+        <v-btn  flat small outline radius v-for="s in userdata[0].userSkills">{{s}}</v-btn>
+      </div>
       </v-flex>
     </v-layout>
 
     <!--USER Careers-->
     <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading"> <CareerEditor v-on:sendCar="receiveCar" v-if="isMine"/>
+      <v-flex xs12 class="text-md-center subheading"> Career <CareerEditor v-on:sendCar="receiveCar" v-if="isMine"/>
       </v-flex>
       <v-flex xs12>
         <!-- v-for Career-->
@@ -53,7 +57,7 @@
     <!--USER Education-->
     <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading">Education <EducationEditor v-on:sendEdu="receiveEdu" v-if="isMine"/></v-flex>
+      <v-flex xs12 class="text-md-center subheading"> Education <EducationEditor v-on:sendEdu="receiveEdu" v-if="isMine"/></v-flex>
       <v-flex xs12>
         <!-- v-for Education -->
         <div v-if="educationToggle" class="caption">
@@ -122,13 +126,24 @@ export default {
         this.careerToggle = false;
       }
 
+      if ( this.userdata[0].userSkills.length == 0 ) {
+        this.skillToggle = true;
+      } else {
+        this.skillToggle = false;
+      }
     },
     receiveIntro(intro) {
       FirebaseService.UPDATE_userIntro(intro,this.$route.params.id);
       this.userdata[0].userIntro = intro;
     },
-    async receiveEdu(edu) {
 
+    receiveSkill(skill) {
+      FirebaseService.UPDATE_userSkill(skill,this.$route.params.id);
+      this.userdata[0].userSkills = skill;
+      this.SELECT_Userdata();
+    },
+
+    async receiveEdu(edu) {
       this.userEducations = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       FirebaseService.UPDATE_userEdu(edu,this.userEducations[0].userEducations,this.$route.params.id);
       // 새로운 데이터 값을 가지는 유저데이터를 가져옴
@@ -141,6 +156,7 @@ export default {
       // 새로운 데이터 값을 가지는 유저데이터를 가져옴
       this.SELECT_Userdata();
     },
+
     isMineCheck() {
       if ( this.$route.params.id == this.$session.get('session_id') ) {
         this.isMine = true;
@@ -148,6 +164,7 @@ export default {
         this.isMine = false;
       }
     },
+
     async follow(){
       var follower = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       var following = await FirebaseService.SELECT_Userdata(this.$session.get('session_id'));
@@ -160,6 +177,7 @@ export default {
       );
       this.isFollowCheck();
     },
+
     async unfollow(){
       var follower = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       var following = await FirebaseService.SELECT_Userdata(this.$session.get('session_id'));
