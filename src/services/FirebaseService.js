@@ -139,7 +139,7 @@ auth().onAuthStateChanged(function(user) {
     // Function :: 프로젝트를 작성합니다.
     // Parameter :: 제목,간략설명,진행기간,내용,사용기술,대표이미지,프로젝트수준,작성자아이디입니다.
     INSERT_Projects(projecttitle,projectdescription,projectterm,projectcontent,projecttech,projectimage,projectrank,session_id) {
-      return firestore.collection("projects").doc(projecttitle).set({
+      return firestore.collection("projects").add({
         projecttitle,projectdescription,projectterm,projectcontent,projecttech,
         projectimage,projectrank,session_id,date: firebase.firestore.FieldValue.serverTimestamp()
       });
@@ -152,7 +152,7 @@ auth().onAuthStateChanged(function(user) {
       .where("session_id","==",id).get().then((docSnapshots) => {
         return docSnapshots.docs.map((doc) => {
           let data = doc.data()
-          return data
+          return { 'project_id' : doc.id, 'data': data}
         })
       })
     },
@@ -185,10 +185,10 @@ auth().onAuthStateChanged(function(user) {
     // -----------------------------------------------------------------
 
     // seulgi
-    INSERT_Comment(project, user, comment) {
-      console.log(111)
+    INSERT_Comment(project_id, projecttitle, user, comment) {
       return firestore.collection("comments").add({
-        project:project,
+        project_id:project_id,
+        projecttitle:projecttitle,
         user:user,
         comment:comment
       });
@@ -200,7 +200,7 @@ auth().onAuthStateChanged(function(user) {
       .get().then((docSnapshots) => {
         return docSnapshots.docs.map((doc) => {
           let data = doc.data()
-          console.log(data.date)
+          // console.log(data.date)
           console.log(data)
           return data
         })
