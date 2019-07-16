@@ -115,7 +115,7 @@
 
 <script>
 export default {
-	name: 'Project',
+	name: 'pj',
 	props: {
     projectimage: { type: String }, //프로젝트 메인 이미지
     projecttitle: { type: String }, // 프로젝트 이름

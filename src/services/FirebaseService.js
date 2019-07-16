@@ -105,7 +105,7 @@ export default {
     INSERT_Projects(projecttitle,projectdescription,projectterm,projectcontent,projecttech,projectimage,projectrank,session_id) {
       return firestore.collection("projects").add({
         projecttitle,projectdescription,projectterm,projectcontent,projecttech,
-        projectimage,projectrank,session_id,date: firebase.firestore.FieldValue.serverTimestamp()
+        projectimage,projectrank,session_id,date: firebase.firestore.FieldValue.serverTimestamp(), comments:[]
       });
   },
 
@@ -118,6 +118,26 @@ export default {
           let data = doc.data()
           return { 'project_id' : doc.id, 'data': data}
         })
+      })
+    },
+
+    // 특정 프로젝트를 찾는 것입니다. - 슬기
+    async SELECT_Project(id) {
+      return firestore.collection('projects')
+      .doc(id).get().then((docSnapshots) => {
+          let data = docSnapshots.data()
+          // console.log(data)
+          return data
+      })
+    },
+
+    // 특정 프로젝트의 댓글들을 찾는 것입니다. id = 프로젝트 id - 슬기
+    async SELECT_Comments(id) {
+      return firestore.collection('projects')
+      .doc(id).get().then((docSnapshots) => {
+          let data = docSnapshots.data().comments
+          // console.log(data)
+          return data
       })
     },
 
@@ -174,14 +194,14 @@ export default {
   // -----------------------------------------------------------------
 
     // seulgi
-    INSERT_Comment(project_id, projecttitle, user, comment) {
-      return firestore.collection("comments").add({
-        project_id:project_id,
-        projecttitle:projecttitle,
-        user:user,
-        comment:comment
-      });
+    INSERT_Comment(comment, old, project_id) {
+      var old = old
+      old.comments.push(comment)
+        return firestore.collection('projects').doc(project_id).update({
+          comments : old.comments
+        });
     },
+
     async info_Projects(id, title) {
       return firestore.collection('projects')
       .where("session_id","==",id)
@@ -190,7 +210,7 @@ export default {
         return docSnapshots.docs.map((doc) => {
           let data = doc.data()
           // console.log(data.date)
-          console.log(data)
+          // console.log(data)
           return data
         })
       })

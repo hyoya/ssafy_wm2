@@ -133,7 +133,7 @@ export default {
   methods: {
     async bindData(){
       this.project = await FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
-      vm.$forceUpdate();
+
       console.log(this.project);
     },
     INSERT_Comment(comment){

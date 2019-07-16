@@ -14,10 +14,8 @@
       </v-toolbar>
 
       <v-card-text>
-        <v-layout row justify-center>
-          {{carcompany}} {{carposition}} {{ cardescription}}
-          {{ carstartday}} {{carendday}}
-          <v-flex xs12 sm6>
+        <v-layout row justify-center wrap>
+          <v-flex xs10 sm5>
             <span>*회사명</span>
             <v-text-field
             single-line
@@ -25,7 +23,8 @@
             v-model="carcompany"
             ></v-text-field>
           </v-flex>
-          <v-flex xs12 sm6>
+          <v-flex hidden-xs-only sm1/>
+          <v-flex xs10 sm5>
             <span>직책/직무</span>
             <v-text-field
             single-line
@@ -34,8 +33,9 @@
             ></v-text-field>
           </v-flex>
         </v-layout>
-        <v-layout row>
-          <v-flex xs12 sm6>
+
+        <v-layout row  wrap justify-center>
+          <v-flex xs5>
             <span>시작일</span>
             <div><input type="date"
               single-line
@@ -43,7 +43,8 @@
               v-model="carstartday"
               ></input></div>
             </v-flex>
-            <v-flex xs12 sm6>
+            <v-flex hidden-xs-only sm1/>
+            <v-flex xs5>
               <span>종료일</span>
               <div><input type="date"
                 single-line
@@ -52,20 +53,23 @@
                 ></input></div>
               </v-flex>
             </v-layout>
-            <v-layout row>
-              <v-flex xs12>
+
+            <v-layout hidden-xs-only style="height:1vw;"/>
+
+            <v-layout row wrap justify-center>
+              <v-flex xs10 sm11>
                 <span>설명</span>
-                <v-text-field
+                <v-textarea
                 outline
                 v-model="cardescription"
                 >
-              </v-text-field>
+              </v-textarea>
             </v-flex>
           </v-layout>
         </v-card-text>
-        <v-card-actions>
+        <v-layout row wrap justify-center>
           <v-btn v-on:click="sendCar(carcompany,carposition,carstartday,carendday,cardescription)">등록</v-btn>
-        </v-card-actions>
+        </v-layout>
       </v-card>
     </v-dialog>
   </template>

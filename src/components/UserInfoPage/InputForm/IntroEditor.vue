@@ -12,20 +12,23 @@
         </v-toolbar>
 
         <v-card-text>
-          <v-layout row>
-            <v-flex xs12>
+          <v-layout row wrap justify-center>
+            <v-flex xs10>
               <span>설명</span>
-              <v-text-field
+              <v-textarea
               outline
+              clearable
               v-model="intro"
               >
-              </v-text-field>
+            </v-textarea>
             </v-flex>
           </v-layout>
         </v-card-text>
-        <v-card-actions>
+
+        <v-layout row wrap justify-center>
           <v-btn v-on:click="sendIntro(intro)"> 등록 </v-btn>
-        </v-card-actions>
+        </v-layout>
+
       </v-card>
     </v-dialog>
 </template>
