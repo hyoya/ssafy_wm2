@@ -115,9 +115,11 @@ import BigImg from "../components/Common/BigImg";
 
 export default {
   name: "Project",
-  data:{
-    project_id:"",
-    project:{},
+  data() {
+      return {
+      project_id:"",
+      project:{},
+    }
   },
   components: {
     BigImg,
@@ -137,7 +139,7 @@ export default {
       console.log("this is test tag");
     }
   },
-  created(){
+  mounted(){
     this.project_id = this.$route.params.pcode;
     this.bindData();
   },
