@@ -65,17 +65,17 @@ var url = document.location.href;
 //   })
 
 // 4. 해당 사람의 것 num 기준으로 역순으로 배열 : 아직 해결 완료
-firestore.collection('projects')
-  .where("session_id","==","rla99@rla.com")
-  .orderBy("num","asc")
-  .get()
-  .then((snap) => {
-    return snap.docs.map((doc) => {
-      let data = doc.data()
-      console.log(data)
-      console.log(doc.id)
-    })
-  })
+// firestore.collection('projects')
+//   .where("session_id","==","rla99@rla.com")
+//   .orderBy("num","asc")
+//   .get()
+//   .then((snap) => {
+//     return snap.docs.map((doc) => {
+//       let data = doc.data()
+//       console.log(data)
+//       console.log(doc.id)
+//     })
+//   })
 
 // 5. 4번의 출처이다.
 
@@ -185,6 +185,28 @@ auth().onAuthStateChanged(function(user) {
     // -----------------------------------------------------------------
 
     // seulgi
+    INSERT_Comment(project, user, comment) {
+      console.log(111)
+      return firestore.collection("comments").add({
+        project:project,
+        user:user,
+        comment:comment
+      });
+    },
+    async info_Projects(id, title) {
+      return firestore.collection('projects')
+      .where("session_id","==",id)
+      .where("projecttitle","==",title)
+      .get().then((docSnapshots) => {
+        return docSnapshots.docs.map((doc) => {
+          let data = doc.data()
+          console.log(data.date)
+          console.log(data)
+          return data
+        })
+      })
+    },
+
     async SignupUser(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
       return firebase
       .auth()
