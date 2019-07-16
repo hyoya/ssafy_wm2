@@ -1,17 +1,12 @@
-
-
 <template>
   <v-app>
+    <Header />
     <v-content>
-    <!-- Header -->
-      <Header/>
-
-      <router-view/>
-
+      <!-- Header -->
+      <router-view />
       <!-- Footer -->
-      <Footer/>
-
     </v-content>
+    <Footer />
   </v-app>
 </template>
 
@@ -19,12 +14,11 @@
 import Header from "./components/Common/Header";
 import Footer from "./components/Common/Footer";
 export default {
-  name:'App',
+  name: "App",
   components: {
     Header,
-    Footer,
+    Footer
   }
-
 };
 </script>
 

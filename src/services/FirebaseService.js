@@ -164,6 +164,14 @@ export default {
       });
   },
 
+  // Function :: 유저의 기술 정보를 업데이트합니다.
+  // Parameter :: Story 페이지의 주인의 아이디와 새로운 기술 정보를 가져옵니다.
+    UPDATE_userSkill(skill,userId) {
+      return firestore.collection("users").doc(userId).update({
+        userSkills : skill
+      });
+    },
+
     // Function :: 유저의 교육정보를 업데이트합니다.
     // Parameter :: 기존 교육정보, 새로 추가된 교육정보, Story 페이지 주인의 아이디를 가져옵니다.
     UPDATE_userEdu(edu,old,userId) {
@@ -352,6 +360,14 @@ export default {
     });
     firestore.collection("users").doc(user).update({
       followinglist : followinglist
+    });
+  },
+
+  async SELECT_ProjectsByPcode(pcode) {
+    return firestore.collection('projects').doc(pcode).get()
+    .then(docSnapshots => {
+        //console.log(docSnapshots.data(), '맞냐??')
+        return docSnapshots.data()
     });
   },
 

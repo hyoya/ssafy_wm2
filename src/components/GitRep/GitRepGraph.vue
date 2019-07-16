@@ -1,9 +1,10 @@
 <template>
-  <div class="py-3">
+  <div>
     <div id="graph-container"></div>
-    <p v-for="commit in commits.data">{{commit.message}}, {{commit.author_email}}</p>
+    <div class="py-3">
+      <p v-for="commit in commits.data">{{commit.message}}, {{commit.author_email}}</p>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -24,27 +25,26 @@ export default {
     async CommitGraph() {
       this.commits = await GitlabService.getCommits()
       const graphContainer = document.getElementById("graph-container");
-        const gitgraph = GitgraphJS.createGitgraph(graphContainer);
-        const master = gitgraph.branch("master");
-     gitgraph._graph.template.commit.message.displayAuthor = false
-     gitgraph._graph.template.commit.message.displayHash = false
-     console.log(gitgraph)
-     master.commit("커밋 Start")
+      const gitgraph = GitgraphJS.createGitgraph(graphContainer);
+      const master = gitgraph.branch("master");
+      gitgraph._graph.template.commit.message.displayAuthor = false
+      gitgraph._graph.template.commit.message.displayHash = false
+      console.log(gitgraph)
+      master.commit("커밋 Start")
 
-     this.commits.forEach(commit => {
-       if (!(this.branch.includes(commit.author_email))) {
-         this.branch.push(commit.author_email)
-       }
-       gitgraph._graph.author = `${commit.author_name} <${commit.author_email}>`
-       const branch = gitgraph.branch(commit.author_email)
-       branch.commit(commit.title)
-     })
-
-     this.branch.forEach(br => {
-       master.merge(br)
-     })
-   },
- }
+      this.commits.data.forEach(commit => {
+        if (!(this.branch.includes(commit.author_email))) {
+          this.branch.push(commit.author_email)
+        }
+        gitgraph._graph.author = `${commit.author_name} <${commit.author_email}>`
+        const branch = gitgraph.branch(commit.author_email)
+        branch.commit(commit.title)
+        this.branch.forEach(br => {
+          master.merge(br)
+        })
+      })
+    },
+  }
 }
 </script>
 

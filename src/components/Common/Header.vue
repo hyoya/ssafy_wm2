@@ -1,35 +1,25 @@
 <template>
-  <v-layout>
-    <v-flex column>
-      <!-- toolbar start -->
-      <v-toolbar fixed style="background:black;">
-        <!-- logo -->
-        <!-- title -->
-        <v-toolbar-title class="white--text">
-          <v-btn flat class="white--text" href="/">Bobsleh</v-btn>
-        </v-toolbar-title>
-
-        <!--spacer -->
-        <v-spacer></v-spacer>
-        <div id="google_translate_element"></div>
-        <!-- sign in & sign up  -->
-        <v-toolbar-items>
-          <Sign />
-          <v-btn flat class="white--text" href="/story">Story</v-btn>
-          <v-btn flat class="white--text" href="/companyIntro">Company</v-btn>
-          <v-btn flat class="white--text" href="/git">Git</v-btn>
-        </v-toolbar-items>
-      </v-toolbar>
-      <!-- toolbar end -->
-    </v-flex>
-  </v-layout>
+  <div class="headerBar">
+    <div style="background:white" class="toolBar">
+      <v-toolbar-title>
+        <a class="font-bold-light content" href="/">Bobsleh</a>
+      </v-toolbar-title>
+      <v-spacer />
+      <div id="google_translate_element"></div>
+      <Sign />
+      <v-btn flat class="font-bold-light" href="/story">Story</v-btn>
+      <v-btn flat class="font-bold-light" href="/companyIntro">Company</v-btn>
+      <v-btn flat class="font-bold-light" href="/followers">followers</v-btn>
+      <v-btn flat class="font-bold-light" href="/git">Git</v-btn>
+    </div>
+    <hr />
+  </div>
 </template>
 
 <script>
-import FirebaseService from "@/services/FirebaseService"
+import FirebaseService from "@/services/FirebaseService";
 
 import Sign from "../Sign/Sign";
-
 
 export default {
   name: "Header",
@@ -39,3 +29,21 @@ export default {
   }
 };
 </script>
+<style scoped>
+.content {
+  margin-left: 30px;
+}
+a {
+  text-decoration: none;
+  color: #2c2c2c;
+}
+.headerBar {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+}
+.toolBar {
+  display: flex;
+  align-items: center;
+}
+</style>
