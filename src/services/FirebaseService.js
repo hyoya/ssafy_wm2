@@ -207,7 +207,9 @@ export default {
             userName: first_name + last_name,
             userIntro: userIntro,
             userCareers: userCareers,
-            userEducations: userEducations
+            userEducations: userEducations,
+            followerlist:[],
+            followinglist:[]
           });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
         return true;
@@ -232,7 +234,9 @@ export default {
         .set({
           company_name: company_name,
           id: id,
-          interests: interests
+          interests: interests,
+          followerlist:[],
+          followinglist:[]
         });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
         return true;
