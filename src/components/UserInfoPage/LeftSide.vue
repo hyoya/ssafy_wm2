@@ -15,15 +15,10 @@
     <!--USER Intro-->
     <v-layout style="margin-top:1vw;">
       <v-flex class="text-md-center">
-<<<<<<< HEAD
         <span class="subheading grey--text text-md-center">{{userdata[0].userName}}</span>
         <v-btn fab flat outline small v-if="!isMine && !isFollow" @click="follow()">팔로우!</v-btn>
         <v-btn fab flat outline small v-if="!isMine && isFollow" @click="unfollow()">언팔!</v-btn>
         <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" /></div>
-=======
-        <p class="subheading grey--text text-md-center">{{userdata[0].userName}}</p>
-        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" v-if="isMine"/></div>
->>>>>>> 0893cc2f705147e2643fa2e70f46f261d72ba95a
       </v-flex>
     </v-layout>
 
