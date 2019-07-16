@@ -6,6 +6,9 @@
       <v-avatar size="150" class="grey lighten-2">
         <!-- <img src="https://i.imgur.com/aTI4OeZ.png?1" v-if="userImage =='null'">
         <img src="https://i.imgur.com/SSlPWnK.png" v-if="userImage !=='null'"> -->
+        <div v-if="isMine">
+          나의것이니라!!!!!!!!!!!
+        </div>
       </v-avatar>
     </v-layout>
 
@@ -13,7 +16,7 @@
     <v-layout style="margin-top:1vw;">
       <v-flex class="text-md-center">
         <p class="subheading grey--text text-md-center">{{userdata[0].userName}}</p>
-        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" /></div>
+        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" v-if="isMine"/></div>
       </v-flex>
     </v-layout>
 
@@ -29,7 +32,7 @@
     <!--USER Careers-->
     <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading"> <CareerEditor v-on:sendCar="receiveCar"/>
+      <v-flex xs12 class="text-md-center subheading"> <CareerEditor v-on:sendCar="receiveCar" v-if="isMine"/>
       </v-flex>
       <v-flex xs12>
         <!-- v-for Career-->
@@ -44,7 +47,7 @@
     <!--USER Education-->
     <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading">Education <EducationEditor v-on:sendEdu="receiveEdu" /></v-flex>
+      <v-flex xs12 class="text-md-center subheading">Education <EducationEditor v-on:sendEdu="receiveEdu" v-if="isMine"/></v-flex>
       <v-flex xs12>
         <!-- v-for Education -->
         <div v-for="e in userdata[0].userEducations" class="caption">
@@ -76,6 +79,9 @@ export default {
       userIntroKEY: 0,
     }
   },
+  props: {
+    isMine : {type:String,default:false}
+  },
   components:{
     CareerEditor,
     EducationEditor,
@@ -93,6 +99,7 @@ export default {
       this.userdata[0].userIntro = intro;
     },
     async receiveEdu(edu) {
+
       this.userEducations = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       FirebaseService.UPDATE_userEdu(edu,this.userEducations[0].userEducations,this.$route.params.id);
       // 새로운 데이터 값을 가지는 유저데이터를 가져옴

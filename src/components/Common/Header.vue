@@ -14,8 +14,7 @@
         <div id="google_translate_element"></div>
         <!-- sign in & sign up  -->
         <v-toolbar-items>
-          <SignIn />
-          <SignUp />
+          <Sign />
           <v-btn flat class="white--text" href="/story">Story</v-btn>
           <v-btn flat class="white--text" href="/companyIntro">Company</v-btn>
           <v-btn flat class="white--text" href="/git">Git</v-btn>
@@ -29,16 +28,14 @@
 <script>
 import FirebaseService from "@/services/FirebaseService"
 
-import SignIn from "../Sign/SignIn";
-import SignUp from "../Sign/SignUp";
+import Sign from "../Sign/Sign";
 
 
 export default {
   name: "Header",
   props: {},
   components: {
-    SignIn,
-    SignUp
+    Sign
   }
 };
 </script>
