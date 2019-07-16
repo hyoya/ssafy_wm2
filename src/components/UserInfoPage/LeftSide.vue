@@ -28,7 +28,7 @@
       <v-flex xs12 class="text-md-center subheading">SKILLS</v-flex>
       <v-flex xs12>
         <v-btn  flat small outline radius v-for="s in userSkills">{{s}}</v-btn>
-        <SkillEditor v-on:sendSkill="receiveSkill"/>
+        <SkillEditor/>
       </v-flex>
     </v-layout>
 
@@ -74,7 +74,6 @@ import SkillEditor from "./InputForm/SkillEditor";
 export default {
   data() {
     return {
-      isMine:false,
       isFollow:false,
       userSkills: [],
       userImage: "",
@@ -86,7 +85,7 @@ export default {
     }
   },
   props: {
-    isMine : {type:String,default:false}
+    isMine : {type:String,default:false},
   },
   components:{
     CareerEditor,

@@ -19,7 +19,8 @@
 
             <v-flex xs12>
               <span>보유스킬</span>
-              <v-btn v-for="item in usertech" small flat outline round @click="deleteTech()">{{ item }}</v-btn>
+              <v-btn v-for="item in skills" small flat outline round @click="deleteTech(item)">
+                {{ item }}</v-btn>
             </v-flex>
 
             <v-flex xs12>
@@ -30,7 +31,11 @@
             </v-flex>
 
             <v-flex xs12>
-              <v-btn v-for="tech in techlist" small flat outline round @click="addTech(item)">{{ item }}</v-btn>
+              <v-btn v-for="tech in techlist"
+               small flat outline round
+                @click="addTech(tech)">
+                {{ tech }}
+              </v-btn>
             </v-flex>
 
           </v-layout>
@@ -50,21 +55,29 @@
   export default {
     data: () => ({
       skillmodal:false,
-      componentKeys : 0,
+      techlist:[
+        "C",
+        "C++",
+        "java",
+        "javascript",
+      ],
+      tech:"",
+      skills:[],
     }),
     methods : {
       addNewTech(){
-        this.careers.push(this.career);
+        this.skills.push(this.tech);
+        this.tech="";
       },
       deleteTech(item){
-        this.careers.splice(this.usertech.idexOf(item),1);
+        this.skills.splice(this.skills.indexOf(item),1);
+      },
+      addTech(tech){
+        this.skills.push(tech);
       },
       sendTech(intro) {
         this.$emit('sendIntro',intro);
       }
-    },
-    props : {
-      skills: {type: Array}, // intro input data
     },
   }
 </script>
