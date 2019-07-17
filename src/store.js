@@ -13,6 +13,7 @@ export default new Vuex.Store({
       check_false : false,
       check_true : true,
       projectViewToggle: false,
+      no_header:false,
     },
 
     // Getter : get 함수 정의

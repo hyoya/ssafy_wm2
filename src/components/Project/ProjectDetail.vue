@@ -48,11 +48,10 @@ export default {
     popdetail(pcode){
       var toggle = this.$store.getters.getPVT;
       if ( toggle ) {
-        window.open("../project/"+pcode,"_blank","width=1000,height=1000");
+        window.open("../project/"+pcode,"name(이름지정)","titlebar=no,status=no,toolbar=no,resizable=yes,top=20,left=500,width=700,height=600");
       } else {
         this.$emit('popdetail',pcode);
-      }
-    }
+      }    }
   },
 
 };
