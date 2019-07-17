@@ -62,7 +62,6 @@
                 <form>
                   <!-- <v-text-field label="Comment" required @input="$v.name.$touch()" @blur="$v.name.$touch()" v-model="comment"></v-text-field> -->
                   <v-text-field label="Comment" v-model="comment"></v-text-field>
-
                   <v-btn @click="INSERT_Comment(comment)">submit</v-btn>
                   <v-btn @click="InfoProject()">project정보</v-btn>
                 </form>
@@ -123,13 +122,13 @@ export default {
   name: "Project",
   data() {
     return {
-    project_id:"",
-    project: "",
-    user:"",
-    comments:[],
-    comment:"",
-    islikeit:false,
-  }
+      project_id:"",
+      project: "",
+      user:"",
+      comments:[],
+      comment:"",
+      islikeit:false,
+    }
   },
   components: {
     BigImg,
@@ -137,14 +136,12 @@ export default {
   created(){
     this.user = this.$session.get('session_id')
     this.project_id = this.$route.params.pcode;
-    // console.log(this.user, '나옴??')
     this.bindData();
     this.get_comments();
   },
   methods: {
     async bindData(){
       this.project = await FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
-      console.log(this.project);
     },
     InfoProject(){
       console.log("this is test tag");
