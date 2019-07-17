@@ -1,6 +1,9 @@
 
 <template>
   <v-app>
+    <notifications group="foo-css"
+                 position="top right"
+                 :speed="500" />
     <Header v-if="!$store.state.no_header"/>
     <v-content>
       <router-view />

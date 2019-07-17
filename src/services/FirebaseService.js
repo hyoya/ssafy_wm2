@@ -278,7 +278,6 @@ export default {
       .signOut()
       .then(function() {
         // Sign-out successful.
-        alert("로그아웃 완료!");
         return false;
       })
       .catch(function(error) {

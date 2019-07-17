@@ -7,6 +7,7 @@
       <v-spacer />
       <div id="google_translate_element"></div>
       <Sign />
+      <v-btn flat><i class="fa fa-globe" aria-hidden="true"></i> </v-btn>
       <v-btn flat class="font-bold-light" href="/story">Story</v-btn>
       <v-btn flat class="font-bold-light" href="/companyIntro">Company</v-btn>
       <v-btn flat class="font-bold-light" href="/followers">followers</v-btn>

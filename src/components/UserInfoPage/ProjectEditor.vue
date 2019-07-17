@@ -317,12 +317,11 @@ import FirebaseService from "@/services/FirebaseService";
             return;
           }
           const apiUrl = "https://api.imgur.com/3/image";
-          const apiKey = "f96b8964f338658";
           let data = new FormData();
           let content = {
             method: "POST",
             headers: {
-              Authorization: "Client-ID " + apiKey,
+              Authorization: "Client-ID f96b8964f338658",
               Accept: "application/json"
             },
             body: data,
@@ -330,11 +329,10 @@ import FirebaseService from "@/services/FirebaseService";
           };
           data.append("image", files[0]);
           fetch(apiUrl, content)
-            .then(response => response.json())
-            .then(success => {
-              this.projectimage = success.data.link;
-            })
-            .catch();
+          .then(response => response.json())
+          .then(success => {
+            this.image = success.data.link;
+          })
         }
       },
     components: {
