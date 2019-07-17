@@ -146,5 +146,11 @@ export default {
       console.log("this is test tag");
     }
   },
+  mounted(){
+    this.project_id = this.$route.params.pcode;
+    this.bindData();
+  },
+  props: {
+  },
 };
 </script>
