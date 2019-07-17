@@ -62,12 +62,12 @@
       </v-card>
     </v-dialog>
     <v-btn
-      class="whoareyou usercansee black--text"
+      class="black--text"
       flat
       @click="GetUserinfo(user)"
       v-if="user!==''"
     >{{user}}</v-btn>
-    <v-btn class="usercansee black--text" flat @click="Logout()" v-if="user!==''">Log Out</v-btn>
+    <v-btn class="black--text" flat @click="Logout()" v-if="user!==''">Log Out</v-btn>
   </v-layout>
 </template>
 
