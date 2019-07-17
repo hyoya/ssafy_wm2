@@ -1,8 +1,10 @@
 <template>
   <div class="userInfo__container">
     <div class="userInfo__container__content">
-      <div class="content__userImg"></div>
-      <div class="content__userName">{{userName}}</div>
+      <div class="content__userImg">
+        <img :src="userImg" style="height:100%; width:100%; border-radius:50px" />
+      </div>
+      <div class="content__userName">&nbsp {{userName}} / Followers</div>
     </div>
   </div>
 </template>
@@ -13,7 +15,8 @@ export default {
   data() {
     return {
       user: "",
-      userName: ""
+      userName: "",
+      userImg: ""
     };
   },
   created() {
@@ -25,6 +28,7 @@ export default {
         this.$session.get("session_id")
       );
       this.userName = this.user[0].userName;
+      this.userImg = this.user[0].userImage;
     }
   }
 };
@@ -32,12 +36,19 @@ export default {
 
 <style scoped>
 .userInfo__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 120px;
-  background-color: aqua;
+  /* background-color: aqua; */
 }
 .userInfo__container__content {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.content__userImg {
+  height: 50px;
+  width: 50px;
 }
 </style>
