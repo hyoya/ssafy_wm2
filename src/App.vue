@@ -1,13 +1,12 @@
 
 <template>
   <v-app>
-    <Header />
+    <Header v-if="!$store.state.no_header"/>
     <v-content>
-      <!-- Header -->
       <router-view />
-      <!-- Footer -->
     </v-content>
-    <Footer />
+
+    <Footer v-if="!$store.state.no_header"/>
   </v-app>
 </template>
 
@@ -19,7 +18,7 @@ export default {
   components: {
     Header,
     Footer
-  }
+  },
 };
 </script>
 
