@@ -12,9 +12,9 @@
     </div>
     <div class="container__weather">
       <div class="weather__content">
-        <p>도시 : {{city}}</p>
-        <p>습도 : {{humidity}}%</p>
-        <p>현재날씨 : {{weather}}</p>
+        <p>도시 : {{city }} &nbsp;</p>
+        <p>습도 : {{humidity}}% &nbsp; </p>
+        <p>현재날씨 : {{weather }} &nbsp;</p>
       </div>
     </div>
   </div>

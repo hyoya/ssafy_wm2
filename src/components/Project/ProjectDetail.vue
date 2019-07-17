@@ -87,7 +87,7 @@ export default {
       alert(temp);
     },
     popdetail(pcode){
-      window.open("../project/"+pcode,"testpage");
+      window.open("../project/"+pcode,"name(해파리유성)","titlebar=no,status=no,toolbar=no,resizable=yes,top=20,left=500,width=700,height=600");
     }
   },
 

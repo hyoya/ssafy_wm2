@@ -1,11 +1,9 @@
 <template>
   <div>
-    <h1>this<br/> is<br/><br/><br/><br/> test!!!</h1>
-    <v-layout>
+    <v-toolbar>
       <!-- profile img -->
       <v-btn icon to="/"/>
       <v-toolbar-title class="font-weight-medium">
-
          <span class="font-weight-bold">{{project.projecttitle}}</span>
          <span class="font-weight-thin font-italic subheading">{{project.developer}}</span>
          <v-flex class="caption">
@@ -19,14 +17,14 @@
       <v-btn flat icon color="yellow">
         <i class="fa fa-star fa-2x"></i>
       </v-btn>
-    </v-layout>
+    </v-toolbar>
 
     <!-- card -->
     <v-layout>
       <v-container grid-list-md>
         <v-layout wrap>
           <!-- Project Main Thumbnail -->
-          <v-flex xs12>
+          <v-flex xs12 sm6>
             <BigImg v-bind:imgSrc="project.projectimage" />
           </v-flex>
           <!--  left detail -->
@@ -142,6 +140,7 @@ export default {
   created(){
     this.project_id = this.$route.params.pcode;
     this.bindData();
+    this.$store.state.no_header = true;
     //this.project = FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
     //console.log("gg", this.project);
   },
