@@ -23,6 +23,23 @@ var url = document.location.href;
 // console.log((login_user==null)?"익명":login_user)
 // console.log(url)
 
+auth().onAuthStateChanged(function(user) {
+  if (user) {
+    login_user = user.email
+    console.log(login_user)
+  } else {
+    login_user = '익명'
+  }
+
+  firestore.collection('weblog').add({
+    login_user,
+    url,
+    date: firebase.firestore.FieldValue.serverTimestamp()
+  })
+})
+
+
+
 //// 김슬기가 지금 댓글 작성하기 위해서 작업하고 있는 곳입니다.
 
 // 1. 컬렉션에서 각 문서의 id와 데이터를 가져오는 방법
@@ -91,11 +108,7 @@ var url = document.location.href;
 
 //// 김슬기 작업장 끝
 
-// firestore.collection('weblog').add({
-//   login_user,
-//   url,
-//   date: firebase.firestore.FieldValue.serverTimestamp()
-// })
+
 
 export default {
   // SXNGHO's Function ---------------------------------------------------------

@@ -121,6 +121,9 @@ export default {
     return {
     project_id:"",
     project: "",
+    user:"",
+    comments:[],
+    comment:""
   }
   },
   components: {
@@ -133,22 +136,46 @@ export default {
   methods: {
     async bindData(){
       this.project = await FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
-
       console.log(this.project);
-    },
-    INSERT_Comment(comment){
-      console.log(comment);
     },
     InfoProject(){
       console.log("this is test tag");
     },
     likeit(index){
       console.log("this is test tag");
-    }
+    },
+
+    // seulgi function
+    async INSERT_Comment(comment){
+      if (this.user) {
+        this.projectData = await FirebaseService.SELECT_Project(this.project_id);
+        var Json = new Object();
+        Json.Comment = this.comment;
+        Json.User = this.user;
+        FirebaseService.INSERT_Comment(Json, this.projectData, this.project_id);
+        const newcommnet = {
+        User : this.user,
+        Comment : this.comment
+        };
+        this.comments.push(newcommnet)
+      } else {
+        // 로그인 안했으면 안했다고 알려줘야지 헤헤
+        alert('너 로그인안했다. 댓글못쓴다~')
+      }
+    },
+    async get_comments() {
+      this.comments = await FirebaseService.SELECT_Comments(this.project_id)
+    },
+    // -----------------
+
   },
   mounted(){
+    this.user = this.$session.get('session_id')
     this.project_id = this.$route.params.pcode;
+    // console.log(this.user, '나옴??')
     this.bindData();
+    this.get_comments();
+
   },
   props: {
   },
