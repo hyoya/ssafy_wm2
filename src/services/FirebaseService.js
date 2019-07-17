@@ -23,7 +23,7 @@ var url = document.location.href;
 auth().onAuthStateChanged(function(user) {
   if (user) {
     login_user = user.email;
-    console.log(login_user);
+    // console.log(login_user)
   } else {
     login_user = "익명";
   }
@@ -60,7 +60,8 @@ export default {
       projectrank,
       session_id,
       date: firebase.firestore.FieldValue.serverTimestamp(),
-      comments: []
+      comments: [],
+      likeit: []
     });
   },
 
@@ -155,6 +156,7 @@ export default {
         userEducations: old
       });
   },
+
   // Function :: 유저의 경력정보 업데이트합니다.
   // Parameter :: 기존 경력정보, 새로 추가된 경력정보, Story 페이지 주인의 아이디를 가져옵니다.
   UPDATE_userCar(car, old, userId) {
@@ -204,18 +206,6 @@ export default {
       });
   },
 
-  // Function :: 유저의 경력정보 업데이트합니다.
-  // Parameter :: 기존 경력정보, 새로 추가된 경력정보, Story 페이지 주인의 아이디를 가져옵니다.
-  UPDATE_userCar(car, old, userId) {
-    old.push(car);
-    return firestore
-      .collection("users")
-      .doc(userId)
-      .update({
-        userCareers: old
-      });
-  },
-
   // -----------------------------------------------------------------
 
   // seulgi's Function
@@ -223,13 +213,35 @@ export default {
   // Function :: 댓글을 프로젝트 안의 댓글들 이라는 요소에 추가합니다.
   // Parameter :: comment : 댓글의 텍스트 , old : 프로젝트의 댓글리스트 구버전 , project_id : 프로젝트의 id
   INSERT_Comment(comment, old, project_id) {
-    var old = old;
     old.comments.push(comment);
     return firestore
       .collection("projects")
       .doc(project_id)
       .update({
         comments: old.comments
+      });
+  },
+
+  UPDATE_Project(data, old, project_id) {
+    old.projecttitle = data.projecttitle;
+    old.projectdescription = data.projectdescription;
+    old.projectterm = data.projectterm;
+    old.projectcontent = data.projectcontent;
+    old.projecttech = data.projecttech;
+    old.projectimage = data.projectimage;
+    old.projectrank = data.projectrank;
+    alert("진행중?");
+    return firestore
+      .collection("projects")
+      .doc(project_id)
+      .update({
+        projecttitle: old.projecttitle,
+        projectdescription: old.projectdescription,
+        projectterm: old.projectterm,
+        projectcontent: old.projectcontent,
+        projecttech: old.projecttech,
+        projectimage: old.projectimage,
+        projectrank: old.projectrank
       });
   },
 
@@ -266,8 +278,10 @@ export default {
             userCareers: userCareers,
             userEducations: userEducations,
             followerlist: [],
-            followinglist: []
+            followinglist: [],
+            likeitProject: []
           });
+
         alert(`${id}님, 회원가입이 완료되었습니다.`);
         return true;
       })
@@ -275,6 +289,22 @@ export default {
         // Handle Errors here.
         // var errorCode = error.code;
         // var errorMessage = error.message;
+        alert(error);
+      });
+    return firebase
+      .auth()
+      .createUserWithEmailAndPassword(id, password)
+      .then(function() {
+        // console.log(`${id}`)
+        firestore
+          .collection("user_addon")
+          .doc(id)
+          .set({
+            toggleView: false
+          });
+        return true;
+      })
+      .catch(function(error) {
         alert(error);
       });
     return false;
@@ -409,6 +439,48 @@ export default {
       });
   },
 
+  // Function :: 프로젝트를 좋아요 누른다
+  // Parameter :: 좋아요가 눌러진 프로젝트 고유아이디
+  //              프로젝트에 저장된 프로젝트를 좋아요 누른 사람 리스트, 유저의 좋아요리스트
+  async likeit(targetProject, user, targetlikeitlist, userlikeitlist) {
+    targetlikeitlist.push(user);
+    userlikeitlist.push(targetProject);
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        likeitProject: userlikeitlist
+      });
+    firestore
+      .collection("projects")
+      .doc(targetProject)
+      .update({
+        likeit: targetlikeitlist
+      });
+  },
+
+  // Function :: 프로젝트를 좋아요를 취소한다.
+  // Parameter :: 좋아요가 취소된 프로젝트 고유아이디,
+  //              프로젝트에 저장된 프로젝트를 좋아요 누른 사람 리스트, 유저의 좋아요리스트
+  async unlikeit(targetProject, user, targetlikeitlist, userlikeitlist) {
+    targetlikeitlist.splice(targetlikeitlist.indexOf(user), 1);
+    userlikeitlist.splice(userlikeitlist.indexOf(targetProject), 1);
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        likeitProject: userlikeitlist
+      });
+    firestore
+      .collection("projects")
+      .doc(targetProject)
+      .update({
+        likeit: targetlikeitlist
+      });
+  },
+
+  // Function :: 프로젝트 디테일을 project_id로 가져옵니다
+  // Parameter :: 프로젝트 고유 아이디
   async SELECT_ProjectsByPcode(pcode) {
     return firestore
       .collection("projects")

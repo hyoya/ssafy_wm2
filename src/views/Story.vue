@@ -20,6 +20,7 @@
           <ProjectList v-if="!stateAdd && !statedetail" v-on:toStory="cc" />
           <ProjectEditor v-if="stateAdd && !statedetail" />
           <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
+
       </v-flex>
     </v-layout>
 
