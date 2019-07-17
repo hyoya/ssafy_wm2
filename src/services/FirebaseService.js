@@ -44,7 +44,7 @@ export default {
     INSERT_Projects(projecttitle,projectdescription,projectterm,projectcontent,projecttech,projectimage,projectrank,session_id) {
       return firestore.collection("projects").add({
         projecttitle,projectdescription,projectterm,projectcontent,projecttech,
-        projectimage,projectrank,session_id,date: firebase.firestore.FieldValue.serverTimestamp(), comments:[]
+        projectimage,projectrank,session_id,date: firebase.firestore.FieldValue.serverTimestamp(), comments:[],likeit:[],
       });
   },
 
@@ -193,6 +193,7 @@ export default {
             userEducations: userEducations,
             followerlist:[],
             followinglist:[],
+            likeitProject:[],
           });
 
         alert(`${id}님, 회원가입이 완료되었습니다.`);
@@ -340,6 +341,37 @@ export default {
     });
   },
 
+  // Function :: 프로젝트를 좋아요 누른다
+  // Parameter :: 좋아요가 눌러진 프로젝트 고유아이디
+  //              프로젝트에 저장된 프로젝트를 좋아요 누른 사람 리스트, 유저의 좋아요리스트
+  async likeit(targetProject, user, targetlikeitlist, userlikeitlist){
+    targetlikeitlist.push(user);
+    userlikeitlist.push(targetProject);
+    firestore.collection("users").doc(user).update({
+      likeitProject : userlikeitlist
+    });
+    firestore.collection("projects").doc(targetProject).update({
+      likeit : targetlikeitlist
+    });
+  },
+
+  // Function :: 프로젝트를 좋아요를 취소한다.
+  // Parameter :: 좋아요가 취소된 프로젝트 고유아이디,
+  //              프로젝트에 저장된 프로젝트를 좋아요 누른 사람 리스트, 유저의 좋아요리스트
+  async unlikeit(targetProject, user, targetlikeitlist, userlikeitlist){
+    targetlikeitlist.splice(targetlikeitlist.indexOf(user),1);
+    userlikeitlist.splice(userlikeitlist.indexOf(targetProject),1);
+    firestore.collection("users").doc(user).update({
+      likeitProject : userlikeitlist
+    });
+    firestore.collection("projects").doc(targetProject).update({
+      likeit : targetlikeitlist
+    });
+  },
+
+
+  // Function :: 프로젝트 디테일을 project_id로 가져옵니다
+  // Parameter :: 프로젝트 고유 아이디
   async SELECT_ProjectsByPcode(pcode) {
     return firestore.collection('projects').doc(pcode).get()
     .then(docSnapshots => {
