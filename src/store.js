@@ -11,7 +11,8 @@ export default new Vuex.Store({
     state: {
       session_id: '',
       check_false : false,
-      check_true : true
+      check_true : true,
+      no_header:false,
     },
 
     // Getter : get 함수 정의
@@ -20,7 +21,7 @@ export default new Vuex.Store({
     getters: {
         getSession: function (state) {
           return state.session_id;
-        }
+        },
     },
 
     // Mutations : 값변경 / 동기
@@ -28,6 +29,14 @@ export default new Vuex.Store({
     mutations: {
         setSession: function (state,payload) {
           return state.session_id = payload;
+        },
+        setHeader:function(state){
+          return state.no_header = false;
+        },
+        setNoHeader:function(state){
+          console.log("this is set No Header", state.no_header);
+          state.no_header = true;
+          console.log("this is set No Header", state.no_header);
         }
     },
 

@@ -44,9 +44,6 @@ export default {
       this.id = this.$route.params.id;
       this.projects = await FirebaseService.SELECT_Projects(this.id);
     },
-    popdetail(pcode){
-      window.open("../project/"+pcode,"testpage");
-    }
   }
 };
 </script>
