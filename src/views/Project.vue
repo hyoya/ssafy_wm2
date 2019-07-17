@@ -180,8 +180,6 @@ export default {
       this.comments = await FirebaseService.SELECT_Comments(this.project_id)
     },
     // -----------------
-
-  },
   props: {
   },
 };
