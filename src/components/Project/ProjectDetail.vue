@@ -1,21 +1,33 @@
 <template>
   <v-flex class="text-xs-center">
-    <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
-      <v-flex hidden-xs-only>
+    <v-flex hidden-xs-only>
+      <!-- <ProjectEditor v-if="!stateAdd"> </ProjectEditor> -->
+      <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
         <v-img :src="projectimage" height="20vw" width="100%"></v-img>
-          <div>
-            <div class="black--text">{{projecttitle}}</div>
-            <span class="grey--text" >{{projectdescription}}</span>
-          </div>
-      </v-flex>
-      <v-flex hidden-sm-and-up>
+        <div>
+          <div class="black--text">{{projecttitle}}</div>
+          <span class="grey--text">{{projectdescription}}</span>
+        </div>
+      </button>
+
+      <v-btn v-if="isMine" @click="UPDATE_Project()">프로젝트 수정하기</v-btn>
+      <v-btn v-if="isMine" @click="toStory(!stateAdd)">emit이 목표(진행중)</v-btn>
+
+      <!-- <ProjectList v-if="!stateAdd"></ProjectList> -->
+    </v-flex>
+
+    <v-flex hidden-sm-and-up>
+      <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
         <v-img :src="projectimage" height="45vw" width="100%"></v-img>
-          <div>
-            <div class="black--text">{{projecttitle}}</div>
-            <span class="grey--text">{{projectdescription}}</span>
-          </div>
-      </v-flex>
-    </button>
+        <div>
+          <div class="black--text">{{projecttitle}}</div>
+          <span class="grey--text">{{projectdescription}}</span>
+        </div>
+      </button>
+      <v-btn v-if="isMine" @click="UPDATE_Project()">프로젝트 수정하기</v-btn>
+    </v-flex>
+
+    <ProjectUpdator v-if="stateAdd" :project_id="this.project_id"></ProjectUpdator>
   </v-flex>
 </template>
 
@@ -24,9 +36,14 @@
 import FirebaseService from "@/services/FirebaseService";
 import BigImg from "../Common/BigImg";
 
+// import ProjectList from "../UserInfoPage/ProjectList";
+import ProjectUpdator from "../UserInfoPage/ProjectUpdator";
+
 export default {
   components: {
-    BigImg
+    BigImg,
+    // ProjectList,
+    ProjectUpdator
   },
   props: {
     projectimage: { type: String }, //프로젝트 메인 이미지
@@ -40,20 +57,45 @@ export default {
     projectThumbnailurl: "https://source.unsplash.com/random/1600x900",
     developer: "개발자이름",
     projectThumbnail: "../assets/logo.png",
-    date : '',
+    date: "",
     // description: "여기에는 프로젝트 디스크립션이 들어갈 공간입니다ㅏㅏㅏㅏ",
-    projectData : ''
+    projectData: "",
+    user: "",
+    login: "",
+    isMine: "",
+    stateAdd: false
   }),
   methods: {
-    popdetail(pcode){
+    popdetail(pcode) {
       var toggle = this.$store.getters.getPVT;
-      if ( toggle ) {
-        window.open("../project/"+pcode,"name(이름지정)","titlebar=no,status=no,toolbar=no,resizable=yes,top=20,left=500,width=700,height=600");
+      if (toggle) {
+        window.open(
+          "../project/" + pcode,
+          "name(이름지정)",
+          "titlebar=no,status=no,toolbar=no,resizable=yes,top=20,left=500,width=700,height=600"
+        );
       } else {
-        this.$emit('popdetail',pcode);
-      }    }
+        this.$emit("popdetail", pcode);
+      }
+    },
+    UPDATE_Project() {
+      this.stateAdd = this.stateAdd ? false : true ? true : false;
+    },
+    toStory(state) {
+      console.log(state, "이게 뭐라고..");
+      this.$emit("toStory", state);
+    }
   },
 
+  created() {
+    this.user = this.$route.params.id;
+    this.login = this.$session.get("session_id");
+    if (this.user == this.login) {
+      this.isMine = true;
+    } else {
+      this.isMine = false;
+    }
+  }
 };
 </script>
 
