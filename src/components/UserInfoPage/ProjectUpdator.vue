@@ -322,10 +322,10 @@ import FirebaseService from "@/services/FirebaseService";
                'projecttech':projecttech,
                'projectimage':projectimage,
                'projectrank':projectrank }
-               console.log(this.project_id, '이게 나와야 한다')
+               // console.log(this.project_id, '이게 나와야 한다')
                FirebaseService.UPDATE_Project(
                  data, this.project, this.project_id);
-                 alert("업로드 완료!");
+                 // alert("업로드 완료!");
 
          },
 
