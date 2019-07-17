@@ -6,7 +6,6 @@
           <div>
             <div class="black--text">{{projecttitle}}</div>
             <span class="grey--text" >{{projectdescription}}</span>
-            <!-- <span class="grey--text" v-line-clamp:10="1">{{projectdescription}}</span> -->
           </div>
       </v-flex>
       <v-flex hidden-sm-and-up>
@@ -47,8 +46,12 @@ export default {
   }),
   methods: {
     popdetail(pcode){
-      window.open("../project/"+pcode,"name(해파리유성)","titlebar=no,status=no,toolbar=no,resizable=yes,top=20,left=500,width=700,height=600");
-    }
+      var toggle = this.$store.getters.getPVT;
+      if ( toggle ) {
+        window.open("../project/"+pcode,"name(이름지정)","titlebar=no,status=no,toolbar=no,resizable=yes,top=20,left=500,width=700,height=600");
+      } else {
+        this.$emit('popdetail',pcode);
+      }    }
   },
 
 };

@@ -205,7 +205,6 @@ export default {
       var tmp = following[0].followerlist.includes(this.$session.get('session_id'));
       this.isFollow=tmp;
     },
-
     removeImage(){
       FirebaseService.DELETE_userImage(this.$route.params.id);
       this.image = "";
