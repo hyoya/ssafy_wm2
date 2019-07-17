@@ -11,9 +11,14 @@
          </v-flex>
        </v-toolbar-title>
       <v-spacer/>
-      <v-btn flat icon color="pink">
+
+      <v-btn flat icon color="gray" @click="likeit()" v-if="!this.islikeit">
         <i class="fa fa-heart fa-2x"></i>
       </v-btn>
+      <v-btn flat icon color="pink" @click="unlikeit()" v-if="this.islikeit">
+        <i class="fa fa-heart fa-2x"></i>
+      </v-btn>
+
       <v-btn flat icon color="yellow">
         <i class="fa fa-star fa-2x"></i>
       </v-btn>
@@ -78,7 +83,7 @@
                     </v-list-tile-content>
 
                     <v-list-tile-action>
-                      <i class="fa fa-heart" @click="likeit(index)"></i>
+                      <i class="fa fa-heart"></i>
                     </v-list-tile-action>
                   </v-list-tile>
                 </v-list>
@@ -110,13 +115,13 @@
 import FirebaseService from "@/services/FirebaseService";
 import BigImg from "../components/Common/BigImg";
 
-
 export default {
   name: "Project",
   data() {
     return {
       project : {},
       project_id : "",
+      islikeit:false,
     }
   },
   components: {
@@ -133,14 +138,42 @@ export default {
     InfoProject(){
       console.log("this is test tag");
     },
-    likeit(index){
-      console.log("this is test tag");
-    }
+    async isLikeItCheck(){
+      var targetProject = await FirebaseService.SELECT_Project(this.project_id);
+      var tmp = targetProject.likeit.includes(this.$session.get('session_id'));
+      this.islikeit=tmp;
+      console.log("like it! :: ", this.islikeit);
+    },
+    async likeit(){
+      var targetProject = await FirebaseService.SELECT_Project(this.project_id);
+      var userlikeitlist = await FirebaseService.SELECT_Userdata(this.$session.get('session_id'));
+
+      await FirebaseService.likeit(
+        this.project_id,
+        this.$session.get('session_id'),
+        targetProject.likeit,
+        userlikeitlist[0].likeitProject
+      );
+      this.isLikeItCheck();
+    },
+    async unlikeit(){
+      var targetProject = await FirebaseService.SELECT_Project(this.project_id);
+      var userlikeitlist = await FirebaseService.SELECT_Userdata(this.$session.get('session_id'));
+
+      await FirebaseService.unlikeit(
+        this.project_id,
+        this.$session.get('session_id'),
+        targetProject.likeit,
+        userlikeitlist[0].likeitProject
+      );
+      this.isLikeItCheck();
+    },
   },
   created(){
     this.project_id = this.$route.params.pcode;
     this.bindData();
     this.$store.state.no_header = true;
+    this.isLikeItCheck();
     //this.project = FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
     //console.log("gg", this.project);
   },
