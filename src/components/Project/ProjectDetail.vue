@@ -9,7 +9,6 @@
           <div>
             <div class="black--text">{{projecttitle}}</div>
             <span class="grey--text" >{{projectdescription}}</span>
-            <!-- <span class="grey--text" v-line-clamp:10="1">{{projectdescription}}</span> -->
           </div>
       </button>
 
@@ -74,13 +73,16 @@ export default {
   }),
   methods: {
     popdetail(pcode){
-      window.open("../project/"+pcode,"_blank","width=1000,height=1000");
-    },
-    UPDATE_Project() {
-      console.log(this.stateAdd, '지금은?')
-      console.log(this.project_id)
-      this.stateAdd = (this.stateAdd)?false:true ?true:false;
-    },
+      var toggle = this.$store.getters.getPVT;
+      if ( toggle ) {
+        window.open("../project/"+pcode,"name(이름지정)","titlebar=no,status=no,toolbar=no,resizable=yes,top=20,left=500,width=700,height=600");
+      } else {
+        this.$emit('popdetail',pcode);
+      }},
+      UPDATE_Project() {
+        this.stateAdd = (this.stateAdd)?false:true ?true:false;
+      },
+
   },
 
   created() {
