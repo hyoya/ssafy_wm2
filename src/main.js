@@ -9,8 +9,6 @@ import store from './store'
 import router from './router'
 import './registerServiceWorker'
 import 'vuetify/dist/vuetify.min.css'
-import EasyRefresh from 'vue-easyrefresh'
-Vue.use(EasyRefresh)
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 

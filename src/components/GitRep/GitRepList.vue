@@ -2,10 +2,10 @@
   <v-layout column px-4>
     <v-flex v-for="i in repositories.length">
       <v-divider v-if="i === 1"></v-divider>
-      <GitRepository :repos="repositories[i - 1]"></GitRepository>
+        <GitRepository :repos="repositories[i - 1]"></GitRepository>
       <v-divider></v-divider>
     </v-flex>
-    <GitRepGraph />
+      <GitRepGraph/>
   </v-layout>
 </template>
 
