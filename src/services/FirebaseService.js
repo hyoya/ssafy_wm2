@@ -130,6 +130,17 @@ export default {
           userCareers : old
         });
     },
+    UPDATE_userImage(image,userId) {
+      return firestore.collection("users").doc(userId).update({
+        userImage : image
+      });
+    },
+
+    DELETE_userImage(userId) {
+      return firestore.collection("users").doc(userId).update({
+          userImage : ""
+      });
+    },
 
 
   // -----------------------------------------------------------------
@@ -262,7 +273,7 @@ export default {
         return true;
       });
     },
-    
+
     GetUserinfo(user) {
       var str = location.origin +'/story/'+ user;
       location.replace(str);

@@ -2,7 +2,7 @@
   <v-layout row justify-center>
     <v-dialog v-model="dialog" max-width="600px" v-if="user==''">
       <template v-slot:activator="{ on }">
-        <v-btn flat class="usercantsee black--text" v-on="on">Sign In</v-btn>
+        <v-btn flat class="black--text" v-on="on">Sign In</v-btn>
       </template>
 
       <v-card>
@@ -28,7 +28,6 @@
         </v-card-text>
 
         <v-card-actions>
-          <!-- <v-spacer></v-spacer> -->
           <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
           <v-btn
             color="blue darken-1"
@@ -41,32 +40,21 @@
     </v-dialog>
 
     <v-dialog v-model="signupmodal" max-width="500px" v-if="user==''">
-      <template v-slot:activator="{ on }">
-        <v-btn class="usercantsee black--text" flat v-on="on">Sign Up</v-btn>
+      <template v-slot:activator="{ on: { click } }">
+        <v-btn flat class="black--text" v-on:click="click">Sign Up</v-btn>
       </template>
-
       <v-card>
-        <!-- title -->
         <v-card-title>Sign Up</v-card-title>
-
-        <!-- Kind -->
         <v-card-text>
           <SignupforUserModal />
           <SignupforCompanyModal />
         </v-card-text>
-
-        <!-- Close -->
         <v-card-actions>
           <v-btn color="primary" flat @click="signupmodal=false">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-btn
-      class="black--text"
-      flat
-      @click="GetUserinfo(user)"
-      v-if="user!==''"
-    >{{user}}</v-btn>
+    <v-btn class="black--text" flat @click="GetUserinfo(user)" v-if="user!==''">{{user}}</v-btn>
     <v-btn class="black--text" flat @click="Logout()" v-if="user!==''">Log Out</v-btn>
   </v-layout>
 </template>
@@ -83,12 +71,13 @@ export default {
     user: "",
 
     dialog: false,
+    signupmodal: false,
+
     LoginId: "",
     LoginPassword: "",
 
     signupforuser: false,
     signupforcompany: false,
-    signupmodal: false
   }),
   components: {
     SignupforCompanyModal,

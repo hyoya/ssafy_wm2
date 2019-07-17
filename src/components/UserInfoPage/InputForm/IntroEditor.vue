@@ -19,6 +19,7 @@
               outline
               clearable
               v-model="intro"
+              v-on:keyup.enter="sendIntro(intro)"
               >
             </v-textarea>
             </v-flex>

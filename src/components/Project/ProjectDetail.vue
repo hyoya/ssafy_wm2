@@ -47,7 +47,7 @@ export default {
   }),
   methods: {
     popdetail(pcode){
-      window.open("../project/"+pcode);
+      window.open("../project/"+pcode,"_blank","width=1000,height=1000");
     }
   },
 
