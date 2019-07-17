@@ -14,7 +14,7 @@
         <LeftSide xs12 sm4 md3 :isMine="isMine" v-cloak/>
       </v-flex>
       <v-flex xs12 sm8 md9 >
-          <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
+          <v-btn @click="changeComponent()" v-if="isMine">(1번)프로젝트 생성하기</v-btn>
           <ProjectList v-if="!stateAdd"></ProjectList>
           <ProjectEditor v-else> </ProjectEditor>
       </v-flex>

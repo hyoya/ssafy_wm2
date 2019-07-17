@@ -42,6 +42,7 @@
                   <v-flex class="d-inline caption tag" round outline>{{ projectterm }}</v-flex>
                   <v-flex class="d-inline caption tag" round outline>{{ projectrank }}</v-flex>
                   <br />
+
                   <v-layout class="d-block" style="padding: 1vw 0vw;">
                     <v-flex
                       v-for="tech in projecttech"
@@ -56,6 +57,7 @@
             <!--comment -->
               <v-flex>
                 <!-- comment input -->
+
                 <form>
                   <!-- <v-text-field label="Comment" required @input="$v.name.$touch()" @blur="$v.name.$touch()" v-model="comment"></v-text-field> -->
                   <v-text-field label="Comment" v-model="comment"></v-text-field>
