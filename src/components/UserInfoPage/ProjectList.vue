@@ -1,13 +1,9 @@
 <!--GetProjectByUserId-->
 <template>
   <div>
-    <v-layout>
-      <h1 class="subheading grey--text text-md-center">PROJECT LIST</h1>
-    </v-layout>
-
     <v-layout row wrap justify-center>
       <v-flex v-for="i in projects.length" xs12 sm6 md4>
-        <ProjectDetail
+        <ProjectDetail v-on:popdetail="toStory"
           :projectimage="projects[i-1].data.projectimage"
           :projecttitle="projects[i-1].data.projecttitle"
           :projectdescription="projects[i-1].data.projectdescription"
@@ -29,7 +25,7 @@ export default {
   name: "ProjectList",
   data() {
     return {
-      projects: []
+      projects: [],
     };
   },
   components: {
@@ -44,8 +40,9 @@ export default {
       this.id = this.$route.params.id;
       this.projects = await FirebaseService.SELECT_Projects(this.id);
     },
-    popdetail(pcode){
-      window.open("../project/"+pcode,"testpage");
+    toStory(pcode) {
+      console.log("여기까지왔다.",pcode)
+      this.$emit('toStory',pcode);
     }
   }
 };

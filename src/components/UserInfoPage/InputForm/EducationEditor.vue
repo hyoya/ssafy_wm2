@@ -15,7 +15,6 @@
 
         <v-card-text>
             <v-layout row justify-center wrap>
-              {{eduagency}} {{edudegree}} {{edustartday}} {{eduendday}}
               <v-flex xs10 sm5>
                 <span>*기관명</span>
                 <v-text-field

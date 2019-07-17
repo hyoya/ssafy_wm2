@@ -1,11 +1,10 @@
 <template>
   <div>
-    <v-layout>
+    <v-toolbar>
       <!-- profile img -->
       <v-btn icon to="/"/>
       <v-toolbar-title class="font-weight-medium">
-
-         <span class="font-weight-bold">{{project.projecttitle}} </span>
+         <span class="font-weight-bold">{{project.projecttitle}}</span>
 
          <span class="font-weight-thin font-italic subheading">{{project.developer}}</span>
          <v-flex class="caption">
@@ -19,14 +18,14 @@
       <v-btn flat icon color="yellow">
         <i class="fa fa-star fa-2x"></i>
       </v-btn>
-    </v-layout>
+    </v-toolbar>
 
     <!-- card -->
     <v-layout>
       <v-container grid-list-md>
         <v-layout wrap>
           <!-- Project Main Thumbnail -->
-          <v-flex xs12>
+          <v-flex xs12 sm6>
             <BigImg v-bind:imgSrc="project.projectimage" />
           </v-flex>
           <!--  left detail -->
@@ -74,10 +73,12 @@
 
                 <!-- comment list -->
                 <v-list>
-                  <v-list-tile v-for="(com, index) in project.comments">
+                  <v-list-tile v-for="(com, index) in comments">
 
                     <v-list-tile-content>
-                      <v-list-tile-title v-html="com.content"></v-list-tile-title>
+                      <v-list-tile-title v-html="com.Comment"></v-list-tile-title>
+                      <v-list-tile-title v-html="com.User"></v-list-tile-title>
+
                     </v-list-tile-content>
 
                     <v-list-tile-action>
@@ -121,23 +122,25 @@ export default {
     return {
     project_id:"",
     project: "",
+    user:"",
+    comments:[],
+    comment:""
   }
   },
   components: {
     BigImg,
   },
   created(){
+    this.user = this.$session.get('session_id')
     this.project_id = this.$route.params.pcode;
+    // console.log(this.user, '나옴??')
     this.bindData();
+    this.get_comments();
   },
   methods: {
     async bindData(){
       this.project = await FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
-
       console.log(this.project);
-    },
-    INSERT_Comment(comment){
-      console.log(comment);
     },
     InfoProject(){
       console.log("this is test tag");
@@ -146,10 +149,37 @@ export default {
       console.log("this is test tag");
     }
   },
-  mounted(){
+  created(){
     this.project_id = this.$route.params.pcode;
     this.bindData();
-  },
+    this.$store.state.no_header = true;
+    //this.project = FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
+    //console.log("gg", this.project);
+
+    },
+
+    // seulgi function
+    async INSERT_Comment(comment){
+      if (this.user) {
+        this.projectData = await FirebaseService.SELECT_Project(this.project_id);
+        var Json = new Object();
+        Json.Comment = this.comment;
+        Json.User = this.user;
+        FirebaseService.INSERT_Comment(Json, this.projectData, this.project_id);
+        const newcommnet = {
+        User : this.user,
+        Comment : this.comment
+        };
+        this.comments.push(newcommnet)
+      } else {
+        // 로그인 안했으면 안했다고 알려줘야지 헤헤
+        alert('너 로그인안했다. 댓글못쓴다~')
+      }
+    },
+    async get_comments() {
+      this.comments = await FirebaseService.SELECT_Comments(this.project_id)
+    },
+    // -----------------
   props: {
   },
 };

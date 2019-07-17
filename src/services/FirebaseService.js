@@ -17,84 +17,23 @@ firebase.initializeApp(firebase_config);
 const firestore = firebase.firestore();
 const auth = firebase.auth;
 var provider = new auth.FacebookAuthProvider();
-// console.log(provider)
 var login_user; // 로그인 하면 email, 아니면 ''  처리
 var url = document.location.href;
-// console.log((login_user==null)?"익명":login_user)
-// console.log(url)
 
-//// 김슬기가 지금 댓글 작성하기 위해서 작업하고 있는 곳입니다.
+auth().onAuthStateChanged(function(user) {
+  if (user) {
+    login_user = user.email;
+    console.log(login_user);
+  } else {
+    login_user = "익명";
+  }
 
-// 1. 컬렉션에서 각 문서의 id와 데이터를 가져오는 방법
-// firestore.collection('project')
-// .where("session_id","==","rla99@rla.com").get().then((snap) => {
-//   return snap.docs.map((doc) => {
-//     let data = doc.data()
-//     console.log(data)
-//     console.log(doc.id)
-//     return data
-//   })
-// })
-
-// 2. 해당 사람의 컬렉션 갯수
-// firestore.collection('project')
-//   .where("session_id","==","rla99@rla.com")
-//   .get()
-//   .then(snap => {
-//    var size = snap.size // will return the collection size
-//    console.log(snap)
-//    console.log(size)
-// });
-
-// 3. 해당 사람의 프로젝트 다 가져오기
-// firestore.collection('projects')
-//   .where("session_id","==","rla99@rla.com")
-//   .get()
-//   .then((snap) => {
-//     return snap.docs.map((doc) => {
-//       let data = doc.data()
-//       console.log(snap)
-//       console.log(data)
-//       console.log(doc.id)
-//       return data
-//     })
-//   })
-
-// 4. 해당 사람의 것 num 기준으로 역순으로 배열 : 아직 해결 완료
-// firestore.collection('projects')
-//   .where("session_id","==","rla99@rla.com")
-//   .orderBy("num","asc")
-//   .get()
-//   .then((snap) => {
-//     return snap.docs.map((doc) => {
-//       let data = doc.data()
-//       console.log(data)
-//       console.log(doc.id)
-//     })
-//   })
-
-// 5. 4번의 출처이다.
-
-// var userId = "rla99@rla.com"
-// console.log(userId)
-// async function getUploadsByUser(userId) {
-//   const query = firestore
-//     .collection('projects')
-//     .where('session_id', '==', userId)
-//     .orderBy('num', 'asc');
-//   const snapshot = await query.get()
-//   return snapshot.docs.map(doc => console.log(doc.data()));
-// }
-//
-// getUploadsByUser(userId)
-
-//// 김슬기 작업장 끝
-
-// firestore.collection("weblog").add({
-//   login_user,
-//   url,
-//   date: firebase.firestore.FieldValue.serverTimestamp()
-// });
+  // firestore.collection('weblog').add({
+  //   login_user,
+  //   url,
+  //   date: firebase.firestore.FieldValue.serverTimestamp()
+  // })
+});
 
 export default {
   // SXNGHO's Function ---------------------------------------------------------
@@ -140,7 +79,8 @@ export default {
       });
   },
 
-  // 특정 프로젝트를 찾는 것입니다. - 슬기
+  // Function :: 특정 프로젝트를 찾는 것입니다. ( seulgi )
+  // Parameter :: 프로젝트 id를 받으면, 이에 해당하는 프로젝트를 검색합니다.
   async SELECT_Project(id) {
     return firestore
       .collection("projects")
@@ -153,7 +93,8 @@ export default {
       });
   },
 
-  // 특정 프로젝트의 댓글들을 찾는 것입니다. id = 프로젝트 id - 슬기
+  // Function :: 특정 프로젝트의 댓글들을 찾는 것입니다. ( seulgi )
+  // Parameter :: 프로젝트 id를 받으면, 해당 프로젝트에 속한 댓글들을 검색합니다.
   async SELECT_Comments(id) {
     return firestore
       .collection("projects")
@@ -214,6 +155,54 @@ export default {
         userEducations: old
       });
   },
+  // Function :: 유저의 경력정보 업데이트합니다.
+  // Parameter :: 기존 경력정보, 새로 추가된 경력정보, Story 페이지 주인의 아이디를 가져옵니다.
+  UPDATE_userCar(car, old, userId) {
+    old.push(car);
+    return firestore
+      .collection("users")
+      .doc(userId)
+      .update({
+        userCareers: old
+      });
+  },
+  UPDATE_userImage(image, userId) {
+    return firestore
+      .collection("users")
+      .doc(userId)
+      .update({
+        userImage: image
+      });
+  },
+
+  DELETE_userImage(userId) {
+    firestore
+      .collection("users")
+      .doc(userId)
+      .update({
+        userImage: ""
+      });
+  },
+
+  UPDATE_userAddon(userId, toggleView) {
+    firestore
+      .collection("user_addon")
+      .doc(userId)
+      .update({
+        toggleView: toggleView
+      });
+  },
+
+  async SELECT_userAddon(userId) {
+    return firestore
+      .collection("user_addon")
+      .doc(userId)
+      .get()
+      .then(docSnapshots => {
+        let data = docSnapshots.data().toggleView;
+        return data;
+      });
+  },
 
   // Function :: 유저의 경력정보 업데이트합니다.
   // Parameter :: 기존 경력정보, 새로 추가된 경력정보, Story 페이지 주인의 아이디를 가져옵니다.
@@ -229,7 +218,10 @@ export default {
 
   // -----------------------------------------------------------------
 
-  // seulgi
+  // seulgi's Function
+
+  // Function :: 댓글을 프로젝트 안의 댓글들 이라는 요소에 추가합니다.
+  // Parameter :: comment : 댓글의 텍스트 , old : 프로젝트의 댓글리스트 구버전 , project_id : 프로젝트의 id
   INSERT_Comment(comment, old, project_id) {
     var old = old;
     old.comments.push(comment);
@@ -238,22 +230,6 @@ export default {
       .doc(project_id)
       .update({
         comments: old.comments
-      });
-  },
-
-  async info_Projects(id, title) {
-    return firestore
-      .collection("projects")
-      .where("session_id", "==", id)
-      .where("projecttitle", "==", title)
-      .get()
-      .then(docSnapshots => {
-        return docSnapshots.docs.map(doc => {
-          let data = doc.data();
-          // console.log(data.date)
-          // console.log(data)
-          return data;
-        });
       });
   },
 
@@ -303,6 +279,7 @@ export default {
       });
     return false;
   },
+
   async SignupCompany(company_name, id, password, interests) {
     return firebase
       .auth()
@@ -330,6 +307,7 @@ export default {
       });
     return false;
   },
+
   async Signin(id, password) {
     return firebase
       .auth()
@@ -345,6 +323,7 @@ export default {
       });
     return false;
   },
+
   async SigninFacebook() {
     return firebase
       .auth()
@@ -366,6 +345,7 @@ export default {
         return false;
       });
   },
+
   async Logout() {
     return firebase
       .auth()
@@ -381,6 +361,7 @@ export default {
         return true;
       });
   },
+
   GetUserinfo(user) {
     var str = location.origin + "/story/" + user;
     location.replace(str);
