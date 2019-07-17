@@ -6,7 +6,6 @@
           <div>
             <div class="black--text">{{projecttitle}}</div>
             <span class="grey--text" >{{projectdescription}}</span>
-            <!-- <span class="grey--text" v-line-clamp:10="1">{{projectdescription}}</span> -->
           </div>
       </v-flex>
       <v-flex hidden-sm-and-up>
@@ -47,7 +46,12 @@ export default {
   }),
   methods: {
     popdetail(pcode){
-      window.open("../project/"+pcode,"_blank","width=1000,height=1000");
+      var toggle = this.$store.getters.getPVT;
+      if ( toggle ) {
+        window.open("../project/"+pcode,"_blank","width=1000,height=1000");
+      } else {
+        this.$emit('popdetail',pcode);
+      }
     }
   },
 

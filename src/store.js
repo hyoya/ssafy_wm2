@@ -11,7 +11,8 @@ export default new Vuex.Store({
     state: {
       session_id: '',
       check_false : false,
-      check_true : true
+      check_true : true,
+      projectViewToggle: false,
     },
 
     // Getter : get 함수 정의
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     getters: {
         getSession: function (state) {
           return state.session_id;
+        },
+        getPVT: function(state) {
+          return state.projectViewToggle;
         }
     },
 
@@ -28,7 +32,10 @@ export default new Vuex.Store({
     mutations: {
         setSession: function (state,payload) {
           return state.session_id = payload;
-        }
+        },
+        convertPVT: function (state,payload) {
+          return state.projectViewToggle = payload;
+        },
     },
 
     // Action : 값변경 / 비동기

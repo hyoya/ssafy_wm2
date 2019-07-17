@@ -137,8 +137,22 @@ export default {
     },
 
     DELETE_userImage(userId) {
-      return firestore.collection("users").doc(userId).update({
+      firestore.collection("users").doc(userId).update({
           userImage : ""
+      });
+    },
+
+
+    UPDATE_userAddon(userId,toggleView) {
+      firestore.collection("user_addon").doc(userId).update({
+        toggleView : toggleView
+      });
+    },
+
+    async SELECT_userAddon(userId) {
+      return firestore.collection("user_addon").doc(userId).get().then((docSnapshots) => {
+          let data = docSnapshots.data().toggleView
+          return data
       });
     },
 

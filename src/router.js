@@ -6,7 +6,6 @@ import CompanyIntro from "./views/CompanyIntro.vue";
 import Git from "./views/Git.vue";
 import Followers from "./views/Followers.vue";
 import Project from "./views/Project.vue";
-
 Vue.use(Router);
 
 export default new Router({
@@ -46,7 +45,6 @@ export default new Router({
       name: "followers",
       component: Followers
     },
-
     {
       path:"/project/:pcode",
       name:"project",
