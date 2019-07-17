@@ -74,10 +74,12 @@
 
                 <!-- comment list -->
                 <v-list>
-                  <v-list-tile v-for="(com, index) in project.comments">
+                  <v-list-tile v-for="(com, index) in comments">
 
                     <v-list-tile-content>
-                      <v-list-tile-title v-html="com.content"></v-list-tile-title>
+                      <v-list-tile-title v-html="com.Comment"></v-list-tile-title>
+                      <v-list-tile-title v-html="com.User"></v-list-tile-title>
+
                     </v-list-tile-content>
 
                     <v-list-tile-action>
@@ -130,8 +132,11 @@ export default {
     BigImg,
   },
   created(){
+    this.user = this.$session.get('session_id')
     this.project_id = this.$route.params.pcode;
+    // console.log(this.user, '나옴??')
     this.bindData();
+    this.get_comments();
   },
   methods: {
     async bindData(){
@@ -167,14 +172,6 @@ export default {
       this.comments = await FirebaseService.SELECT_Comments(this.project_id)
     },
     // -----------------
-
-  },
-  mounted(){
-    this.user = this.$session.get('session_id')
-    this.project_id = this.$route.params.pcode;
-    // console.log(this.user, '나옴??')
-    this.bindData();
-    this.get_comments();
 
   },
   props: {
