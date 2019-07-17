@@ -6,26 +6,29 @@
       <v-card>
         <v-toolbar>
           <span class="font-weight-regular headline">자기소개 수정</span>
+          {{intro}}
           <v-spacer/>
-          <div @click="intromodal = false"><i class="fa fa-close"/></div>
+          <div @click="clearIntro"><i class="fa fa-close"/></div>
         </v-toolbar>
 
         <v-card-text>
-          <v-layout row>
-            <v-flex xs12>
+          <v-layout row wrap justify-center>
+            <v-flex xs10>
               <span>설명</span>
-              <v-text-field
+              <v-textarea
               outline
+              clearable
               v-model="intro"
               >
-              </v-text-field>
-              {{intro}}
+            </v-textarea>
             </v-flex>
           </v-layout>
         </v-card-text>
-        <v-card-actions>
+
+        <v-layout row wrap justify-center>
           <v-btn v-on:click="sendIntro(intro)"> 등록 </v-btn>
-        </v-card-actions>
+        </v-layout>
+
       </v-card>
     </v-dialog>
 </template>
@@ -34,11 +37,16 @@
 import FirebaseService from "@/services/FirebaseService";
 
   export default {
-    data: () => ({
+    data() {
+      return {
       intromodal:false,
-      intro : '',
-      componentKeys : 0,
-    }),
+      intro : "",
+      }
+    },
+    created() {
+      this.SELECT_Userdata();
+    },
+
     methods : {
       addNewCareer(){
         this.careers.push(this.career);
@@ -48,10 +56,17 @@ import FirebaseService from "@/services/FirebaseService";
       },
       sendIntro(intro) {
         this.$emit('sendIntro',intro);
-      }
-    },
-    props : {
-      introinput: {type: String}, // intro input data
+        this.SELECT_Userdata();
+        this.intromodal = false;
+      },
+      clearIntro() {
+        this.intro = '';
+        this.intromodal = false;
+      },
+      async SELECT_Userdata() {
+        var userdata = await FirebaseService.SELECT_Userdata(this.$route.params.id);
+        this.intro = userdata[0].userIntro
+      },
     },
   }
 </script>
