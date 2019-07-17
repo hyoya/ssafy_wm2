@@ -1,8 +1,8 @@
 <template>
   <div class="followerList__container">
     <div class="followrList__container__content">
-      <div v-for="man in followers" class="content__follower">
-        <Follower v-bind:follower="man" />
+      <div v-for="human in followers" class="content__follower">
+        <Follower v-bind:follower="human" />
       </div>
     </div>
   </div>
@@ -21,7 +21,6 @@ export default {
   components: {
     Follower
   },
-  // props: ["followers"],
   created() {
     this.SELECT_Userdata();
   },
@@ -31,14 +30,10 @@ export default {
         this.$session.get("session_id")
       );
       this.followers = this.user[0].followerlist;
-      console.log(this.followers);
     }
   }
 };
 </script>
 
 <style scoped>
-.content__follower {
-  border: 1px solid black;
-}
 </style>

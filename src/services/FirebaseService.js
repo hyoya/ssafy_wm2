@@ -88,58 +88,83 @@ var url = document.location.href;
 //
 // getUploadsByUser(userId)
 
-
 //// 김슬기 작업장 끝
 
-// firestore.collection('weblog').add({
+// firestore.collection("weblog").add({
 //   login_user,
 //   url,
 //   date: firebase.firestore.FieldValue.serverTimestamp()
-// })
+// });
 
 export default {
   // SXNGHO's Function ---------------------------------------------------------
 
-    // Function :: 프로젝트를 작성합니다.
-    // Parameter :: 제목,간략설명,진행기간,내용,사용기술,대표이미지,프로젝트수준,작성자아이디입니다.
-    INSERT_Projects(projecttitle,projectdescription,projectterm,projectcontent,projecttech,projectimage,projectrank,session_id) {
-      return firestore.collection("projects").add({
-        projecttitle,projectdescription,projectterm,projectcontent,projecttech,
-        projectimage,projectrank,session_id,date: firebase.firestore.FieldValue.serverTimestamp(), comments:[]
+  // Function :: 프로젝트를 작성합니다.
+  // Parameter :: 제목,간략설명,진행기간,내용,사용기술,대표이미지,프로젝트수준,작성자아이디입니다.
+  INSERT_Projects(
+    projecttitle,
+    projectdescription,
+    projectterm,
+    projectcontent,
+    projecttech,
+    projectimage,
+    projectrank,
+    session_id
+  ) {
+    return firestore.collection("projects").add({
+      projecttitle,
+      projectdescription,
+      projectterm,
+      projectcontent,
+      projecttech,
+      projectimage,
+      projectrank,
+      session_id,
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+      comments: []
+    });
+  },
+
+  // Function :: 개인 프로젝트를 가져옵니다.
+  // Parameter :: Story 페이지의 주인의 아이디를 가져와서 개인프로젝트를 검색합니다.
+  async SELECT_Projects(id) {
+    return firestore
+      .collection("projects")
+      .where("session_id", "==", id)
+      .get()
+      .then(docSnapshots => {
+        return docSnapshots.docs.map(doc => {
+          let data = doc.data();
+          return { project_id: doc.id, data: data };
+        });
       });
   },
 
-    // Function :: 개인 프로젝트를 가져옵니다.
-    // Parameter :: Story 페이지의 주인의 아이디를 가져와서 개인프로젝트를 검색합니다.
-    async SELECT_Projects(id) {
-      return firestore.collection('projects')
-      .where("session_id","==",id).get().then((docSnapshots) => {
-        return docSnapshots.docs.map((doc) => {
-          let data = doc.data()
-          return { 'project_id' : doc.id, 'data': data}
-        })
-      })
-    },
+  // 특정 프로젝트를 찾는 것입니다. - 슬기
+  async SELECT_Project(id) {
+    return firestore
+      .collection("projects")
+      .doc(id)
+      .get()
+      .then(docSnapshots => {
+        let data = docSnapshots.data();
+        // console.log(data)
+        return data;
+      });
+  },
 
-    // 특정 프로젝트를 찾는 것입니다. - 슬기
-    async SELECT_Project(id) {
-      return firestore.collection('projects')
-      .doc(id).get().then((docSnapshots) => {
-          let data = docSnapshots.data()
-          // console.log(data)
-          return data
-      })
-    },
-
-    // 특정 프로젝트의 댓글들을 찾는 것입니다. id = 프로젝트 id - 슬기
-    async SELECT_Comments(id) {
-      return firestore.collection('projects')
-      .doc(id).get().then((docSnapshots) => {
-          let data = docSnapshots.data().comments
-          // console.log(data)
-          return data
-      })
-    },
+  // 특정 프로젝트의 댓글들을 찾는 것입니다. id = 프로젝트 id - 슬기
+  async SELECT_Comments(id) {
+    return firestore
+      .collection("projects")
+      .doc(id)
+      .get()
+      .then(docSnapshots => {
+        let data = docSnapshots.data().comments;
+        // console.log(data)
+        return data;
+      });
+  },
 
   // Function :: 유저의 정보를 가져옵니다.
   // Parameter :: Story 페이지의 주인의 아이디를 개인정보를 가져옵니다.
@@ -156,68 +181,96 @@ export default {
       });
   },
 
-    // Function :: 유저의 자기소개 정보를 업데이트합니다.
-    // Parameter :: Story 페이지의 주인의 아이디와 새로운 인트로 정보를 가져옵니다.
-    UPDATE_userIntro(intro,userId) {
-      return firestore.collection("users").doc(userId).update({
-        userIntro : intro
+  // Function :: 유저의 자기소개 정보를 업데이트합니다.
+  // Parameter :: Story 페이지의 주인의 아이디와 새로운 인트로 정보를 가져옵니다.
+  UPDATE_userIntro(intro, userId) {
+    return firestore
+      .collection("users")
+      .doc(userId)
+      .update({
+        userIntro: intro
       });
   },
 
   // Function :: 유저의 기술 정보를 업데이트합니다.
   // Parameter :: Story 페이지의 주인의 아이디와 새로운 기술 정보를 가져옵니다.
-    UPDATE_userSkill(skill,userId) {
-      return firestore.collection("users").doc(userId).update({
-        userSkills : skill
+  UPDATE_userSkill(skill, userId) {
+    return firestore
+      .collection("users")
+      .doc(userId)
+      .update({
+        userSkills: skill
       });
-    },
+  },
 
-    // Function :: 유저의 교육정보를 업데이트합니다.
-    // Parameter :: 기존 교육정보, 새로 추가된 교육정보, Story 페이지 주인의 아이디를 가져옵니다.
-    UPDATE_userEdu(edu,old,userId) {
-      old.push(edu)
-        return firestore.collection("users").doc(userId).update({
-          userEducations : old
-        });
-    },
+  // Function :: 유저의 교육정보를 업데이트합니다.
+  // Parameter :: 기존 교육정보, 새로 추가된 교육정보, Story 페이지 주인의 아이디를 가져옵니다.
+  UPDATE_userEdu(edu, old, userId) {
+    old.push(edu);
+    return firestore
+      .collection("users")
+      .doc(userId)
+      .update({
+        userEducations: old
+      });
+  },
 
-    // Function :: 유저의 경력정보 업데이트합니다.
-    // Parameter :: 기존 경력정보, 새로 추가된 경력정보, Story 페이지 주인의 아이디를 가져옵니다.
-    UPDATE_userCar(car,old,userId) {
-      old.push(car)
-        return firestore.collection("users").doc(userId).update({
-          userCareers : old
-        });
-    },
-
+  // Function :: 유저의 경력정보 업데이트합니다.
+  // Parameter :: 기존 경력정보, 새로 추가된 경력정보, Story 페이지 주인의 아이디를 가져옵니다.
+  UPDATE_userCar(car, old, userId) {
+    old.push(car);
+    return firestore
+      .collection("users")
+      .doc(userId)
+      .update({
+        userCareers: old
+      });
+  },
 
   // -----------------------------------------------------------------
 
-    // seulgi
-    INSERT_Comment(comment, old, project_id) {
-      var old = old
-      old.comments.push(comment)
-        return firestore.collection('projects').doc(project_id).update({
-          comments : old.comments
-        });
-    },
+  // seulgi
+  INSERT_Comment(comment, old, project_id) {
+    var old = old;
+    old.comments.push(comment);
+    return firestore
+      .collection("projects")
+      .doc(project_id)
+      .update({
+        comments: old.comments
+      });
+  },
 
-    async info_Projects(id, title) {
-      return firestore.collection('projects')
-      .where("session_id","==",id)
-      .where("projecttitle","==",title)
-      .get().then((docSnapshots) => {
-        return docSnapshots.docs.map((doc) => {
-          let data = doc.data()
+  async info_Projects(id, title) {
+    return firestore
+      .collection("projects")
+      .where("session_id", "==", id)
+      .where("projecttitle", "==", title)
+      .get()
+      .then(docSnapshots => {
+        return docSnapshots.docs.map(doc => {
+          let data = doc.data();
           // console.log(data.date)
           // console.log(data)
-          return data
-        })
-      })
-    },
+          return data;
+        });
+      });
+  },
 
-    async SignupUser(id, password, first_name, last_name, phonenumber, userSkills, userImage, userName, userIntro, userCareers, userEducations) {
-      return firebase
+  async SignupUser(
+    id,
+    password,
+    first_name,
+    last_name,
+    phonenumber,
+    userSkills,
+    userImage,
+    userName,
+    userIntro,
+    userCareers,
+    userEducations
+  ) {
+    return firebase
       .auth()
       .createUserWithEmailAndPassword(id, password)
       .then(function() {
@@ -236,8 +289,8 @@ export default {
             userIntro: userIntro,
             userCareers: userCareers,
             userEducations: userEducations,
-            followerlist:[],
-            followinglist:[]
+            followerlist: [],
+            followinglist: []
           });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
         return true;
@@ -248,24 +301,24 @@ export default {
         // var errorMessage = error.message;
         alert(error);
       });
-      return false;
-    },
-    async SignupCompany(company_name, id, password, interests) {
-      return firebase
+    return false;
+  },
+  async SignupCompany(company_name, id, password, interests) {
+    return firebase
       .auth()
       .createUserWithEmailAndPassword(id, password)
       .then(function() {
         // console.log(`${id}`)
         firestore
-        .collection("companys")
-        .doc(id)
-        .set({
-          company_name: company_name,
-          id: id,
-          interests: interests,
-          followerlist:[],
-          followinglist:[]
-        });
+          .collection("companys")
+          .doc(id)
+          .set({
+            company_name: company_name,
+            id: id,
+            interests: interests,
+            followerlist: [],
+            followinglist: []
+          });
         alert(`${id}님, 회원가입이 완료되었습니다.`);
         return true;
       })
@@ -275,10 +328,10 @@ export default {
         // var errorMessage = error.message;
         alert(error);
       });
-      return false;
-    },
-    async Signin(id, password) {
-      return firebase
+    return false;
+  },
+  async Signin(id, password) {
+    return firebase
       .auth()
       .signInWithEmailAndPassword(id, password)
       .then(function() {
@@ -290,10 +343,10 @@ export default {
         var errorMessage = error.message;
         alert(`${errorCode}\n${errorMessage}`);
       });
-      return false;
-    },
-    async SigninFacebook() {
-      return firebase
+    return false;
+  },
+  async SigninFacebook() {
+    return firebase
       .auth()
       .signInWithPopup(provider)
       .then(function(result) {
@@ -312,9 +365,9 @@ export default {
         alert(`${errorCode}\n${errorMessage}\n${email}\n${credential}`);
         return false;
       });
-    },
-    async Logout() {
-      return firebase
+  },
+  async Logout() {
+    return firebase
       .auth()
       .signOut()
       .then(function() {
@@ -327,48 +380,62 @@ export default {
         alert(error);
         return true;
       });
-    },
-    GetUserinfo(user) {
-      var str = location.origin +'/story/'+ user;
-      location.replace(str);
-    },
+  },
+  GetUserinfo(user) {
+    var str = location.origin + "/story/" + user;
+    location.replace(str);
+  },
 
-// -----------------------------------------------------------------
-//hyoya
+  // -----------------------------------------------------------------
+  //hyoya
   // Function :: 팔로우를 추가합니다.
   // Parameter :: 팔로잉을 당한사람, 현재 유저의 아이디,
   //              팔로잉 당하는 사람의 기존 팔로워 리스트,  현재 유저의 팔로잉 리스트를 가져옵니다.
-  async follow(follow, user, followerlist, followinglist){
+  async follow(follow, user, followerlist, followinglist) {
     followerlist.push(user);
     followinglist.push(follow);
-    firestore.collection("users").doc(follow).update({
-      followerlist : followerlist
-    });
-    firestore.collection("users").doc(user).update({
-      followinglist : followinglist
-    });
+    firestore
+      .collection("users")
+      .doc(follow)
+      .update({
+        followerlist: followerlist
+      });
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        followinglist: followinglist
+      });
   },
 
   // Function :: 언팔로우합니다.
   // Parameter :: 팔로우 헸던 사람, 현재 유저의 아이디,
   //              팔로잉 당하는 사람의 기존 팔로워 리스트,  현재 유저의 팔로잉 리스트를 가져옵니다.
-  async unfollow(follow, user, followerlist, followinglist){
-    followerlist.splice(followerlist.indexOf(user),1);
-    followinglist.splice(followinglist.indexOf(follow),1);
-    firestore.collection("users").doc(follow).update({
-      followerlist : followerlist
-    });
-    firestore.collection("users").doc(user).update({
-      followinglist : followinglist
-    });
+  async unfollow(follow, user, followerlist, followinglist) {
+    followerlist.splice(followerlist.indexOf(user), 1);
+    followinglist.splice(followinglist.indexOf(follow), 1);
+    firestore
+      .collection("users")
+      .doc(follow)
+      .update({
+        followerlist: followerlist
+      });
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        followinglist: followinglist
+      });
   },
 
   async SELECT_ProjectsByPcode(pcode) {
-    return firestore.collection('projects').doc(pcode).get()
-    .then(docSnapshots => {
+    return firestore
+      .collection("projects")
+      .doc(pcode)
+      .get()
+      .then(docSnapshots => {
         //console.log(docSnapshots.data(), '맞냐??')
-        return docSnapshots.data()
-    });
-  },
-
+        return docSnapshots.data();
+      });
+  }
 };
