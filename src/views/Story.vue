@@ -17,10 +17,13 @@
           <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
           <toggle-button :width="100" v-model="toggleView" :sync="true"
                :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
-          <ProjectList v-if="!stateAdd && !statedetail" v-on:toStory="cc" />
-          <ProjectEditor v-if="stateAdd && !statedetail" />
+          <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc" />
+          <ProjectEditor v-if="stateAdd && !statedetail && !stateupdate" />
           <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
-
+          <ProjectUpdator v-if="stateupdate" v-on:doing="update_project"
+            :project_id="this.project_id"
+            > </ProjectUpdator>
+          <v-btn @click="check_stateupdate()"></v-btn>
       </v-flex>
     </v-layout>
 
@@ -35,7 +38,7 @@ import LeftSide from "../components/UserInfoPage/LeftSide";
 import ProjectList from "../components/UserInfoPage/ProjectList";
 import ProjectEditor from "../components/UserInfoPage/ProjectEditor";
 import Project from "../components/Project/Project";
-
+import ProjectUpdator from "../components/UserInfoPage/ProjectUpdator"
 export default {
   name: "Story",
   data() {
@@ -46,6 +49,8 @@ export default {
       toggleView : false,
       pcode : '',
       statedetail : false,
+      stateupdate : false,
+      state : '',
     }
   },
   created() {
@@ -82,6 +87,14 @@ export default {
     },
     gbp() {
       this.statedetail = false;
+    },
+    update_project(state) {
+      this.stateupdate = state;
+      console.log(state)
+    },
+    check_stateupdate(state) {
+      this.stateupdate = state;
+      console.log(this.stateupdate)
     }
   },
   components: {
@@ -90,6 +103,7 @@ export default {
     ProjectList,
     ProjectEditor,
     Project,
+    ProjectUpdator,
   },
   watch: {
     // 라우터 객체를 감시하고 있다가 fetchData() 함수를 호출한다

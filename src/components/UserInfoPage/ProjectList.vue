@@ -10,6 +10,7 @@
           :project_id="projects[i-1].project_id"
           >
         </ProjectDetail>
+        <ProjectUpdator v-on:goup="doing" />
         <v-divider></v-divider>
       </v-flex>
     </v-layout>
@@ -21,6 +22,7 @@
 import FirebaseService from "@/services/FirebaseService";
 import Project from "../Project/Project";
 import ProjectDetail from "../Project/ProjectDetail";
+import ProjectUpdator from "./ProjectUpdator";
 export default {
   name: "ProjectList",
   data() {
@@ -30,7 +32,8 @@ export default {
   },
   components: {
     Project,
-    ProjectDetail
+    ProjectDetail,
+    ProjectUpdator,
   },
   created() {
     this.SELECT_Projects();
@@ -43,6 +46,10 @@ export default {
     toStory(pcode) {
       console.log("여기까지왔다.",pcode)
       this.$emit('toStory',pcode);
+    },
+    doing(state) {
+      console.log(state, '그 다음은??')
+      this.$emit('doing', state);
     }
   }
 };

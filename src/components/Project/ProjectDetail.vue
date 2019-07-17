@@ -2,7 +2,7 @@
   <v-flex class="text-xs-center">
 
     <v-flex hidden-xs-only>
-      <!-- <ProjectEditor v-if="!stateAdd"> </ProjectEditor> -->
+      <!-- <ProjectEditor v-if="!state"> </ProjectEditor> -->
       <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
         <v-img :src="projectimage" height="20vw" width="100%"></v-img>
           <div>
@@ -12,7 +12,7 @@
       </button>
 
       <v-btn v-if="isMine" @click="UPDATE_Project()">프로젝트 수정하기</v-btn>
-      <v-btn v-if="isMine" @click="toStory(!stateAdd)">emit이 목표(진행중)</v-btn>
+      <v-btn v-if="isMine" @click="goup(state)">emit이 목표(진행중)</v-btn>
 
       <!-- <ProjectList v-if="!stateAdd"></ProjectList> -->
 
@@ -30,7 +30,7 @@
 
     </v-flex>
 
-    <ProjectUpdator v-if="stateAdd"
+    <ProjectUpdator v-if="state"
       :project_id="this.project_id"
       > </ProjectUpdator>
 
@@ -69,7 +69,7 @@ export default {
     user:'',
     login:'',
     isMine: '',
-    stateAdd : false,
+    state : false,
   }),
   methods: {
     popdetail(pcode){
@@ -77,14 +77,15 @@ export default {
       if ( toggle ) {
         window.open("../project/"+pcode,"name(이름지정)","titlebar=no,status=no,toolbar=no,resizable=yes,top=20,left=500,width=700,height=600");
       } else {
+        console.log(pcode, '첫단계 옴??')
         this.$emit('popdetail',pcode);
       }},
       UPDATE_Project() {
-        this.stateAdd = (this.stateAdd)?false:true ?true:false;
+        this.state = (this.state)?false:true ?true:false;
       },
-      toStory(state) {
-        console.log(state, '이게 뭐라고..')
-        this.$emit('toStory', state)
+      goup(state) {
+        console.log(!state, '이거 올라감?')
+        this.$emit('goup', !state);
       }
   },
 
