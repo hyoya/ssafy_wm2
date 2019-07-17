@@ -1,7 +1,6 @@
 <template>
   <v-flex class="text-xs-center">
 
-    <v-if="!stateAdd">
     <v-flex hidden-xs-only>
       <!-- <ProjectEditor v-if="!stateAdd"> </ProjectEditor> -->
       <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
@@ -13,6 +12,7 @@
       </button>
 
       <v-btn v-if="isMine" @click="UPDATE_Project()">프로젝트 수정하기</v-btn>
+      <v-btn v-if="isMine" @click="toStory(!stateAdd)">emit이 목표(진행중)</v-btn>
 
       <!-- <ProjectList v-if="!stateAdd"></ProjectList> -->
 
@@ -29,7 +29,7 @@
       <v-btn v-if="isMine" @click="UPDATE_Project()">프로젝트 수정하기</v-btn>
 
     </v-flex>
-  </v-if>
+
     <ProjectUpdator v-if="stateAdd"
       :project_id="this.project_id"
       > </ProjectUpdator>
@@ -82,7 +82,10 @@ export default {
       UPDATE_Project() {
         this.stateAdd = (this.stateAdd)?false:true ?true:false;
       },
-
+      toStory(state) {
+        console.log(state, '이게 뭐라고..')
+        this.$emit('toStory', state)
+      }
   },
 
   created() {
