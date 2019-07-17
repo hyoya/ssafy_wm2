@@ -1,9 +1,11 @@
 <template>
   <div>
-    <div id="graph-container"></div>
-    <div class="py-3">
+    <v-flex hidden-xs-only>
+      <div id="graph-container"></div>
+    </v-flex>
+    <!-- <div class="py-3">
       <p v-for="commit in commits.data">{{commit.message}}, {{commit.author_email}}</p>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -30,7 +32,7 @@ export default {
       gitgraph._graph.template.commit.message.displayAuthor = false
       gitgraph._graph.template.commit.message.displayHash = false
       console.log(gitgraph)
-      master.commit("커밋 Start")
+      master.commit("INIT COMMIT")
 
       this.commits.data.forEach(commit => {
         if (!(this.branch.includes(commit.author_email))) {
@@ -39,9 +41,9 @@ export default {
         gitgraph._graph.author = `${commit.author_name} <${commit.author_email}>`
         const branch = gitgraph.branch(commit.author_email)
         branch.commit(commit.title)
-        this.branch.forEach(br => {
-          master.merge(br)
-        })
+          this.branch.forEach(br => {
+            master.merge(br)
+          })
       })
     },
   }

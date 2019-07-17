@@ -87,15 +87,14 @@ var url = document.location.href;
 // }
 //
 // getUploadsByUser(userId)
+  //
+  // firestore.collection('weblog').add({
+  //   url,
+  //   date: firebase.firestore.FieldValue.serverTimestamp()
+  // })
 
 
 //// 김슬기 작업장 끝
-
-// firestore.collection('weblog').add({
-//   login_user,
-//   url,
-//   date: firebase.firestore.FieldValue.serverTimestamp()
-// })
 
 export default {
   // SXNGHO's Function ---------------------------------------------------------
@@ -188,6 +187,17 @@ export default {
         return firestore.collection("users").doc(userId).update({
           userCareers : old
         });
+    },
+    UPDATE_userImage(image,userId) {
+      return firestore.collection("users").doc(userId).update({
+        userImage : image
+      });
+    },
+
+    DELETE_userImage(userId) {
+      return firestore.collection("users").doc(userId).update({
+          userImage : ""
+      });
     },
 
 

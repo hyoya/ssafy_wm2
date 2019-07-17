@@ -3,8 +3,12 @@
   <div id="graph-container"></div>
     <v-layout>
       <v-flex xs12>
-        <h2 class="font-weight-regular cutoneline">{{repos.path_with_namespace}}</h2>
-        <p class="subheading mb-1 grey--text text--darken-1 font-weight-light cutfourlines">{{repos.namespace.name}}</p>
+        <v-btn flat @click="gotorepo(repos.path_with_namespace)">
+          <h2 class="font-weight-regular cutoneline">
+              {{repos.path_with_namespace}}
+          </h2>
+          <p class="subheading mb-1 grey--text text--darken-1 font-weight-light cutfourlines">{{repos.namespace.name}}</p>
+        </v-btn>
       </v-flex>
     </v-layout>
   </div>
@@ -22,6 +26,12 @@ export default {
          stats: {},
       }
    },
+   methods:{
+     gotorepo(tmp){
+       var target = "https://lab.ssafy.com/"+tmp;
+       window.open(target);
+     }
+   }
 }
 </script>
 <style>
