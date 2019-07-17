@@ -32,7 +32,7 @@ export default {
       gitgraph._graph.template.commit.message.displayAuthor = false
       gitgraph._graph.template.commit.message.displayHash = false
       console.log(gitgraph)
-      master.commit("커밋 Start")
+      master.commit("INIT COMMIT")
 
       this.commits.data.forEach(commit => {
         if (!(this.branch.includes(commit.author_email))) {

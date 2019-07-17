@@ -1,3 +1,4 @@
+
 <template>
   <v-app>
     <Header v-if="!$store.state.no_header"/>

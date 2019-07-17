@@ -1,15 +1,21 @@
 <!-- UserSideInfo -->
 <template>
-  <div style=" padding:1vw; background:white">
+  <div style="padding:1vw; background:white">
     <!-- USER Profile Img -->
     <v-layout wrap align-center justify-space-around>
-      <v-avatar size="150" class="grey lighten-2">
-        <!-- <img src="https://i.imgur.com/aTI4OeZ.png?1" v-if="userImage =='null'">
-        <img src="https://i.imgur.com/SSlPWnK.png" v-if="userImage !=='null'"> -->
-        <div v-if="isMine">
-          나의것이니라!!!!!!!!!!!
-        </div>
-      </v-avatar>
+      <div v-if="!image">
+        <v-avatar size="150" class="grey lighten-2">
+          <img src="https://i.imgur.com/aTI4OeZ.png?1">
+        </v-avatar>
+        <input type="file" @change="onFileChange" />
+      </div>
+      <div v-else>
+        <v-avatar size="150" class="grey lighten-2">
+          <img :src="image"/>
+        </v-avatar>
+        <br/>
+        <v-btn @click="removeImage">Remove image</v-btn>
+      </div>
     </v-layout>
 
     <!--USER Intro-->
@@ -18,21 +24,21 @@
         <span class="subheading grey--text text-md-center">{{userdata[0].userName}}</span>
         <v-btn fab flat outline small v-if="!isMine && !isFollow" @click="follow()">팔로우!</v-btn>
         <v-btn fab flat outline small v-if="!isMine && isFollow" @click="unfollow()">언팔!</v-btn>
-        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" v-if="isMine"/></div>
+        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" :introinput="userdata[0].userIntro" v-if="isMine"/></div>
       </v-flex>
     </v-layout>
 
     <!--USER SKILLS-->
     <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading">SKILLS <SkillEditor v-on:sendSkill="receiveSkill" v-if="isMine"/> </v-flex>
+      <v-flex xs12 class="text-md-center subheading">Skills <SkillEditor v-on:sendSkill="receiveSkill" v-if="isMine"/> </v-flex>
       <v-flex xs12>
         <div v-if="skillToggle" class="caption">
           <p> 등록된 기술이 없습니다. </p>
         </div>
         <div v-else>
-        <v-btn  flat small outline radius v-for="s in userdata[0].userSkills">{{s}}</v-btn>
-      </div>
+          <v-btn  flat small outline radius v-for="s in userdata[0].userSkills">{{s}}</v-btn>
+        </div>
       </v-flex>
     </v-layout>
 
@@ -84,16 +90,13 @@ import SkillEditor from "./InputForm/SkillEditor";
 export default {
   data() {
     return {
+      image : '',
       isFollow:false,
-      userSkills: [],
-      userImage: "",
-      userIntro: "",
-      userCareers: "",
-      userEducations: "",
       educationToggle : false,
       careerToggle : false,
-      userdata: [ {userName : ''} , {userIntro : ''} , {userEducations : ''} ],
-      userIntroKEY: 0,
+      skillToggle : false,
+      imageToggle : false,
+      userdata: [ {userName : ''} , {userIntro : ''} , {userEducations : ''} , {userImage : ''} ],
     }
   },
   props: {
@@ -113,8 +116,16 @@ export default {
   methods: {
     async SELECT_Userdata() {
       this.userdata = await FirebaseService.SELECT_Userdata(this.$route.params.id);
-      if ( this.userdata[0].userIntro == "" )
-      this.userdata[0].userIntro = "소개말이 없습니다."
+      if ( this.userdata[0].userIntro == "" ) {
+        this.userdata[0].userIntro = "소개말이 없습니다."
+      }
+      if ( this.userdata[0].userImage == "" ) {
+        this.imageToggle = true;
+        this.image = "";
+      } else {
+        this.imageToggle = false;
+        this.image = this.userdata[0].userImage;
+      }
       if ( this.userdata[0].userEducations.length == 0 ) {
         this.educationToggle = true;
       } else {
@@ -140,7 +151,6 @@ export default {
     receiveSkill(skill) {
       FirebaseService.UPDATE_userSkill(skill,this.$route.params.id);
       this.userdata[0].userSkills = skill;
-      this.SELECT_Userdata();
     },
 
     async receiveEdu(edu) {
@@ -195,6 +205,37 @@ export default {
       var tmp = following[0].followerlist.includes(this.$session.get('session_id'));
       this.isFollow=tmp;
     },
+
+    removeImage(){
+      FirebaseService.DELETE_userImage(this.$route.params.id);
+      this.image = "";
+    },
+    onFileChange(e) {
+      // file 세팅
+      let files = e.target.files || e.dataTransfer.files;
+      if (!files.length) {
+        return;
+      }
+      const apiUrl = "https://api.imgur.com/3/image";
+      let data = new FormData();
+      let content = {
+        method: "POST",
+        headers: {
+          Authorization: "Client-ID f96b8964f338658",
+          Accept: "application/json"
+        },
+        body: data,
+        mimeType: "multipart/form-data"
+      };
+      data.append("image", files[0]);
+      fetch(apiUrl, content)
+      .then(response => response.json())
+      .then(success => {
+        this.image = success.data.link;
+        FirebaseService.UPDATE_userImage(this.image,this.$route.params.id)
+      })
+      .catch();
+    }
   },
 
 
