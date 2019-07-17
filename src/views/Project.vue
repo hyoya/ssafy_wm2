@@ -146,6 +146,15 @@ export default {
     },
     likeit(index){
       console.log("this is test tag");
+    }
+  },
+  created(){
+    this.project_id = this.$route.params.pcode;
+    this.bindData();
+    this.$store.state.no_header = true;
+    //this.project = FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
+    //console.log("gg", this.project);
+
     },
     // seulgi function
     async INSERT_Comment(comment){
@@ -169,13 +178,6 @@ export default {
       this.comments = await FirebaseService.SELECT_Comments(this.project_id)
     },
     // -----------------
-
-  },
-  created(){
-    this.project_id = this.$route.params.pcode;
-    this.bindData();
-    this.$store.state.no_header = true;
-  },
   props: {
   },
 };

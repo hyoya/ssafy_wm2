@@ -15,8 +15,11 @@
       </v-flex>
       <v-flex xs12 sm8 md9 >
           <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
-          <ProjectList v-if="!stateAdd"></ProjectList>
-          <ProjectEditor v-else> </ProjectEditor>
+          <toggle-button :width="100" v-model="toggleView" :sync="true"
+               :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
+          <ProjectList v-if="!stateAdd && !statedetail" v-on:toStory="cc" />
+          <ProjectEditor v-if="stateAdd && !statedetail" />
+          <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
       </v-flex>
     </v-layout>
 
@@ -29,7 +32,8 @@ import FirebaseService from "@/services/FirebaseService";
 import TopSide from "../components/UserInfoPage/TopSide";
 import LeftSide from "../components/UserInfoPage/LeftSide";
 import ProjectList from "../components/UserInfoPage/ProjectList";
-import ProjectEditor from "../components/UserInfoPage/ProjectEditor"
+import ProjectEditor from "../components/UserInfoPage/ProjectEditor";
+import Project from "../components/Project/Project";
 
 export default {
   name: "Story",
@@ -38,7 +42,9 @@ export default {
       isMine : false,
       stateAdd : false,
       userurl : '',
-      changingTEXT : '',
+      toggleView : false,
+      pcode : '',
+      statedetail : false,
     }
   },
   created() {
@@ -54,23 +60,40 @@ export default {
         this.isMine = false;
       }
     },
-    fetchData() {
-      // 라우터가 바뀔떄마다 데이터가져오는기능은 이것처럼 쓰면 됩니다.
-      this.changingTEXT = this.$route.params.id;
+    async fetchData() {
+      var session = this.$session.get('session_id');
+      if( session !== "" ) {
+        this.toggleView = await FirebaseService.SELECT_userAddon(session);
+      }
+    },
+    updateToggle() {
+      if ( this.$session.get('session_id') !== "" ) {
+        FirebaseService.UPDATE_userAddon(this.$session.get('session_id'),this.toggleView);
+      }
+      this.$store.commit('convertPVT',this.toggleView);
     },
     changeComponent(){
       this.stateAdd = (this.stateAdd)?false:true;
     },
+    cc(pcode) {
+      this.pcode = pcode;
+      this.statedetail = true;
+    },
+    gbp() {
+      this.statedetail = false;
+    }
   },
   components: {
     TopSide,
     LeftSide,
     ProjectList,
     ProjectEditor,
+    Project,
   },
   watch: {
     // 라우터 객체를 감시하고 있다가 fetchData() 함수를 호출한다
-    '$route': 'fetchData'
+    //'$route': 'fetchData'
+   'toggleView' : 'updateToggle'
   },
 };
 

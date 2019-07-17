@@ -12,6 +12,7 @@ export default new Vuex.Store({
       session_id: '',
       check_false : false,
       check_true : true,
+      projectViewToggle: false,
       no_header:false,
     },
 
@@ -22,6 +23,9 @@ export default new Vuex.Store({
         getSession: function (state) {
           return state.session_id;
         },
+        getPVT: function(state) {
+          return state.projectViewToggle;
+        }
     },
 
     // Mutations : 값변경 / 동기
@@ -30,14 +34,9 @@ export default new Vuex.Store({
         setSession: function (state,payload) {
           return state.session_id = payload;
         },
-        setHeader:function(state){
-          return state.no_header = false;
+        convertPVT: function (state,payload) {
+          return state.projectViewToggle = payload;
         },
-        setNoHeader:function(state){
-          console.log("this is set No Header", state.no_header);
-          state.no_header = true;
-          console.log("this is set No Header", state.no_header);
-        }
     },
 
     // Action : 값변경 / 비동기

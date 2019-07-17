@@ -137,8 +137,22 @@ export default {
     },
 
     DELETE_userImage(userId) {
-      return firestore.collection("users").doc(userId).update({
+      firestore.collection("users").doc(userId).update({
           userImage : ""
+      });
+    },
+
+
+    UPDATE_userAddon(userId,toggleView) {
+      firestore.collection("user_addon").doc(userId).update({
+        toggleView : toggleView
+      });
+    },
+
+    async SELECT_userAddon(userId) {
+      return firestore.collection("user_addon").doc(userId).get().then((docSnapshots) => {
+          let data = docSnapshots.data().toggleView
+          return data
       });
     },
 
@@ -178,8 +192,9 @@ export default {
             userCareers: userCareers,
             userEducations: userEducations,
             followerlist:[],
-            followinglist:[]
+            followinglist:[],
           });
+
         alert(`${id}님, 회원가입이 완료되었습니다.`);
         return true;
       })
@@ -187,6 +202,22 @@ export default {
         // Handle Errors here.
         // var errorCode = error.code;
         // var errorMessage = error.message;
+        alert(error);
+      });
+      return firebase
+      .auth()
+      .createUserWithEmailAndPassword(id, password)
+      .then(function() {
+        // console.log(`${id}`)
+        firestore
+          .collection("user_addon")
+          .doc(id)
+          .set({
+            toggleView: false,
+          });
+        return true;
+      })
+      .catch(function(error) {
         alert(error);
       });
       return false;
