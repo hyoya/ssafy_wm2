@@ -2,7 +2,6 @@
   <v-flex class="text-xs-center">
 
     <v-flex hidden-xs-only>
-      <!-- <ProjectEditor v-if="!state"> </ProjectEditor> -->
       <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
         <v-img :src="projectimage" height="20vw" width="100%"></v-img>
           <div>
@@ -11,10 +10,7 @@
           </div>
       </button>
 
-      <v-btn v-if="isMine" @click="UPDATE_Project()">프로젝트 수정하기</v-btn>
-      <v-btn v-if="isMine" @click="goup(state)">emit이 목표(진행중)</v-btn>
 
-      <!-- <ProjectList v-if="!stateAdd"></ProjectList> -->
 
     </v-flex>
 
@@ -26,13 +22,10 @@
             <span class="grey--text">{{projectdescription}}</span>
           </div>
       </button>
-      <v-btn v-if="isMine" @click="UPDATE_Project()">프로젝트 수정하기</v-btn>
+
 
     </v-flex>
 
-    <ProjectUpdator v-if="state"
-      :project_id="this.project_id"
-      > </ProjectUpdator>
 
   </v-flex>
 </template>
@@ -42,14 +35,9 @@
 import FirebaseService from "@/services/FirebaseService";
 import BigImg from "../Common/BigImg";
 
-// import ProjectList from "../UserInfoPage/ProjectList";
-import ProjectUpdator from "../UserInfoPage/ProjectUpdator"
-
 export default {
   components: {
     BigImg,
-    // ProjectList,
-    ProjectUpdator,
   },
   props: {
     projectimage: { type: String }, //프로젝트 메인 이미지
@@ -69,7 +57,6 @@ export default {
     user:'',
     login:'',
     isMine: '',
-    state : false,
   }),
   methods: {
     popdetail(pcode){
@@ -80,13 +67,6 @@ export default {
         console.log(pcode, '첫단계 옴??')
         this.$emit('popdetail',pcode);
       }},
-      UPDATE_Project() {
-        this.state = (this.state)?false:true ?true:false;
-      },
-      goup(state) {
-        console.log(!state, '이거 올라감?')
-        this.$emit('goup', !state);
-      }
   },
 
   created() {

@@ -171,7 +171,8 @@ export default {
     },
 
     UPDATE_Project(data, old, project_id) {
-
+      console.log(data, 'data입니다.')
+      console.log(old, 'old 입니다..')
       old.projecttitle = data.projecttitle
       old.projectdescription = data.projectdescription
       old.projectterm = data.projectterm
@@ -179,7 +180,7 @@ export default {
       old.projecttech = data.projecttech
       old.projectimage = data.projectimage
       old.projectrank = data.projectrank
-      alert('진행중?')
+      alert('수정이 완료되었습니다.')
       return firestore.collection('projects').doc(project_id).update({
         projecttitle : old.projecttitle,
         projectdescription : old.projectdescription,

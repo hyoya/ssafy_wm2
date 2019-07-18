@@ -17,13 +17,11 @@
           <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
           <toggle-button :width="100" v-model="toggleView" :sync="true"
                :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
-          <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc" />
+          <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc"  v-on:goup="update_project" />
           <ProjectEditor v-if="stateAdd && !statedetail && !stateupdate" />
           <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
-          <ProjectUpdator v-if="stateupdate" v-on:doing="update_project"
-            :project_id="this.project_id"
-            > </ProjectUpdator>
-          <v-btn @click="check_stateupdate()"></v-btn>
+          <ProjectUpdator v-if="stateupdate" :project_id="pcode2" v-on:goBackpage="gbp2" />
+          <!-- <v-btn @click="check_stateupdate(state)"></v-btn> -->
       </v-flex>
     </v-layout>
 
@@ -50,7 +48,7 @@ export default {
       pcode : '',
       statedetail : false,
       stateupdate : false,
-      state : '',
+      pcode2 : '',
     }
   },
   created() {
@@ -83,18 +81,19 @@ export default {
     },
     cc(pcode) {
       this.pcode = pcode;
+      console.log('에/')
       this.statedetail = true;
     },
     gbp() {
       this.statedetail = false;
     },
-    update_project(state) {
-      this.stateupdate = state;
-      console.log(state)
+    update_project(pcode2) {
+      this.pcode2 = pcode2
+      this.stateupdate = true;
+      console.log(this.stateupdate, '됏냐?')
     },
-    check_stateupdate(state) {
-      this.stateupdate = state;
-      console.log(this.stateupdate)
+    gbp2() {
+      this.stateupdate = false;
     }
   },
   components: {

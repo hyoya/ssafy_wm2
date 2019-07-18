@@ -10,7 +10,7 @@
           :project_id="projects[i-1].project_id"
           >
         </ProjectDetail>
-        <ProjectUpdator v-on:goup="doing" />
+        <v-btn v-if="isMine" @click="goup(projects[i-1].project_id)">수정하기</v-btn>
         <v-divider></v-divider>
       </v-flex>
     </v-layout>
@@ -37,6 +37,13 @@ export default {
   },
   created() {
     this.SELECT_Projects();
+    this.user = this.$route.params.id;
+    this.login = this.$session.get('session_id')
+    if ( this.user == this.login ) {
+      this.isMine = true;
+    } else {
+      this.isMine = false;
+    }
   },
   methods: {
     async SELECT_Projects() {
@@ -44,13 +51,13 @@ export default {
       this.projects = await FirebaseService.SELECT_Projects(this.id);
     },
     toStory(pcode) {
-      console.log("여기까지왔다.",pcode)
+      // console.log("여기까지왔다.",pcode)
       this.$emit('toStory',pcode);
     },
-    doing(state) {
-      console.log(state, '그 다음은??')
-      this.$emit('doing', state);
-    }
+    goup(pcode2) {
+      // console.log(pcode2, '이거 나옴??')
+      this.$emit('goup',pcode2);
+    },
   }
 };
 </script>
