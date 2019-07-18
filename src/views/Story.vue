@@ -2,7 +2,12 @@
   <div>
     <!-- TODO 여백 -->
     <v-layout><v-flex style="margin:50px;" /></v-layout>
-
+    <div v-if="loading">
+      <br>  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
     <v-layout row wrap>
       <v-flex xs12>
         <TopSide/>
@@ -11,16 +16,17 @@
 
     <v-layout row wrap>
       <v-flex xs12 sm4 md3>
-        <LeftSide xs12 sm4 md3 :isMine="isMine" v-cloak/>
+        <LeftSide xs12 sm4 md3 :isMine="isMine" v-on:toStory="fromLeftSide"/>
       </v-flex>
       <v-flex xs12 sm8 md9 >
-          <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
-          <toggle-button :width="100" v-model="toggleView" :sync="true"
+          <v-btn  @click="changeComponent()" v-if="isMine && !statedetail && !stateupdate"><span id='toggletext'>프로젝트 생성하기</span></v-btn>
+          <toggle-button v-if="!stateAdd && !stateupdate && !statedetail" :width="100" v-model="toggleView" :sync="true"
                :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
-          <ProjectList v-if="!stateAdd && !statedetail" v-on:toStory="cc" />
-          <ProjectEditor v-if="stateAdd && !statedetail" />
+          <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc"  v-on:goup="update_project" />
+          <ProjectEditor v-if="stateAdd && !statedetail && !stateupdate" />
           <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
-
+          <ProjectUpdator v-if="stateupdate" :project_id="pcode2" v-on:goBackpage="gbp2" />
+          <!-- <v-btn @click="check_stateupdate(state)"></v-btn> -->
       </v-flex>
     </v-layout>
 
@@ -35,7 +41,7 @@ import LeftSide from "../components/UserInfoPage/LeftSide";
 import ProjectList from "../components/UserInfoPage/ProjectList";
 import ProjectEditor from "../components/UserInfoPage/ProjectEditor";
 import Project from "../components/Project/Project";
-
+import ProjectUpdator from "../components/UserInfoPage/ProjectUpdator"
 export default {
   name: "Story",
   data() {
@@ -46,6 +52,9 @@ export default {
       toggleView : false,
       pcode : '',
       statedetail : false,
+      stateupdate : false,
+      pcode2 : '',
+      loading : false,
     }
   },
   created() {
@@ -74,15 +83,41 @@ export default {
       this.$store.commit('convertPVT',this.toggleView);
     },
     changeComponent(){
-      this.stateAdd = (this.stateAdd)?false:true;
+      var v_button = document.getElementById('toggletext');
+      if (this.stateAdd) {
+        v_button.innerHTML='프로젝트 생성하기'
+      } else  {
+        v_button.innerHTML='뒤로가기'
+      }
+      this.stateAdd = !this.stateAdd
     },
     cc(pcode) {
       this.pcode = pcode;
+      console.log('에/')
       this.statedetail = true;
+      this.loading = false;
     },
     gbp() {
       this.statedetail = false;
+    },
+
+    update_project(pcode2) {
+      this.pcode2 = pcode2
+      this.stateupdate = true;
+    },
+    gbp2() {
+      this.stateupdate = false;
+    },
+
+    fromLeftSide(load) {
+      this.loading = load;
+      if ( this.loading == true) {
+        this.$loading(true)
+      } else {
+        this.$loading(false)
+      }
     }
+
   },
   components: {
     TopSide,
@@ -90,11 +125,12 @@ export default {
     ProjectList,
     ProjectEditor,
     Project,
+    ProjectUpdator,
   },
   watch: {
     // 라우터 객체를 감시하고 있다가 fetchData() 함수를 호출한다
     //'$route': 'fetchData'
-   'toggleView' : 'updateToggle'
+    'toggleView' : 'updateToggle'
   },
 };
 

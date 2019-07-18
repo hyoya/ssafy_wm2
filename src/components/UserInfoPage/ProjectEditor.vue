@@ -92,7 +92,8 @@
 
             <!--  테크 -->
             <v-container>
-              <h3>Tech stack</h3>
+
+              <h3>현재 등록된 Tech stack</h3>
               <v-layout column justify-center>
                 <v-layout row>
                   <v-flex xs12>
@@ -104,6 +105,7 @@
                   </v-flex>
                 </v-layout>
 
+                <h3>직접 추가하기</h3>
                 <v-layout row>
                   <v-flex xs6>
                     <v-text-field
@@ -113,6 +115,7 @@
                   </v-flex>
                 </v-layout>
 
+                <h3>Tech stack 목록</h3>
                 <v-layout row>
                   <v-flex xs12>
                     <ul row style="list-style:none;">
@@ -187,6 +190,7 @@
                      projectterm,
                      projectcontent,
                      projecttech,
+                     projectimage,
                      projectrank,
                      session_id)" :editorToolbar="customToolbar">완성하기!</v-btn>
               <br/>
@@ -278,11 +282,19 @@ import FirebaseService from "@/services/FirebaseService";
           this.projecttech.splice(index,1);
         },
         addNewTech(){
-          this.projecttech.push(this.tech);
-          this.tech = '';
+          if (this.tech) {
+            this.projecttech.push(this.tech);
+            this.tech = '';
+          } else {
+            alert('tech를 입력해주세요')
+          }
         },
         addTech(t){
-          this.projecttech.push(t);
+          if (!this.projecttech.includes(t)) {
+              this.projecttech.push(t);
+          } else {
+            alert('이미 들어가 있는 tech 입니다.')
+          }
         },
         selectRank(inputrank){
           this.projectrank = inputrank;
@@ -304,7 +316,6 @@ import FirebaseService from "@/services/FirebaseService";
           this.projectimage,
           this.projectrank,
         this.session_id);
-          alert("업로드 완료!");
         },
         //// IMAGE UPLOAD
         removeImage(){
@@ -317,12 +328,11 @@ import FirebaseService from "@/services/FirebaseService";
             return;
           }
           const apiUrl = "https://api.imgur.com/3/image";
-          const apiKey = "f96b8964f338658";
           let data = new FormData();
           let content = {
             method: "POST",
             headers: {
-              Authorization: "Client-ID " + apiKey,
+              Authorization: "Client-ID f96b8964f338658",
               Accept: "application/json"
             },
             body: data,
@@ -330,13 +340,13 @@ import FirebaseService from "@/services/FirebaseService";
           };
           data.append("image", files[0]);
           fetch(apiUrl, content)
-            .then(response => response.json())
-            .then(success => {
-              this.projectimage = success.data.link;
-            })
-            .catch();
+          .then(response => response.json())
+          .then(success => {
+            this.projectimage = success.data.link;
+          })
+          .catch();
         }
-      },
+    },
     components: {
       VueEditor
     },

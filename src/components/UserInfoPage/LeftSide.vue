@@ -71,13 +71,14 @@
         v-else
         v-for="(c, index) in userdata[0].userCareers"
         class="caption"
-        @mouseover="showRmCarBtn=true" @mouseleave="showRmCarBtn=false"
+        @mouseover="showRmCarBtn(index)" @mouseleave="hideRmCarBtn(index)"
         style="position:relative; padding:15px 6px; border-bottom:1px black solid;">
           <v-btn
-            v-on:click="rmCareer(c.Company, c.Position, c.Description, index)"
-            v-show="showRmCarBtn"
+            v-on:click="rmCareer(userdata[0].userCareers,c,userdata[0].email,reload)"
+            v-show:false
             flat outline small absolute fab
-            style="z-index:2; right:0;">
+            style="z-index:2; right:0;"
+            class ="carbtn">
             X
           </v-btn>
           <span class="subheading">{{c.Company}}<br/></span>
@@ -102,14 +103,16 @@
           v-else
           v-for="(e, index) in userdata[0].userEducations"
           class="caption"
-          @mouseover="showRmEduBtn=true" @mouseleave="showRmEduBtn=false"
+          @mouseover="showRmEduBtn(index)" @mouseleave="hideRmEduBtn(index)"
           style="position:relative; padding:15px 6px; border-bottom:1px black solid;"
           >
           <v-btn
-            v-on:click="rmEducation(e.Agency, e.Degree, e.Startday, index)"
-            v-show="showRmEduBtn"
+            v-on:click="rmEducation(userdata[0].userEducations,e,userdata[0].email,reload)"
+            v-show:false
             flat outline small absolute fab
-            style="z-index:2; right:0;">
+            style="z-index:2; right:0;"
+            class ="edubtn"
+            >
             X
           </v-btn>
           <span class="subheading">{{e.Agency}}<br/></span>
@@ -146,8 +149,7 @@ export default {
         {userSkills : ''},
         {showSkillList:''} ],
       showRmImgBtn : false,
-      showRmCarBtn : false,
-      showRmEduBtn : false,
+      reload : false,
     }
   },
   props: {
@@ -160,12 +162,14 @@ export default {
     SkillEditor,
   },
   created() {
+
     this.SELECT_Userdata();
     this.isMineCheck();
     this.isFollowCheck();
   },
   methods: {
     async SELECT_Userdata() {
+      this.toStory(true);
       this.userdata = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       if ( this.userdata[0].userIntro == "" ) {
         this.userdata[0].userIntro = "소개말이 없습니다."
@@ -193,32 +197,29 @@ export default {
       } else {
         this.skillToggle = false;
       }
+      this.toStory(false);
     },
 
     receiveIntro(intro) {
       FirebaseService.UPDATE_userIntro(intro,this.$route.params.id);
       this.userdata[0].userIntro = intro;
     },
-
     receiveSkill(skill) {
       FirebaseService.UPDATE_userSkill(skill,this.$route.params.id);
       this.userdata[0].userSkills = skill;
     },
-
     async receiveEdu(edu) {
       this.userEducations = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       FirebaseService.UPDATE_userEdu(edu,this.userEducations[0].userEducations,this.$route.params.id);
       // 새로운 데이터 값을 가지는 유저데이터를 가져옴
       this.SELECT_Userdata();
     },
-
     async receiveCar(car) {
       this.userCareers = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       FirebaseService.UPDATE_userCar(car,this.userCareers[0].userCareers,this.$route.params.id);
       // 새로운 데이터 값을 가지는 유저데이터를 가져옴
       this.SELECT_Userdata();
     },
-
     isMineCheck() {
       if ( this.$route.params.id == this.$session.get('session_id') ) {
         this.isMine = true;
@@ -226,7 +227,6 @@ export default {
         this.isMine = false;
       }
     },
-
     async follow(){
       var follower = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       var following = await FirebaseService.SELECT_Userdata(this.$session.get('session_id'));
@@ -239,7 +239,6 @@ export default {
       );
       this.isFollowCheck();
     },
-
     async unfollow(){
       var follower = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       var following = await FirebaseService.SELECT_Userdata(this.$session.get('session_id'));
@@ -256,6 +255,9 @@ export default {
       var following = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       var tmp = following[0].followerlist.includes(this.$session.get('session_id'));
       this.isFollow=tmp;
+    },
+    toStory(load) {
+      this.$emit('toStory',load);
     },
     removeImage(){
       FirebaseService.DELETE_userImage(this.$route.params.id);
@@ -287,20 +289,24 @@ export default {
       })
       .catch();
     },
-
-    rmCareer(cCompany, cPosition, cDescription, idx){
-      console.log("remove Career");
-      console.log("1 :: ", cCompany);
-      console.log("2 :: ", cPosition);
-      console.log("3 :: ", cDescription);
-      console.log("4 :: ", idx);
+    showRmEduBtn(index) {
+      $('.edubtn').eq(index).show();
     },
-    rmEducation(eAgency, eDegree, eStartday, idx){
-      console.log("remove Education");
-      console.log("1 :: ", eAgency);
-      console.log("2 :: ", eDegree);
-      console.log("3 :: ", eStartday);
-      console.log("4 :: ", idx);
+    hideRmEduBtn(index) {
+      $('.edubtn').eq(index).hide();
+    },
+    showRmCarBtn(index) {
+      $('.carbtn').eq(index).show();
+    },
+    hideRmCarBtn(index) {
+      $('.carbtn').eq(index).hide();
+    },
+
+    rmCareer(userCareers, c, userId, reload){
+      this.reload = FirebaseService.DELETE_userCareer(userCareers,c,userId,reload);
+    },
+    rmEducation(userEducations, e, userId, reload){
+      this.reload = FirebaseService.DELETE_userEducations(userEducations, e, userId, reload);
     },
 
 
@@ -308,9 +314,10 @@ export default {
     test(tmp){
       console.log(tmp);
     },
-
   },
-
+  watch: {
+    'reload' : 'SELECT_Userdata'
+  }
 
 };
 </script>

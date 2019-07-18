@@ -1,6 +1,6 @@
 <template>
   <div justify-center>
-
+    <v-btn @click="goBackpage()"> 뒤로가기 </v-btn>
     <v-flex column xs12 sm12 >
     <v-tabs
       right
@@ -50,11 +50,11 @@
               </v-flex>
 
               <v-flex>
-                <p>프로젝트 생성시 프로젝트 생성 도우미가 실행됩니다!</p>
+                <p>프로젝트 수정 도우미가 실행됩니다!</p>
               </v-flex>
 
               <div class="text-xs-center mt-3">
-                <v-btn @click="next">프로젝트 생성하기!</v-btn>
+                <v-btn @click="next">프로젝트 수정하기!</v-btn>
               </div>
             </v-container>
           </v-card-text>
@@ -92,7 +92,8 @@
 
             <!--  테크 -->
             <v-container>
-              <h3>Tech stack</h3>
+
+              <h3>현재 등록된 Tech stack</h3>
               <v-layout column justify-center>
                 <v-layout row>
                   <v-flex xs12>
@@ -104,6 +105,7 @@
                   </v-flex>
                 </v-layout>
 
+                <h3>직접 추가하기</h3>
                 <v-layout row>
                   <v-flex xs6>
                     <v-text-field
@@ -113,6 +115,7 @@
                   </v-flex>
                 </v-layout>
 
+                <h3>Tech stack 목록</h3>
                 <v-layout row>
                   <v-flex xs12>
                     <ul row style="list-style:none;">
@@ -130,12 +133,12 @@
 
             <!-- TODO project img upload ==> Main and thumbnail -->
             <v-container>
-              <h3>프로젝트 대표이미지 등록</h3>
+              <h3>프로젝트 대표이미지 수정</h3>
               <div v-if="!projectimage">
                 <input type="file" @change="onFileChange" />
               </div>
               <div v-else>
-                <img :src="projectimage" width="100%" height="100%"/><br>
+                <img :src="projectimage" width="200px" height="200px"/><br>
                 <v-btn @click="removeImage">Remove image</v-btn>
               </div>
             </v-container>
@@ -187,6 +190,7 @@
                      projectterm,
                      projectcontent,
                      projecttech,
+                     projectimage,
                      projectrank,
                      session_id)" :editorToolbar="customToolbar">수정완료하기!</v-btn>
               <br/>
@@ -272,9 +276,6 @@ import FirebaseService from "@/services/FirebaseService";
           this.projecttech = data.projecttech
           this.projecttitle = data.projecttitle
 
-          // console.log(this.project)
-          // console.log(this.project.date)
-
         },
         getSessionid() {
           this.session_id = this.$session.get('session_id')
@@ -294,8 +295,12 @@ import FirebaseService from "@/services/FirebaseService";
           this.projecttech.splice(index,1);
         },
         addNewTech(){
-          this.projecttech.push(this.tech);
-          this.tech = '';
+          if (this.tech) {
+            this.projecttech.push(this.tech);
+            this.tech = '';
+          } else {
+            alert('tech를 입력해주세요')
+          }
         },
         addTech(t){
           if (!this.projecttech.includes(t)) {
@@ -358,6 +363,9 @@ import FirebaseService from "@/services/FirebaseService";
               this.projectimage = success.data.link;
             })
             .catch();
+        },
+        goBackpage() {
+          this.$emit('goBackpage')
         }
       },
     components: {
