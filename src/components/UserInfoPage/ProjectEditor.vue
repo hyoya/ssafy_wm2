@@ -331,10 +331,11 @@ import FirebaseService from "@/services/FirebaseService";
           fetch(apiUrl, content)
           .then(response => response.json())
           .then(success => {
-            this.image = success.data.link;
+            this.projectimage = success.data.link;
           })
+          .catch();
         }
-      },
+    },
     components: {
       VueEditor
     },
