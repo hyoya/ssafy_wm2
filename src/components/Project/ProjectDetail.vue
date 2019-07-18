@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="text-xs-center">
+  <v-flex class="text-xs-center" style=" padding: 10px 5px; background:white;">
     <v-flex hidden-xs-only>
       <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
         <v-img :src="projectimage" height="20vw" width="100%"></v-img>
@@ -8,7 +8,22 @@
           <span class="grey--text">{{projectdescription}}</span>
         </div>
       </button>
-
+      <div style="float:right; margin-right:1vw;">
+        <v-flex
+          v-if="isMine"
+          @click="UPDATE_Project(project_id)"
+          class="d-inline"
+          style="margin-right:1vw;">
+          <img src="../../assets/icon_set/technics.png" alt="Smiley" style="cursor: pointer;"/>
+        </v-flex>
+        <v-flex
+          v-if="isMine"
+          @click="DELETE_Project(project_id)"
+          class="d-inline"
+          style="margin-right:1vw;">
+          <img src="../../assets/icon_set/delete.png" alt="Smiley" style="cursor: pointer;"/>
+        </v-flex>
+      </div>
 
       <!-- <ProjectList v-if="!stateAdd"></ProjectList> -->
     </v-flex>
@@ -68,9 +83,17 @@ export default {
           "titlebar=no,status=no,toolbar=no,resizable=yes,top=20,left=500,width=700,height=600"
         );
       } else {
-        // console.log(pcode, '첫단계 옴??')
         this.$emit('popdetail',pcode);
       }},
+
+      UPDATE_Project(pcode) {
+        this.$emit('UPDATE_Project',pcode);
+      },
+      DELETE_Project(project_id) {
+        if (confirm("알림 : 삭제된 프로젝트는 복구가 불가능합니다. 삭제하시겠습니까?")) {
+          FirebaseService.DELETE_project(project_id)
+        }
+      },
   },
 
   created() {
