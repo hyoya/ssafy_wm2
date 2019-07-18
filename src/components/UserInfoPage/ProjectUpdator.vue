@@ -1,6 +1,6 @@
 <template>
   <div justify-center>
-
+    <v-btn @click="goBackpage()"> 뒤로가기 </v-btn>
     <v-flex column xs12 sm12 >
     <v-tabs
       right
@@ -187,6 +187,7 @@
                      projectterm,
                      projectcontent,
                      projecttech,
+                     projectimage,
                      projectrank,
                      session_id)" :editorToolbar="customToolbar">수정완료하기!</v-btn>
               <br/>
@@ -358,6 +359,9 @@ import FirebaseService from "@/services/FirebaseService";
               this.projectimage = success.data.link;
             })
             .catch();
+        },
+        goBackpage() {
+          this.$emit('goBackpage')
         }
       },
     components: {

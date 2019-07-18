@@ -210,40 +210,36 @@ export default {
 
   // seulgi's Function
 
-  // Function :: 댓글을 프로젝트 안의 댓글들 이라는 요소에 추가합니다.
-  // Parameter :: comment : 댓글의 텍스트 , old : 프로젝트의 댓글리스트 구버전 , project_id : 프로젝트의 id
-  INSERT_Comment(comment, old, project_id) {
-    old.comments.push(comment);
-    return firestore
-      .collection("projects")
-      .doc(project_id)
-      .update({
-        comments: old.comments
-      });
-  },
+    // Function :: 댓글을 프로젝트 안의 댓글들 이라는 요소에 추가합니다.
+    // Parameter :: comment : 댓글의 텍스트 , old : 프로젝트의 댓글리스트 구버전 , project_id : 프로젝트의 id
+    INSERT_Comment(comment, old, project_id) {
+      old.comments.push(comment)
+        return firestore.collection('projects').doc(project_id).update({
+          comments : old.comments
+        });
+    },
 
-  UPDATE_Project(data, old, project_id) {
-    old.projecttitle = data.projecttitle;
-    old.projectdescription = data.projectdescription;
-    old.projectterm = data.projectterm;
-    old.projectcontent = data.projectcontent;
-    old.projecttech = data.projecttech;
-    old.projectimage = data.projectimage;
-    old.projectrank = data.projectrank;
-    alert("진행중?");
-    return firestore
-      .collection("projects")
-      .doc(project_id)
-      .update({
-        projecttitle: old.projecttitle,
-        projectdescription: old.projectdescription,
-        projectterm: old.projectterm,
-        projectcontent: old.projectcontent,
-        projecttech: old.projecttech,
-        projectimage: old.projectimage,
-        projectrank: old.projectrank
-      });
-  },
+    UPDATE_Project(data, old, project_id) {
+      console.log(data, 'data입니다.')
+      console.log(old, 'old 입니다..')
+      old.projecttitle = data.projecttitle
+      old.projectdescription = data.projectdescription
+      old.projectterm = data.projectterm
+      old.projectcontent = data.projectcontent
+      old.projecttech = data.projecttech
+      old.projectimage = data.projectimage
+      old.projectrank = data.projectrank
+      alert('수정이 완료되었습니다.')
+      return firestore.collection('projects').doc(project_id).update({
+        projecttitle : old.projecttitle,
+        projectdescription : old.projectdescription,
+        projectterm : old.projectterm,
+        projectcontent : old.projectcontent,
+        projecttech : old.projecttech,
+        projectimage : old.projectimage,
+        projectrank : old.projectrank,
+      })
+    },
 
   async SignupUser(
     id,
