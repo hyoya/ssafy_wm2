@@ -2,7 +2,12 @@
   <div>
     <!-- TODO 여백 -->
     <v-layout><v-flex style="margin:50px;" /></v-layout>
-
+    <div v-if="loading">
+      <br>  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
     <v-layout row wrap>
       <v-flex xs12>
         <TopSide/>
@@ -11,15 +16,15 @@
 
     <v-layout row wrap>
       <v-flex xs12 sm4 md3>
-        <LeftSide xs12 sm4 md3 :isMine="isMine" v-cloak/>
+        <LeftSide xs12 sm4 md3 :isMine="isMine" v-on:toStory="fromLeftSide"/>
       </v-flex>
       <v-flex xs12 sm8 md9 >
-          <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
-          <toggle-button :width="100" v-model="toggleView" :sync="true"
-               :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
-          <ProjectList v-if="!stateAdd && !statedetail" v-on:toStory="cc" />
-          <ProjectEditor v-if="stateAdd && !statedetail" />
-          <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
+        <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
+        <toggle-button :width="100" v-model="toggleView" :sync="true"
+        :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
+        <ProjectList v-if="!stateAdd && !statedetail" v-on:toStory="cc" />
+        <ProjectEditor v-if="stateAdd && !statedetail" />
+        <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
 
       </v-flex>
     </v-layout>
@@ -46,6 +51,7 @@ export default {
       toggleView : false,
       pcode : '',
       statedetail : false,
+      loading : false,
     }
   },
   created() {
@@ -79,10 +85,20 @@ export default {
     cc(pcode) {
       this.pcode = pcode;
       this.statedetail = true;
+      this.loading = false;
     },
     gbp() {
       this.statedetail = false;
+    },
+    fromLeftSide(load) {
+      this.loading = load;
+      if ( this.loading == true) {
+        this.$loading(true)
+      } else {
+        this.$loading(false)
+      }
     }
+
   },
   components: {
     TopSide,
@@ -94,7 +110,7 @@ export default {
   watch: {
     // 라우터 객체를 감시하고 있다가 fetchData() 함수를 호출한다
     //'$route': 'fetchData'
-   'toggleView' : 'updateToggle'
+    'toggleView' : 'updateToggle'
   },
 };
 

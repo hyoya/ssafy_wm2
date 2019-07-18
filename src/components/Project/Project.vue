@@ -144,8 +144,10 @@ export default {
   },
   methods: {
     async bindData(){
+      this.$loading(true)
       this.project = await FirebaseService.SELECT_ProjectsByPcode(this.project_id);
       console.log(this.project);
+      this.$loading(false)
     },
     InfoProject(){
       console.log("this is test tag");
