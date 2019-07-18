@@ -400,6 +400,37 @@ export default {
     location.replace(str);
   },
 
+  // user 는 페이지의 주인, techs 는 필터를 위해 내가 선택한 것들.
+  async filter_projects(user, tech) {
+    // console.log(tech)
+    var p_id_box = []
+    // console.log(techs)
+      // console.log(i)
+        return firestore
+        .collection('projects')
+        .where('session_id', '==', user)
+        .where('projecttech', "array-contains", tech)
+        .get()
+        .then(docSnapshots => {
+          return docSnapshots.docs.map(doc => {
+            var data = doc.data();
+            var id = doc.id;
+            // console.log(id)
+            if (p_id_box.includes(id)) {
+              console.log(id, '이것은 이미 들어있다.')
+            } else {
+              p_id_box.push(id);
+              // console.log(id, data)
+              return { project_id : id , data: data }
+            }
+          })
+        })
+
+  },
+
+
+
+
   // -----------------------------------------------------------------
   //hyoya
   // Function :: 팔로우를 추가합니다.

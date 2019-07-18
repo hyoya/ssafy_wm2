@@ -1,8 +1,39 @@
 <!--GetProjectByUserId-->
 <template>
   <div>
+
+      <!-- 현재 슬기가 필터링 시도하는 영역 처음 -->
+      <div>
+        <h3>Tech별 검색</h3>
+      <ul v-for="(tech, index) in techs">
+        <label><input v-model="array" type="radio" v-bind:value="tech" ondblclick="this.checked=false">{{tech}}</label>
+      </ul>
+
+
+
+      <!-- <v-btn @click="check()">check filter</v-btn> -->
+
+      </div>
+      <!-- 현재 슬기가 필터링 시도하는 영역 마지막 -->
+      <h3>프로젝트 리스트</h3>
+      <v-layout row wrap justify-center>
+
+        <v-flex  v-for="i in filter_projects.length" xs12 sm6 md4>
+          <ProjectDetail v-on:popdetail="toStory"
+            :projectimage="filter_projects[i-1].data.projectimage"
+            :projecttitle="filter_projects[i-1].data.projecttitle"
+            :projectdescription="filter_projects[i-1].data.projectdescription"
+            :project_id="filter_projects[i-1].project_id"
+            >
+          </ProjectDetail>
+          <v-divider></v-divider>
+        </v-flex>
+      </v-layout>
+
+
     <v-layout row wrap justify-center>
-      <v-flex v-for="i in max_project" xs12 sm6 md4>
+
+      <v-flex v-if="seeall" v-for="i in projects.length" xs12 sm6 md4>
         <ProjectDetail v-on:popdetail="toStory"
           :projectimage="projects[i-1].data.projectimage"
           :projecttitle="projects[i-1].data.projecttitle"
@@ -35,6 +66,10 @@ export default {
       projects: [],
       max_project : 2,
       more : true,
+      techs : ["전체보기", "c", "c#", "javascript", "android", "jquery"],
+      array:'',
+      filter_projects:[],
+      seeall : true,
     };
   },
   components: {
@@ -56,6 +91,7 @@ export default {
     async SELECT_Projects() {
       this.id = this.$route.params.id;
       this.projects = await FirebaseService.SELECT_Projects(this.id);
+      // console.log(this.projects,'나옴?')
     },
     toStory(pcode) {
       // console.log("여기까지왔다.",pcode)
@@ -81,6 +117,25 @@ export default {
       } else {
         this.max_project += interval
       }
+    },
+    async filterprojects() {
+      // console.log(this.array)
+      if (this.array == '전체보기') {
+        this.seeall = true
+      } else {
+        this.seeall = false
+        this.filter_projects = await FirebaseService.filter_projects(this.user, this.array)
+      }
+
+    },
+    check() {
+      // console.log(this.filter_projects)
+    }
+  },
+  watch: {
+    array : function(){
+      this.filter_projects = []
+      this.filterprojects()
     }
   }
 };
