@@ -38,13 +38,20 @@
     <!--USER SKILLS-->
     <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading">Skills <SkillEditor v-on:sendSkill="receiveSkill" v-if="isMine"/> </v-flex>
+      <v-flex xs12 class="text-md-center subheading">
+        Skills
+        <SkillEditor
+        v-on:sendSkill="receiveSkill"
+        v-if="isMine"
+        v-bind:userSkills="this.userdata[0].userSkills"
+        v-bind:showSkillList="this.userdata[0].showSkillList"/>
+      </v-flex>
       <v-flex xs12>
         <div v-if="skillToggle" class="caption">
           <p> 등록된 기술이 없습니다. </p>
         </div>
         <div v-else>
-          <v-btn  flat small outline radius v-for="s in userdata[0].userSkills">{{s}}</v-btn>
+          <v-btn  flat small outline radius v-for="s in userdata[0].showSkillList">{{s}}</v-btn>
         </div>
       </v-flex>
     </v-layout>
@@ -64,13 +71,14 @@
         v-else
         v-for="(c, index) in userdata[0].userCareers"
         class="caption"
-        @mouseover="showRmCarBtn=true" @mouseleave="showRmCarBtn=false"
+        @mouseover="showRmCarBtn(index)" @mouseleave="hideRmCarBtn(index)"
         style="position:relative; padding:15px 6px; border-bottom:1px black solid;">
           <v-btn
-            v-on:click="rmCareer(c.Company, c.Position, c.Description, index)"
-            v-show="showRmCarBtn"
+            v-on:click="rmCareer(userdata[0].userCareers,c,userdata[0].email,reload)"
+            v-show:false
             flat outline small absolute fab
-            style="z-index:2; right:0;">
+            style="z-index:2; right:0;"
+            class ="carbtn">
             X
           </v-btn>
           <span class="subheading">{{c.Company}}<br/></span>
@@ -95,14 +103,16 @@
           v-else
           v-for="(e, index) in userdata[0].userEducations"
           class="caption"
-          @mouseover="showRmEduBtn=true" @mouseleave="showRmEduBtn=false"
+          @mouseover="showRmEduBtn(index)" @mouseleave="hideRmEduBtn(index)"
           style="position:relative; padding:15px 6px; border-bottom:1px black solid;"
           >
           <v-btn
-            v-on:click="rmEducation(e.Agency, e.Degree, e.Startday, index)"
-            v-show="showRmEduBtn"
+            v-on:click="rmEducation(userdata[0].userEducations,e,userdata[0].email,reload)"
+            v-show:false
             flat outline small absolute fab
-            style="z-index:2; right:0;">
+            style="z-index:2; right:0;"
+            class ="edubtn"
+            >
             X
           </v-btn>
           <span class="subheading">{{e.Agency}}<br/></span>
@@ -131,10 +141,15 @@ export default {
       careerToggle : false,
       skillToggle : false,
       imageToggle : false,
-      userdata: [ {userName : ''} , {userIntro : ''} , {userEducations : ''} , {userImage : ''} ],
+      userdata: [
+        {userName : ''} ,
+        {userIntro : ''} ,
+        {userEducations : ''},
+        {userImage : ''},
+        {userSkills : ''},
+        {showSkillList:''} ],
       showRmImgBtn : false,
-      showRmCarBtn : false,
-      showRmEduBtn : false,
+      reload : false,
     }
   },
   props: {
@@ -147,6 +162,7 @@ export default {
     SkillEditor,
   },
   created() {
+
     this.SELECT_Userdata();
     this.isMineCheck();
     this.isFollowCheck();
@@ -183,30 +199,27 @@ export default {
       }
       this.toStory(false);
     },
+
     receiveIntro(intro) {
       FirebaseService.UPDATE_userIntro(intro,this.$route.params.id);
       this.userdata[0].userIntro = intro;
     },
-
     receiveSkill(skill) {
       FirebaseService.UPDATE_userSkill(skill,this.$route.params.id);
       this.userdata[0].userSkills = skill;
     },
-
     async receiveEdu(edu) {
       this.userEducations = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       FirebaseService.UPDATE_userEdu(edu,this.userEducations[0].userEducations,this.$route.params.id);
       // 새로운 데이터 값을 가지는 유저데이터를 가져옴
       this.SELECT_Userdata();
     },
-
     async receiveCar(car) {
       this.userCareers = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       FirebaseService.UPDATE_userCar(car,this.userCareers[0].userCareers,this.$route.params.id);
       // 새로운 데이터 값을 가지는 유저데이터를 가져옴
       this.SELECT_Userdata();
     },
-
     isMineCheck() {
       if ( this.$route.params.id == this.$session.get('session_id') ) {
         this.isMine = true;
@@ -214,7 +227,6 @@ export default {
         this.isMine = false;
       }
     },
-
     async follow(){
       var follower = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       var following = await FirebaseService.SELECT_Userdata(this.$session.get('session_id'));
@@ -227,7 +239,6 @@ export default {
       );
       this.isFollowCheck();
     },
-
     async unfollow(){
       var follower = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       var following = await FirebaseService.SELECT_Userdata(this.$session.get('session_id'));
@@ -246,7 +257,6 @@ export default {
       this.isFollow=tmp;
     },
     toStory(load) {
-      console.log("로딩중.",load)
       this.$emit('toStory',load);
     },
     removeImage(){
@@ -279,27 +289,35 @@ export default {
       })
       .catch();
     },
+    showRmEduBtn(index) {
+      $('.edubtn').eq(index).show();
+    },
+    hideRmEduBtn(index) {
+      $('.edubtn').eq(index).hide();
+    },
+    showRmCarBtn(index) {
+      $('.carbtn').eq(index).show();
+    },
+    hideRmCarBtn(index) {
+      $('.carbtn').eq(index).hide();
+    },
 
-    rmCareer(cCompany, cPosition, cDescription, idx){
-      console.log("remove Career");
-      console.log("1 :: ", cCompany);
-      console.log("2 :: ", cPosition);
-      console.log("3 :: ", cDescription);
-      console.log("4 :: ", idx);
+    rmCareer(userCareers, c, userId, reload){
+      this.reload = FirebaseService.DELETE_userCareer(userCareers,c,userId,reload);
     },
-    rmEducation(eAgency, eDegree, eStartday, idx){
-      console.log("remove Education");
-      console.log("1 :: ", eAgency);
-      console.log("2 :: ", eDegree);
-      console.log("3 :: ", eStartday);
-      console.log("4 :: ", idx);
+    rmEducation(userEducations, e, userId, reload){
+      this.reload = FirebaseService.DELETE_userEducations(userEducations, e, userId, reload);
     },
+
+
+
     test(tmp){
       console.log(tmp);
-    }
-
+    },
   },
-
+  watch: {
+    'reload' : 'SELECT_Userdata'
+  }
 
 };
 </script>
