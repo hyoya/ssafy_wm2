@@ -246,7 +246,7 @@ export default {
       this.isFollow=tmp;
     },
     toStory(load) {
-      console.log("로딩중.",load)
+      // console.log("로딩중.",load)
       this.$emit('toStory',load);
     },
     removeImage(){
