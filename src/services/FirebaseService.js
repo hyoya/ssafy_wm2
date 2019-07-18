@@ -223,7 +223,6 @@ export default {
 
   // seulgi's Function
 
-<<<<<<< HEAD
   // Function :: 댓글을 프로젝트 안의 댓글들 이라는 요소에 추가합니다.
   // Parameter :: comment : 댓글의 텍스트 , old : 프로젝트의 댓글리스트 구버전 , project_id : 프로젝트의 id
   INSERT_Comment(comment, old, project_id) {
@@ -260,7 +259,6 @@ export default {
         projectrank: old.projectrank
       });
   },
-=======
     // Function :: 댓글을 프로젝트 안의 댓글들 이라는 요소에 추가합니다.
     // Parameter :: comment : 댓글의 텍스트 , old : 프로젝트의 댓글리스트 구버전 , project_id : 프로젝트의 id
     INSERT_Comment(comment, old, project_id) {
@@ -295,7 +293,6 @@ export default {
     DELETE_project(project_id) {
       firestore.collection('projects').doc(project_id).delete()
     },
->>>>>>> 6c4ff6c710ec2b85cd2c047308c3fee9d8aabf4b
 
   DELETE_userCareer(userCareers, career,userId,reload) {
     var index = -1;
