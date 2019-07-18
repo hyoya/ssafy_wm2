@@ -2,13 +2,13 @@
 <template>
   <div>
     <v-layout row wrap justify-center>
-      <v-flex v-for="i in max_project" xs12 sm6 md4
-        style="border:1px solid black; margin:1vw; padding:1vw;">
+      <v-flex v-for="i in max_project" xs12 sm4 v-if="layout==1">
         <ProjectDetail v-on:popdetail="toStory"
           :projectimage="projects[i-1].data.projectimage"
           :projecttitle="projects[i-1].data.projecttitle"
           :projectdescription="projects[i-1].data.projectdescription"
           :project_id="projects[i-1].project_id"
+          :project_writer="projects[i-1].data.session_id"
           >
         </ProjectDetail>
         <div
@@ -30,6 +30,36 @@
         </div>
         <v-divider></v-divider>
       </v-flex>
+      <v-flex v-for="i in max_project" xs12 v-if="layout==2">
+        <ProjectDetail0 v-on:popdetail="toStory"
+          :projectimage="projects[i-1].data.projectimage"
+          :projecttitle="projects[i-1].data.projecttitle"
+          :projectdescription="projects[i-1].data.projectdescription"
+          :project_id="projects[i-1].project_id"
+          :project_writer="projects[i-1].data.session_id"
+          :projectrank="projects[i-1].data.projectrank"
+          :projectterm="projects[i-1].data.projectterm"
+          :projecttech="projects[i-1].data.projecttech"
+          :projectcontent="projects[i-1].data.projectcontent"
+          >
+        </ProjectDetail0>
+        <v-divider></v-divider>
+      </v-flex>
+      <v-flex v-for="i in max_project" xs12 v-if="layout==3">
+        <ProjectDetail1 v-on:popdetail="toStory"
+          :projectimage="projects[i-1].data.projectimage"
+          :projecttitle="projects[i-1].data.projecttitle"
+          :projectdescription="projects[i-1].data.projectdescription"
+          :project_id="projects[i-1].project_id"
+          :project_writer="projects[i-1].data.session_id"
+          :projectrank="projects[i-1].data.projectrank"
+          :projectterm="projects[i-1].data.projectterm"
+          :projecttech="projects[i-1].data.projecttech"
+          :projectcontent="projects[i-1].data.projectcontent"
+          >
+        </ProjectDetail1>
+        <v-divider></v-divider>
+      </v-flex>
     </v-layout>
 
     <v-layout>
@@ -43,19 +73,23 @@
 import FirebaseService from "@/services/FirebaseService";
 import Project from "../Project/Project";
 import ProjectDetail from "../Project/ProjectDetail";
+import ProjectDetail0 from "../Project/ProjectDetail0";
+import ProjectDetail1 from "../Project/ProjectDetail1";
 import ProjectUpdator from "./ProjectUpdator";
 export default {
   name: "ProjectList",
   data() {
     return {
       projects: [],
-      max_project : 2,
+      max_project : 3,
       more : true,
     };
   },
   components: {
     Project,
     ProjectDetail,
+    ProjectDetail0,
+    ProjectDetail1,
     ProjectUpdator,
   },
   created() {
@@ -68,10 +102,14 @@ export default {
       this.isMine = false;
     }
   },
+  props: {
+    layout : {type:String}
+  },
   methods: {
     async SELECT_Projects() {
       this.id = this.$route.params.id;
       this.projects = await FirebaseService.SELECT_Projects(this.id);
+      console.log(this.projects)
     },
     toStory(pcode) {
       // console.log("여기까지왔다.",pcode)
@@ -97,7 +135,8 @@ export default {
       } else {
         this.max_project += interval
       }
-    }
+    },
+
   }
 };
 </script>

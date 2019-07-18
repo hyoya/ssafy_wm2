@@ -140,6 +140,14 @@ export default {
     this.get_comments();
   },
   methods: {
+    showNotification (group, type ,title, text) {
+       this.$notify({
+         group,
+         title,
+         text,
+         type,
+       })
+     },
     async bindData(){
       this.$loading(true)
       this.project = await FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
@@ -203,7 +211,7 @@ export default {
         this.comments.push(newcommnet)
       } else {
         // 로그인 안했으면 안했다고 알려줘야지 헤헤
-        alert('너 로그인안했다. 댓글못쓴다~')
+          this.showNotification('foo-css','error','댓글 작성 오류','로그인이 필요한 기능입니다.')
       }
     },
     async get_comments() {

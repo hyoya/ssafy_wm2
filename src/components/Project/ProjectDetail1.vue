@@ -1,32 +1,26 @@
 <template>
+  <div>
   <v-flex class="text-xs-center">
-    <v-flex hidden-xs-only>
       <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
+        <v-layout>
+        <v-flex xs4 hidden-xs-only >
         <v-img :src="projectimage" height="20vw" width="100%"></v-img>
+        </v-flex>
+        <v-flex xs8>
         <div>
-          <div class="black--text">{{projecttitle}}</div>
-          <span class="grey--text">{{projectdescription}}</span>
+          <div class="black--text"> {{projecttitle}} / {{project_writer}} / {{projectterm}} / {{projectrank}} </div>
+          <p class="black--text" v-html="projectcontent" />
+          <v-flex
+            v-for="tech in projecttech"
+            class="tech d-inline-block caption"
+          >{{ tech }} </v-flex>
         </div>
+        </v-flex>
+        </v-layout>
       </button>
-
-
       <!-- <ProjectList v-if="!stateAdd"></ProjectList> -->
-    </v-flex>
-
-    <v-flex hidden-sm-and-up>
-      <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
-        <v-img :src="projectimage" height="45vw" width="100%"></v-img>
-        <div>
-          <div class="black--text">{{projecttitle}}</div>
-          <span class="grey--text">{{projectdescription}}</span>
-        </div>
-      </button>
-
-
-    </v-flex>
-
-
   </v-flex>
+  </div>
 </template>
 
 
@@ -44,6 +38,11 @@ export default {
     projectdescription: { type: String }, //프로젝트 간단 설명
     project_id: { type: String },
     project_writer: {type: String},
+    projectrank : {type: String},
+    projectcontent : {type: String},
+    projecttech : {type: Array},
+    projectterm : {type: String},
+    projectcontent : {type: String},
   },
   data: () => ({
     popol: false,

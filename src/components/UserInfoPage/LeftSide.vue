@@ -77,7 +77,7 @@
           <v-flex
             v-on:click="rmCareer(userdata[0].userCareers,c,userdata[0].email,reload)"
             v-show:false
-            class ="carbtn"
+            class ="carbtn"  v-if="isMine"
             style="z-index:2; right:0; top2vw; position: absolute; display: none;">
             <img src="../../assets/icon_set/delete.png" alt="delimg" style="cursor:pointer;width:25px;height:25px;"/>
           </v-flex>
@@ -109,7 +109,7 @@
             v-on:click="rmEducation(userdata[0].userEducations,e,userdata[0].email,reload)"
             v-show:false
             flat outline small absolute fab
-            class ="edubtn"
+            class ="edubtn"  v-if="isMine"
             style="z-index:2; right:0; top2vw; position: absolute; display: none;">
             <img src="../../assets/icon_set/delete.png" alt="delimg" style="cursor:pointer; width:25px;height:25px;"/>
           </v-flex>

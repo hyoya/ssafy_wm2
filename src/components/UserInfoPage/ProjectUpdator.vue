@@ -265,6 +265,14 @@ import FirebaseService from "@/services/FirebaseService";
         this.getProject()
       },
       methods: {
+        showNotification (group, type ,title, text) {
+           this.$notify({
+             group,
+             title,
+             text,
+             type,
+           })
+         },
         async getProject() {
           this.project = await FirebaseService.SELECT_Project(this.project_id)
           var data = this.project
@@ -299,14 +307,14 @@ import FirebaseService from "@/services/FirebaseService";
             this.projecttech.push(this.tech);
             this.tech = '';
           } else {
-            alert('tech를 입력해주세요')
+            this.showNotification('foo-css','warn','Tech Stack 추가 오류','추가할 TECH를 입력해주세요')
           }
         },
         addTech(t){
           if (!this.projecttech.includes(t)) {
               this.projecttech.push(t);
           } else {
-            alert('이미 들어가 있는 tech 입니다.')
+            this.showNotification('foo-css','warn','Tech Stack 추가 오류','이미 추가되어있는 TECH입니다')
           }
         },
         selectRank(inputrank){
@@ -330,7 +338,7 @@ import FirebaseService from "@/services/FirebaseService";
                // console.log(this.project_id, '이게 나와야 한다')
                FirebaseService.UPDATE_Project(
                  data, this.project, this.project_id);
-                 // alert("업로드 완료!");
+              this.showNotification('foo-css','success','업로드 성공','프로젝트가 정상적으로 수정되었습니다.')
 
          },
 
