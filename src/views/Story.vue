@@ -26,7 +26,7 @@
             style="display:inline;">
             <img id='toggletext' src="../assets/icon_set/add.png" alt="delimg" style="cursor:pointer;width:25px;height:25px;"/>
           </v-flex>
-          
+
           <v-flex style="float:right; display:inline;">
             <toggle-button
             v-if="!stateAdd && !stateupdate && !statedetail"
@@ -99,9 +99,9 @@ export default {
     changeComponent(){
       var v_button = document.getElementById('toggletext');
       if (this.stateAdd) {
-        v_button.innerHTML='프로젝트 생성하기'
-      } else  {
-        v_button.innerHTML='뒤로가기'
+        v_button.innerHTML = "프로젝트 생성하기";
+      } else {
+        v_button.innerHTML = "뒤로가기";
       }
       this.stateAdd = !this.stateAdd
     },

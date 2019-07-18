@@ -10,13 +10,13 @@
       </div>
       <div class="content__icon content"></div>
     </div>
-    <div class="container__weather">
+    <!-- <div class="container__weather">
       <div class="weather__content">
         <p>도시 : {{city}} &nbsp</p>
         <p>습도 : {{humidity}}% &nbsp</p>
         <p>현재날씨 : {{weather}}</p>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -34,16 +34,16 @@ export default {
     hasResult: function() {
       return this.posts.length > 0;
     }
-  },
-  mounted() {
-    const BASE_URL =
-      "http://api.openweathermap.org/data/2.5/weather?q=Daejeon&appid=8524498325d50c1573d0f08755ed342c";
-    this.$http.get(`${BASE_URL}`).then(result => {
-      this.city = result.data.name;
-      this.humidity = result.data.main.humidity;
-      this.weather = result.data.weather[0].main;
-    });
   }
+  // mounted() {
+  //   const BASE_URL =
+  //     "http://api.openweathermap.org/data/2.5/weather?q=Daejeon&appid=8524498325d50c1573d0f08755ed342c";
+  //   this.$http.get(`${BASE_URL}`).then(result => {
+  //     this.city = result.data.name;
+  //     this.humidity = result.data.main.humidity;
+  //     this.weather = result.data.weather[0].main;
+  //   });
+  // }
 };
 </script>
 <style>
@@ -56,6 +56,9 @@ export default {
   height: 80px;
 }
 .footer__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 150px;
   background-color: white;
 }
