@@ -2,19 +2,15 @@
 <template>
   <div>
 
-      <!-- 현재 슬기가 필터링 시도하는 영역 처음 -->
+      <!-- 필터링한 프로젝트들을 출력하는 곳입니다.-->
       <div>
         <h3>Tech별 검색</h3>
       <ul v-for="(tech, index) in techs">
         <label><input v-model="array" type="radio" v-bind:value="tech" ondblclick="this.checked=false">{{tech}}</label>
       </ul>
 
-
-
-      <!-- <v-btn @click="check()">check filter</v-btn> -->
-
       </div>
-      <!-- 현재 슬기가 필터링 시도하는 영역 마지막 -->
+
       <h3>프로젝트 리스트</h3>
       <v-layout row wrap justify-center>
 
@@ -30,6 +26,9 @@
         </v-flex>
       </v-layout>
 
+      <!-- 필터링한 프로젝트들을 출력하는 곳입니다. (끝)-->
+
+      <!-- 여기서부터는 전체 프로젝트를 보여주는 곳입니다.-->
 
     <v-layout row wrap justify-center>
 
