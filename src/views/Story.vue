@@ -19,9 +19,23 @@
         <LeftSide xs12 sm4 md3 :isMine="isMine" v-on:toStory="fromLeftSide"/>
       </v-flex>
       <v-flex xs12 sm8 md9 >
-          <v-btn  @click="changeComponent()" v-if="isMine && !statedetail && !stateupdate"><span id='toggletext'>프로젝트 생성하기</span></v-btn>
-          <toggle-button v-if="!stateAdd && !stateupdate && !statedetail" :width="100" v-model="toggleView" :sync="true"
-               :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
+          <v-flex
+            @click="changeComponent()"
+            v-if="isMine && !statedetail && !stateupdate"
+            class="d-inline"
+            style="display:inline;">
+            <img id='toggletext' src="../assets/icon_set/add.png" alt="delimg" style="cursor:pointer;width:25px;height:25px;"/>
+          </v-flex>
+          
+          <v-flex style="float:right; display:inline;">
+            <toggle-button
+            v-if="!stateAdd && !stateupdate && !statedetail"
+            :width="100"
+            v-model="toggleView"
+            :sync="true"
+            :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
+          </v-flex>
+
           <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc"  v-on:goup="update_project" />
           <ProjectEditor v-if="stateAdd && !statedetail && !stateupdate" />
           <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>

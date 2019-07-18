@@ -2,7 +2,7 @@
     <v-dialog v-model="edumodal"  max-width="600px">
 
       <template v-slot:activator="{ on }">
-        <v-btn fab small outline v-on="on"><i class="fa fa-pencil"/></v-btn>
+        <img src="../../../assets/icon_set/pencil.png" alt="edit" style="cursor:pointer;" v-on="on"/>
       </template>
 
 
