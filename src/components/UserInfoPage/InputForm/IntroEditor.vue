@@ -7,7 +7,6 @@
       <v-card>
         <v-toolbar>
           <span class="font-weight-regular headline">자기소개 수정</span>
-          {{intro}}
           <v-spacer/>
           <div @click="clearIntro"><i class="fa fa-close"/></div>
         </v-toolbar>

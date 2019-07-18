@@ -18,6 +18,7 @@
       <v-flex xs12 sm4 md3>
         <LeftSide xs12 sm4 md3 :isMine="isMine" v-on:toStory="fromLeftSide"/>
       </v-flex>
+
       <v-flex xs12 sm8 md9 >
           <v-flex
             @click="changeComponent()"
@@ -26,8 +27,13 @@
             style="display:inline;">
             <img id='toggletext' src="../assets/icon_set/add.png" alt="delimg" style="cursor:pointer;width:25px;height:25px;"/>
           </v-flex>
-
+          <div style="display:inline">
+            <v-btn flat outline fab small @click="layout1()"> 1 </v-btn>
+            <v-btn flat outline fab small @click="layout2()"> 2 </v-btn>
+            <v-btn flat outline fab small @click="layout3()"> 3 </v-btn>
+          </div>
           <v-flex style="float:right; display:inline;">
+
             <toggle-button
             v-if="!stateAdd && !stateupdate && !statedetail"
             :width="100"
@@ -35,8 +41,7 @@
             :sync="true"
             :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
           </v-flex>
-
-          <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc"  v-on:goup="update_project" />
+          <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc" :layout="layout" v-on:goup="update_project" />
           <ProjectEditor v-if="stateAdd && !statedetail && !stateupdate" />
           <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
           <ProjectUpdator v-if="stateupdate" :project_id="pcode2" v-on:goBackpage="gbp2" />
@@ -69,6 +74,7 @@ export default {
       stateupdate : false,
       pcode2 : '',
       loading : false,
+      layout : "1",
     }
   },
   created() {
@@ -130,6 +136,15 @@ export default {
       } else {
         this.$loading(false)
       }
+    },
+    layout1() {
+      this.layout = "1";
+    },
+    layout2() {
+      this.layout = "2";
+    },
+    layout3() {
+      this.layout = "3";
     }
 
   },
