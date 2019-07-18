@@ -5,6 +5,7 @@
         <Portfolio v-bind:portfolio="item" />
       </div>
     </div>
+    <button class="mainMoreBtn">MORE</button>
   </div>
 </template>
 
@@ -17,7 +18,8 @@ export default {
   },
   data() {
     return {
-      allPortfolio: ""
+      allPortfolio: [],
+      bottolePortfolio: []
     };
   },
   created() {
@@ -26,6 +28,7 @@ export default {
   methods: {
     async SELECT_ALLProjects() {
       this.allPortfolio = await FirebaseService.SELECT_ALLProjects();
+
       console.log(this.allPortfolio);
     }
   }
@@ -42,5 +45,14 @@ export default {
   padding-left: 90px;
   padding-right: 40px;
   padding-top: 50px;
+}
+.mainMoreBtn {
+  margin-left: 570px;
+  font-size: 20px;
+  background: purple;
+  color: white;
+  border-radius: 5%;
+  width: 80px;
+  height: 35px;
 }
 </style>

@@ -4,6 +4,7 @@
     <Filters />
     <ProfileRegister />
     <PortfolioList />
+    <!-- <button class="mainMoreBtn">MORE</button> -->
   </div>
 </template>
 
@@ -28,3 +29,5 @@ export default {
   methods: {}
 };
 </script>
+<style>
+</style>

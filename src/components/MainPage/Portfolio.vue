@@ -1,9 +1,9 @@
 <template>
   <div class="Portfolio__container">
     <div class="Portfolio__container__content">
-      <div class="Portfolio__box" style="background:white; height:310px; width:360px;">
+      <button class="Portfolio__box" @click="popdetail(portfolioId)">
         <img :src="protfolioImg" style="height:280px; width:330px" />
-      </div>
+      </button>
     </div>
   </div>
 </template>
@@ -31,6 +31,9 @@ export default {
       this.protfolioImg = this.portfolioInfo.projectimage;
       console.log(this.protfolioImg);
       console.log(this.portfolioId);
+    },
+    popdetail(pcode) {
+      window.open("../project/" + pcode);
     }
   }
 };
@@ -42,5 +45,8 @@ export default {
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
+  background: white;
+  height: 290px;
+  width: 340px;
 }
 </style>

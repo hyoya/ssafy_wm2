@@ -5,13 +5,21 @@
         <h2>포트폴리오를 등록하면 기업이 먼저 면접을 제안합니다.</h2>
       </div>
       <div class="ProfileContent__btn">
-        <button>포트폴리오 등록하기</button>
+        <button @click="GetSession">포트폴리오 등록하기</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+export default {
+  methods: {
+    GetSession() {
+      //   console.log(this.$session.get("session_id"), " : 현재 아이디");
+      window.open("../story/" + this.$session.get("session_id"));
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -47,14 +55,5 @@ button {
   /* height: 50px; */
   /* width: 180px; */
   padding: 15px 45px;
-}
-@media screen and (max-width: 700px) {
-  .ProfileContent {
-    display: flex;
-    flex-direction: column;
-  }
-  h2 {
-    font-size: 7px;
-  }
 }
 </style>
