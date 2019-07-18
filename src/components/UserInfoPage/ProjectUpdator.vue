@@ -50,7 +50,7 @@
               </v-flex>
 
               <v-flex>
-                <p>프로젝트 순서 도우기가 실행됩니다!</p>
+                <p>프로젝트 수정 도우미가 실행됩니다!</p>
               </v-flex>
 
               <div class="text-xs-center mt-3">
