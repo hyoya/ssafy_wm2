@@ -231,7 +231,7 @@ export default {
       old.projectcontent = data.projectcontent
       old.projecttech = data.projecttech
       old.projectimage = data.projectimage
-      old.projectrank = data.projectrank    
+      old.projectrank = data.projectrank
       firestore.collection('projects').doc(project_id).update({
         projecttitle : old.projecttitle,
         projectdescription : old.projectdescription,
@@ -243,6 +243,10 @@ export default {
       })
       alert('수정이 완료되었습니다.')
       location.reload();
+    },
+
+    DELETE_project(project_id) {
+      firestore.collection('projects').doc(project_id).delete()
     },
 
   async SignupUser(
