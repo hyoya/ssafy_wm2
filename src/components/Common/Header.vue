@@ -2,16 +2,17 @@
   <div class="headerBar">
     <div style="background:white" class="toolBar">
       <v-toolbar-title>
-        <a class="font-bold-light content" href="/">Bobsleh</a>
+        <a class="font-bold-light content" href="/">Sharefolio</a>
       </v-toolbar-title>
       <v-spacer />
-      <div id="google_translate_element"></div>
+      <!-- <div id="google_translate_element"></div> -->
       <Sign />
-      <v-btn flat><i class="fa fa-globe" aria-hidden="true"></i> </v-btn>
+      <v-btn flat>
+        <i class="fa fa-globe" aria-hidden="true"></i>
+      </v-btn>
       <v-btn flat class="font-bold-light" href="/story">Story</v-btn>
       <v-btn flat class="font-bold-light" href="/companyIntro">Company</v-btn>
       <v-btn flat class="font-bold-light" href="/followers">followers</v-btn>
-      <v-btn flat class="font-bold-light" href="/git">Git</v-btn>
     </div>
     <hr />
   </div>
@@ -40,7 +41,7 @@ a {
 }
 .headerBar {
   position: fixed;
-  z-index: 1;
+  z-index: 10;
   width: 100%;
 }
 .toolBar {

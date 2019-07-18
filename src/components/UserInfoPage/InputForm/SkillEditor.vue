@@ -1,8 +1,8 @@
 <template>
-
     <v-dialog v-model="skillmodal"  max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn fab small outline v-on="on"><i class="fa fa-pencil"/>스킬!</v-btn>
+        <img src="../../../assets/icon_set/pencil.png" alt="edit" style="cursor:pointer;"
+        v-on="on" @click="initShowModal"/>
       </template>
 
       <!-- Modal -->
@@ -18,23 +18,23 @@
           <v-layout row wrap>
 
             <v-flex xs12>
-              <span>보유스킬</span>
-              <v-btn v-for="item in skills" small flat outline round @click="deleteTech(item)">
-                {{ item }}</v-btn>
+              <span>Show</span><br/>
+              <v-btn
+              v-for="item in this.selectList"
+              small flat outline round
+              @click="deleteTech(item)">
+                {{ item }}
+              </v-btn>
             </v-flex>
 
-            <v-flex xs12>
-              <v-text-field
-              v-model="tech"
-              v-on:keyup.enter="addNewTech()"
-              ></v-text-field>
-            </v-flex>
+            <br/><br/>-------------------<br/><br/>
 
             <v-flex xs12>
-              <v-btn v-for="tech in techlist"
+              <span>보유스킬</span><br/>
+              <v-btn v-for="item in this.unselectList"
                small flat outline round
-                @click="addTech(tech)">
-                {{ tech }}
+                @click="addTech(item)">
+                {{ item }}
               </v-btn>
             </v-flex>
 
@@ -43,7 +43,7 @@
 
         <!-- action -->
         <v-card-actions>
-          <v-btn v-on:click="sendSkill(skills)"> 등록 </v-btn>
+          <v-btn v-on:click="sendSkill(selectList)"> 등록 </v-btn>
         </v-card-actions>
 
       </v-card>
@@ -54,43 +54,49 @@
 import FirebaseService from "@/services/FirebaseService";
 
   export default {
+    props: [
+      'userSkills',
+      'showSkillList',
+    ],
     data() {
         return {
         skillmodal:false,
-        techlist:[
-          "C",
-          "C++",
-          "java",
-          "javascript",
-        ],
-        tech:"",
-        skills: "",
+        receiveUserSkills:this.userSkills,
+        receiveShowSkillList:this.showSkillList,
+        unselectList:[],
+        selectList:[],
       }
     },
     created() {
-      this.SELECT_Userdata();
     },
     methods : {
-      async SELECT_Userdata() {
-        var userdata = await FirebaseService.SELECT_Userdata(this.$route.params.id);
-        this.skills = userdata[0].userSkills
-      },
-      addNewTech(){
-        if( this.tech !==  "" ) {
-          this.skills.push(this.tech);
-        }
-        this.tech="";
-      },
       deleteTech(item){
-        this.skills.splice(this.skills.indexOf(item),1);
+        this.selectList.splice(this.selectList.indexOf(item),1);
+        this.calcDiff();
       },
       addTech(tech){
-        this.skills.push(tech);
+        this.selectList.push(tech);
+        this.calcDiff();
       },
       sendSkill(skills) {
         this.$emit('sendSkill',skills);
         this.skillmodal = false;
-      }
+      },
+      calcDiff(){
+        var tmp =[];
+        for(var i=0; i<this.receiveUserSkills.length; i++){
+          if(!this.selectList.includes(this.receiveUserSkills[i])){
+            tmp.push(this.receiveUserSkills[i]);
+          }
+        }
+        this.unselectList = tmp;
+      },
+      initShowModal(){
+        this.receiveUserSkills = this.userSkills;
+        this.receiveShowSkillList = this.showSkillList;
+        this.selectList = this.showSkillList;
+        this.calcDiff();
+      },
     },
 
   }

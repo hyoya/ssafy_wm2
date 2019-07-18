@@ -1,6 +1,5 @@
 <template>
   <div justify-center>
-
     <v-flex column xs12 sm12 >
     <v-tabs
       right
@@ -264,6 +263,14 @@ import FirebaseService from "@/services/FirebaseService";
         this.getSessionid()
       },
       methods: {
+        showNotification (group, type ,title, text) {
+           this.$notify({
+             group,
+             title,
+             text,
+             type,
+           })
+         },
         getSessionid() {
           this.session_id = this.$session.get('session_id')
         },
@@ -286,14 +293,15 @@ import FirebaseService from "@/services/FirebaseService";
             this.projecttech.push(this.tech);
             this.tech = '';
           } else {
-            alert('tech를 입력해주세요')
+            this.showNotification('foo-css','warn','Tech Stack 추가 오류','추가할 TECH를 입력해주세요')
+
           }
         },
         addTech(t){
           if (!this.projecttech.includes(t)) {
               this.projecttech.push(t);
           } else {
-            alert('이미 들어가 있는 tech 입니다.')
+            this.showNotification('foo-css','warn','Tech Stack 추가 오류','이미 추가되어있는 TECH입니다')
           }
         },
         selectRank(inputrank){
@@ -316,6 +324,7 @@ import FirebaseService from "@/services/FirebaseService";
           this.projectimage,
           this.projectrank,
         this.session_id);
+        this.showNotification('foo-css','success','업로드 성공','프로젝트가 정상적으로 수정되었습니다.')
         },
         //// IMAGE UPLOAD
         removeImage(){
@@ -346,7 +355,7 @@ import FirebaseService from "@/services/FirebaseService";
           })
           .catch();
         }
-      },
+    },
     components: {
       VueEditor
     },
