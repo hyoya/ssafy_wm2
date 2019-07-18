@@ -1,7 +1,8 @@
 <template>
     <v-dialog v-model="skillmodal"  max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn fab small outline v-on="on" @click="initShowModal"><i class="fa fa-pencil"/></v-btn>
+        <img src="../../../assets/icon_set/pencil.png" alt="edit" style="cursor:pointer;"
+        v-on="on" @click="initShowModal"/>
       </template>
 
       <!-- Modal -->
@@ -10,7 +11,6 @@
           <span class="font-weight-regular headline">Skill Editor</span>
           <v-spacer/>
           <div @click="skillmodal = false"><i class="fa fa-close"/></div>
-          <v-btn @click="test('ds')">test</v-btn>
         </v-toolbar>
 
         <!-- container -->
@@ -18,7 +18,7 @@
           <v-layout row wrap>
 
             <v-flex xs12>
-              <span>Show</span>
+              <span>Show</span><br/>
               <v-btn
               v-for="item in this.selectList"
               small flat outline round
@@ -27,11 +27,10 @@
               </v-btn>
             </v-flex>
 
-            <hr/>
-            <br/><br/><br/>
+            <br/><br/>-------------------<br/><br/>
 
             <v-flex xs12>
-              <span>보유스킬</span>
+              <span>보유스킬</span><br/>
               <v-btn v-for="item in this.unselectList"
                small flat outline round
                 @click="addTech(item)">
