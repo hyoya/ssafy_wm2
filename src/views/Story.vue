@@ -2,12 +2,14 @@
   <div>
     <!-- TODO 여백 -->
     <v-layout><v-flex style="margin:50px;" /></v-layout>
+
     <div v-if="loading">
       <br>  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
       <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
       <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
       <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     </div>
+
     <v-layout row wrap>
       <v-flex xs12>
         <TopSide/>
@@ -15,37 +17,56 @@
     </v-layout>
 
     <v-layout row wrap>
+
       <v-flex xs12 sm4 md3>
         <LeftSide xs12 sm4 md3 :isMine="isMine" v-on:toStory="fromLeftSide"/>
       </v-flex>
 
       <v-flex xs12 sm8 md9 >
-          <v-flex
-            @click="changeComponent()"
-            v-if="isMine && !statedetail && !stateupdate"
-            class="d-inline"
-            style="display:inline;">
-            <img id='toggletext' src="../assets/icon_set/add.png" alt="delimg" style="cursor:pointer;width:25px;height:25px;"/>
-          </v-flex>
-          <div style="display:inline">
-            <v-btn flat outline fab small @click="layout1()"> 1 </v-btn>
-            <v-btn flat outline fab small @click="layout2()"> 2 </v-btn>
-            <v-btn flat outline fab small @click="layout3()"> 3 </v-btn>
-          </div>
-          <v-flex style="float:right; display:inline;">
+        <v-layout row wrap>
+          <v-flex xs12 style="">
+            <div
+              @click="changeComponent()"
+              v-if="isMine && !statedetail && !stateupdate"
+              class="d-inline"
+              style="display:inline;">
+              <img id='toggletext' src="../assets/icon_set/add.png" alt="delimg" style="cursor:pointer;width:25px;height:25px;"/>
+            </div>
 
-            <toggle-button
-            v-if="!stateAdd && !stateupdate && !statedetail"
-            :width="100"
-            v-model="toggleView"
-            :sync="true"
-            :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
+            <v-flex
+            class="d-inline"
+            style="float:right;">
+              <toggle-button
+              v-if="!stateAdd && !stateupdate && !statedetail"
+              :width="100"
+              v-model="toggleView"
+              :sync="true"
+              :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
+            </v-flex>
+
+            <div style="display:inline; float:right; right:50%">
+              <div class="d-inline" @click="layout1()">
+                 <img id='toggletext' src="../assets/icon_set/layout1.png" alt="delimg" style="cursor:pointer;width:25px;height:25px; margin-right:5px;"/>
+               </div>
+              <div class="d-inline" @click="layout2()">
+                 <img id='toggletext' src="../assets/icon_set/layout2.png" alt="delimg" style="cursor:pointer;width:25px;height:25px;margin-right:5px;"/>
+               </div>
+              <div class="d-inline" @click="layout3()">
+                 <img id='toggletext' src="../assets/icon_set/layout3.png" alt="delimg" style="cursor:pointer;width:25px;height:25px;margin-right:5px;"/>
+               </div>
+            </div>
+
           </v-flex>
-          <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc" :layout="layout" v-on:goup="update_project" />
-          <ProjectEditor v-if="stateAdd && !statedetail && !stateupdate" />
-          <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
-          <ProjectUpdator v-if="stateupdate" :project_id="pcode2" v-on:goBackpage="gbp2" />
-          <!-- <v-btn @click="check_stateupdate(state)"></v-btn> -->
+        </v-layout>
+
+        <ProjectList
+          v-if="!stateAdd && !statedetail && !stateupdate"
+          v-on:toStory="cc" :layout="layout" v-on:goup="update_project"
+          v-on:toStoryUpdate="UPDATE_Project"/>
+        <ProjectEditor v-if="stateAdd && !statedetail && !stateupdate" />
+        <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
+        <ProjectUpdator v-if="stateupdate" :project_id="pcode2" v-on:goBackpage="gbp2" />
+        <!-- <v-btn @click="check_stateupdate(state)"></v-btn> -->
       </v-flex>
     </v-layout>
 
@@ -145,7 +166,11 @@ export default {
     },
     layout3() {
       this.layout = "3";
-    }
+    },
+    UPDATE_Project(pcode) {
+      this.pcode2 = pcode
+      this.stateupdate = true;
+    },
 
   },
   components: {
