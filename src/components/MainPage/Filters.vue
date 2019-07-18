@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <v-container style="height:60px">
     <v-layout row>
-      <v-flex xs3 sm2>
+      <v-flex xs3 sm2 style="margin-top:-30px">
         <v-overflow-btn :items="category" label="분류" target="#dropdown-example"></v-overflow-btn>
       </v-flex>
 
@@ -16,7 +16,7 @@
           <v-flex column></v-flex>
         </v-layout>
 
-        <v-flex xs3 sm2>
+        <v-flex xs3 sm2 style="margin-top:-30px">
           <v-overflow-btn :items="filter" label="필터" target="#dropdown-example"></v-overflow-btn>
         </v-flex>
       </v-layout>
