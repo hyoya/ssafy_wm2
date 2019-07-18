@@ -240,9 +240,4 @@ export default {
 </script>
 
 <style scoped>
-.userInfoPortfolioLayout {
-  border: 1px solid #2c2c2c;
-  background-color: white;
-  margin: 25px;
-}
 </style>

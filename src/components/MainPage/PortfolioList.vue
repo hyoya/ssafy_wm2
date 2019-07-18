@@ -22,7 +22,7 @@ export default {
       bottolePortfolio: [],
       end: 6,
       start: 0,
-      PageCount: ""
+      PageLength: ""
     };
   },
   created() {
@@ -31,16 +31,21 @@ export default {
   methods: {
     async SELECT_ALLProjects() {
       this.allPortfolio = await FirebaseService.SELECT_ALLProjects();
-      this.PageCount = this.allPortfolio.length;
-      console.log(this.PageCount);
+      this.PageLength = this.allPortfolio.length;
+      console.log(this.PageLength);
       for (let i = this.start; i < this.end; i++) {
         this.bottolePortfolio.push(this.allPortfolio[i]);
       }
     },
     morePortfolio() {
-      this.end += 6;
-      this.start += 6;
-      this.SELECT_ALLProjects();
+      if (this.end < this.PageLength) {
+        this.end += 6;
+        this.start += 6;
+        if (this.end > this.PageLength) {
+          this.end = this.PageLength;
+        }
+        this.SELECT_ALLProjects();
+      }
     }
   }
 };
