@@ -109,7 +109,7 @@ export default {
   // Parameter :: Story 페이지의 주인의 아이디와 새로운 기술 정보를 가져옵니다.
     UPDATE_userSkill(skill,userId) {
       return firestore.collection("users").doc(userId).update({
-        userSkills : skill
+        showSkillList : skill
       });
     },
 
@@ -215,6 +215,7 @@ export default {
             followerlist:[],
             followinglist:[],
             likeitProject:[],
+            showSkillList:[],
           });
 
         alert(`${id}님, 회원가입이 완료되었습니다.`);
