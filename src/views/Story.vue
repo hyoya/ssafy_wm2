@@ -2,7 +2,12 @@
   <div>
     <!-- TODO 여백 -->
     <v-layout><v-flex style="margin:50px;" /></v-layout>
-
+    <div v-if="loading">
+      <br>  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
     <v-layout row wrap>
       <v-flex xs12>
         <TopSide/>
@@ -11,7 +16,7 @@
 
     <v-layout row wrap>
       <v-flex xs12 sm4 md3>
-        <LeftSide xs12 sm4 md3 :isMine="isMine" v-cloak/>
+        <LeftSide xs12 sm4 md3 :isMine="isMine" v-on:toStory="fromLeftSide"/>
       </v-flex>
       <v-flex xs12 sm8 md9 >
           <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
@@ -49,6 +54,7 @@ export default {
       statedetail : false,
       stateupdate : false,
       pcode2 : '',
+      loading : false,
     }
   },
   created() {
@@ -83,18 +89,29 @@ export default {
       this.pcode = pcode;
       console.log('에/')
       this.statedetail = true;
+      this.loading = false;
     },
     gbp() {
       this.statedetail = false;
     },
+
     update_project(pcode2) {
       this.pcode2 = pcode2
       this.stateupdate = true;
-      console.log(this.stateupdate, '됏냐?')
     },
     gbp2() {
       this.stateupdate = false;
+    },
+    
+    fromLeftSide(load) {
+      this.loading = load;
+      if ( this.loading == true) {
+        this.$loading(true)
+      } else {
+        this.$loading(false)
+      }
     }
+
   },
   components: {
     TopSide,
@@ -107,7 +124,7 @@ export default {
   watch: {
     // 라우터 객체를 감시하고 있다가 fetchData() 함수를 호출한다
     //'$route': 'fetchData'
-   'toggleView' : 'updateToggle'
+    'toggleView' : 'updateToggle'
   },
 };
 

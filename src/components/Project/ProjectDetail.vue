@@ -1,26 +1,25 @@
 <template>
   <v-flex class="text-xs-center">
-
     <v-flex hidden-xs-only>
       <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
         <v-img :src="projectimage" height="20vw" width="100%"></v-img>
-          <div>
-            <div class="black--text">{{projecttitle}}</div>
-            <span class="grey--text" >{{projectdescription}}</span>
-          </div>
+        <div>
+          <div class="black--text">{{projecttitle}}</div>
+          <span class="grey--text">{{projectdescription}}</span>
+        </div>
       </button>
 
 
-
+      <!-- <ProjectList v-if="!stateAdd"></ProjectList> -->
     </v-flex>
 
     <v-flex hidden-sm-and-up>
       <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
         <v-img :src="projectimage" height="45vw" width="100%"></v-img>
-          <div>
-            <div class="black--text">{{projecttitle}}</div>
-            <span class="grey--text">{{projectdescription}}</span>
-          </div>
+        <div>
+          <div class="black--text">{{projecttitle}}</div>
+          <span class="grey--text">{{projectdescription}}</span>
+        </div>
       </button>
 
 
@@ -51,7 +50,7 @@ export default {
     projectThumbnailurl: "https://source.unsplash.com/random/1600x900",
     developer: "개발자이름",
     projectThumbnail: "../assets/logo.png",
-    date : '',
+    date: "",
     // description: "여기에는 프로젝트 디스크립션이 들어갈 공간입니다ㅏㅏㅏㅏ",
     projectData : '',
     user:'',
@@ -59,20 +58,24 @@ export default {
     isMine: '',
   }),
   methods: {
-    popdetail(pcode){
+    popdetail(pcode) {
       var toggle = this.$store.getters.getPVT;
-      if ( toggle ) {
-        window.open("../project/"+pcode,"name(이름지정)","titlebar=no,status=no,toolbar=no,resizable=yes,top=20,left=500,width=700,height=600");
+      if (toggle) {
+        window.open(
+          "../project/" + pcode,
+          "name(이름지정)",
+          "titlebar=no,status=no,toolbar=no,resizable=yes,top=20,left=500,width=700,height=600"
+        );
       } else {
-        console.log(pcode, '첫단계 옴??')
+        // console.log(pcode, '첫단계 옴??')
         this.$emit('popdetail',pcode);
       }},
   },
 
   created() {
     this.user = this.$route.params.id;
-    this.login = this.$session.get('session_id')
-    if ( this.user == this.login ) {
+    this.login = this.$session.get("session_id");
+    if (this.user == this.login) {
       this.isMine = true;
     } else {
       this.isMine = false;

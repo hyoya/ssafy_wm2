@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="dialog" max-width="600px" v-if="user==''">
+    <v-dialog v-model="dialog" max-width="600px" v-if=" user== '' || user == undefined ">
       <template v-slot:activator="{ on }">
         <v-btn flat class="black--text" v-on="on">Sign In</v-btn>
       </template>
@@ -39,7 +39,7 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="signupmodal" max-width="500px" v-if="user==''">
+    <v-dialog v-model="signupmodal" max-width="500px" v-if=" user== '' || user == undefined ">
       <template v-slot:activator="{ on: { click } }">
         <v-btn flat class="black--text" v-on:click="click">Sign Up</v-btn>
       </template>
@@ -54,8 +54,8 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-btn class="black--text" flat @click="GetUserinfo(user)" v-if="user!==''">{{user}}</v-btn>
-    <v-btn class="black--text" flat @click="Logout()" v-if="user!==''">Log Out</v-btn>
+    <v-btn class="black--text" flat @click="GetUserinfo(user)" v-if="user!=='' && user!==undefined">{{user}}</v-btn>
+    <v-btn class="black--text" flat @click="Logout()" v-if="user!=='' && user!==undefined">Log Out</v-btn>
   </v-layout>
 </template>
 
@@ -87,15 +87,25 @@ export default {
     this.user = this.$session.get("session_id");
   },
   methods: {
+    showNotification (group, type ,title, text) {
+       this.$notify({
+         group,
+         title,
+         text,
+         type,
+       })
+     },
     async Logout() {
-      var result = await FirebaseService.Logout();
-      if (result == false) {
+      var res = await FirebaseService.Logout();
+      if (res == false) {
+        this.showNotification("foo-css","error",`${this.$session.get("session_id")}님`,`로그아웃 완료!`);
         this.$session.set("session_id", "");
         this.user = "";
         // console.log(this.$store.getters.getSession,"setSession")
         // console.log(this.$session.get('session_id'))
       }
     },
+
     GetUserinfo(user) {
       FirebaseService.GetUserinfo(user);
     },
@@ -104,10 +114,7 @@ export default {
       if (this.check == true) {
         this.$session.set("session_id", id);
         this.user = this.$session.get("session_id");
-        // console.log(this.$store.getters.getSession,"setSession")
-        // console.log(this.$session.get('session_id'))
-        console.log(this.user);
-        this.$route.go(0)
+        this.showNotification("foo-css","success",`${this.user}님`,`로그인 완료!`);
       }
     },
     async SigninFacebook() {

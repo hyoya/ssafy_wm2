@@ -5,6 +5,9 @@ import VueSimplemde from 'vue-simplemde'
 import VueSession from 'vue-session'
 import { VueEditor } from "vue2-editor";
 import ToggleButton from 'vue-js-toggle-button'
+import Notifications from 'vue-notification'
+import VueLoading from 'vuejs-loading-plugin'
+
 import axios from 'axios'
 import store from './store'
 import router from './router'
@@ -14,6 +17,8 @@ import 'vuetify/dist/vuetify.min.css'
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
+Vue.use(VueLoading)
+Vue.use(Notifications)
 Vue.use(ToggleButton)
 Vue.use(VueSimplemde)
 Vue.use(VueSession)
