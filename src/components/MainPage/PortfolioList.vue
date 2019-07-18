@@ -32,7 +32,6 @@ export default {
     async SELECT_ALLProjects() {
       this.allPortfolio = await FirebaseService.SELECT_ALLProjects();
       this.PageLength = this.allPortfolio.length;
-      console.log(this.PageLength);
       for (let i = this.start; i < this.end; i++) {
         this.bottolePortfolio.push(this.allPortfolio[i]);
       }
