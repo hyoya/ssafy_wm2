@@ -1,6 +1,5 @@
 <template>
   <div justify-center>
-
     <v-flex column xs12 sm12 >
     <v-tabs
       right

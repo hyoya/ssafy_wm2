@@ -9,7 +9,7 @@
               v-for="tech in projecttech"
               class="tech d-inline-block caption"
             >{{ tech }}</v-flex> </span>
-          <div class="black--text"> {{projectcontent}} </div>
+              <p class="black--text" v-html="projectcontent" />
         </div>
       </button>
 
@@ -22,7 +22,7 @@
           <div class="black--text">{{projecttitle}} / {{project_writer}} / {{projectterm}} / {{projectrank}}</div>
           <span class="grey--text">{{projectdescription}} / {{projecttech}}
             <v-flex v-for="tech in projecttech" class="tech d-inline-block caption">{{ tech }}</v-flex> </span>
-          <div class="black--text"> {{projectcontent}} </div>
+              <p class="black--text" v-html="projectcontent" />
         </div>
       </button>
 

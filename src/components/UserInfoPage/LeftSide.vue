@@ -11,13 +11,12 @@
       </div>
 
       <div v-else style="position:relative;">
-        <v-btn
+        <v-flex
           @click="removeImage"
           v-show="showRmImgBtn"
-          flat outline small absolute fab
-          style="z-index:2; right:0;">
-          X
-        </v-btn>
+          style="z-index:2; right:0;position: absolute; display: none;">
+          <img src="../../assets/icon_set/delete.png" alt="delimg" style="cursor:pointer;width:25px;height:25px;"/>
+        </v-flex>
         <br/>
         <v-avatar size="150" class="grey lighten-2">
           <img :src="image"/>
@@ -28,15 +27,16 @@
     <!--USER Intro-->
     <v-layout style="margin-top:1vw;">
       <v-flex class="text-md-center">
-        <span class="subheading grey--text text-md-center">{{userdata[0].userName}}</span>
+        <span class="title text-md-center">{{userdata[0].userName}}</span>
         <v-btn fab flat outline small v-if="!isMine && !isFollow" @click="follow()">팔로우!</v-btn>
         <v-btn fab flat outline small v-if="!isMine && isFollow" @click="unfollow()">언팔!</v-btn>
-        <div class="subheading grey--text"> {{userdata[0].userIntro}} <IntroEditor v-on:sendIntro="receiveIntro" :introinput="userdata[0].userIntro" v-if="isMine"/></div>
+        <div class="subheading grey--text"> {{userdata[0].userIntro}}
+         <IntroEditor v-on:sendIntro="receiveIntro" :introinput="userdata[0].userIntro" v-if="isMine"/>
+         </div>
       </v-flex>
     </v-layout>
 
     <!--USER SKILLS-->
-    <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
       <v-flex xs12 class="text-md-center subheading">
         Skills
@@ -57,9 +57,10 @@
     </v-layout>
 
     <!--USER Careers-->
-    <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading"> Career <CareerEditor v-on:sendCar="receiveCar" v-if="isMine"/>
+      <v-flex xs12 class="text-md-center subheading">
+        Career
+        <CareerEditor v-on:sendCar="receiveCar" v-if="isMine"/>
       </v-flex>
       <v-flex xs12>
         <!-- v-for Career-->
@@ -73,14 +74,13 @@
         class="caption"
         @mouseover="showRmCarBtn(index)" @mouseleave="hideRmCarBtn(index)"
         style="position:relative; padding:15px 6px; border-bottom:1px black solid;">
-          <v-btn
+          <v-flex
             v-on:click="rmCareer(userdata[0].userCareers,c,userdata[0].email,reload)"
             v-show:false
-            flat outline small absolute fab
-            style="z-index:2; right:0;"
-            class ="carbtn" v-if="isMine">
-            X
-          </v-btn>
+            class ="carbtn"  v-if="isMine"
+            style="z-index:2; right:0; top2vw; position: absolute; display: none;">
+            <img src="../../assets/icon_set/delete.png" alt="delimg" style="cursor:pointer;width:25px;height:25px;"/>
+          </v-flex>
           <span class="subheading">{{c.Company}}<br/></span>
           <span class="body-2">{{c.Position}}<br/></span>
           <span class="gray--text">{{c.Description}}</span>
@@ -90,7 +90,6 @@
     </v-layout>
 
     <!--USER Education-->
-    <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
       <v-flex xs12 class="text-md-center subheading"> Education <EducationEditor v-on:sendEdu="receiveEdu" v-if="isMine"/></v-flex>
       <v-flex xs12>
@@ -106,15 +105,14 @@
           @mouseover="showRmEduBtn(index)" @mouseleave="hideRmEduBtn(index)"
           style="position:relative; padding:15px 6px; border-bottom:1px black solid;"
           >
-          <v-btn
+          <v-flex
             v-on:click="rmEducation(userdata[0].userEducations,e,userdata[0].email,reload)"
             v-show:false
             flat outline small absolute fab
-            style="z-index:2; right:0;"
-            class ="edubtn" v-if="isMine"
-            >
-            X
-          </v-btn>
+            class ="edubtn"  v-if="isMine"
+            style="z-index:2; right:0; top2vw; position: absolute; display: none;">
+            <img src="../../assets/icon_set/delete.png" alt="delimg" style="cursor:pointer; width:25px;height:25px;"/>
+          </v-flex>
           <span class="subheading">{{e.Agency}}<br/></span>
           <span class="body-2">{{e.Degree}}<br/></span>
           <span class="gray--text">{{e.Startday}} ~ {{e.Endday}}<br/></span>

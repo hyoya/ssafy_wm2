@@ -11,8 +11,23 @@
           :project_writer="projects[i-1].data.session_id"
           >
         </ProjectDetail>
-        <v-btn v-if="isMine" @click="goup(projects[i-1].project_id)">수정하기</v-btn>
-        <v-btn v-if="isMine" @click="DELETE_project(i-1, projects[i-1])">삭제하기</v-btn>
+        <div
+        style="float:right; margin-right:1vw;">
+          <v-flex
+            v-if="isMine"
+            @click="goup(projects[i-1].project_id)"
+            class="d-inline"
+            style="margin-right:1vw;">
+            <img src="../../assets/icon_set/technics.png" alt="Smiley" style="cursor: pointer;"/>
+          </v-flex>
+          <v-flex
+            v-if="isMine"
+            @click="DELETE_project(i-1, projects[i-1])"
+            class="d-inline"
+            style="margin-right:1vw;">
+            <img src="../../assets/icon_set/delete.png" alt="Smiley" style="cursor: pointer;"/>
+          </v-flex>
+        </div>
         <v-divider></v-divider>
       </v-flex>
       <v-flex v-for="i in max_project" xs12 v-if="layout==2">
@@ -94,6 +109,7 @@ export default {
     async SELECT_Projects() {
       this.id = this.$route.params.id;
       this.projects = await FirebaseService.SELECT_Projects(this.id);
+      console.log(this.projects)
     },
     toStory(pcode) {
       // console.log("여기까지왔다.",pcode)

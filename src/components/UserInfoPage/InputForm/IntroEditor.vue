@@ -1,8 +1,9 @@
 <template>
     <v-dialog v-model="intromodal"  max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn fab small outline v-on="on"><i class="fa fa-pencil"/></v-btn>
+        <img src="../../../assets/icon_set/pencil.png" alt="edit" style="cursor:pointer;" v-on="on">
       </template>
+
       <v-card>
         <v-toolbar>
           <span class="font-weight-regular headline">자기소개 수정</span>

@@ -9,7 +9,7 @@
         <v-flex xs8>
         <div>
           <div class="black--text"> {{projecttitle}} / {{project_writer}} / {{projectterm}} / {{projectrank}} </div>
-          <span class="grey--text">{{projectcontent}}</span>
+          <p class="black--text" v-html="projectcontent" />
           <v-flex
             v-for="tech in projecttech"
             class="tech d-inline-block caption"
