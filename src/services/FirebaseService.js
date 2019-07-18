@@ -41,16 +41,6 @@ export default {
   // Function :: 프로젝트를 작성합니다.
   // Parameter :: 제목,간략설명,진행기간,내용,사용기술,대표이미지,프로젝트수준,작성자아이디입니다.
   INSERT_Projects(
-    projecttitle,
-    projectdescription,
-    projectterm,
-    projectcontent,
-    projecttech,
-    projectimage,
-    projectrank,
-    session_id
-  ) {
-    return firestore.collection("projects").add({
       projecttitle,
       projectdescription,
       projectterm,
@@ -58,12 +48,25 @@ export default {
       projecttech,
       projectimage,
       projectrank,
-      session_id,
-      date: firebase.firestore.FieldValue.serverTimestamp(),
-      comments: [],
-      likeit: []
-    });
-  },
+      session_id
+    ) {
+      firestore.collection("projects").add({
+        projecttitle,
+        projectdescription,
+        projectterm,
+        projectcontent,
+        projecttech,
+        projectimage,
+        projectrank,
+        session_id,
+        date: firebase.firestore.FieldValue.serverTimestamp(),
+        comments: [],
+        likeit: []
+      });
+      alert("등록 완료!");
+      location.reload();
+    },
+
 
   // Function :: 개인 프로젝트를 가져옵니다.
   // Parameter :: Story 페이지의 주인의 아이디를 가져와서 개인프로젝트를 검색합니다.
@@ -228,9 +231,8 @@ export default {
       old.projectcontent = data.projectcontent
       old.projecttech = data.projecttech
       old.projectimage = data.projectimage
-      old.projectrank = data.projectrank
-      alert('수정이 완료되었습니다.')
-      return firestore.collection('projects').doc(project_id).update({
+      old.projectrank = data.projectrank    
+      firestore.collection('projects').doc(project_id).update({
         projecttitle : old.projecttitle,
         projectdescription : old.projectdescription,
         projectterm : old.projectterm,
@@ -239,6 +241,8 @@ export default {
         projectimage : old.projectimage,
         projectrank : old.projectrank,
       })
+      alert('수정이 완료되었습니다.')
+      location.reload();
     },
 
   async SignupUser(
