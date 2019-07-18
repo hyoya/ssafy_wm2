@@ -15,7 +15,6 @@
 export default {
   methods: {
     GetSession() {
-      //   console.log(this.$session.get("session_id"), " : 현재 아이디");
       window.open("../story/" + this.$session.get("session_id"));
     }
   }
