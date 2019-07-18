@@ -109,10 +109,12 @@
       <v-flex xs12 sm4 md3>
         <LeftSide xs12 sm4 md3 :isMine="isMine" v-on:toStory="fromLeftSide" />
       </v-flex>
-<<<<<<< HEAD
       <v-flex xs12 sm8 md9>
-        <v-btn @click="changeComponent()" v-if="isMine">프로젝트 생성하기</v-btn>
+        <v-btn @click="changeComponent()" v-if="isMine && !statedetail && !stateupdate">
+          <span id="toggletext">프로젝트 생성하기</span>
+        </v-btn>
         <toggle-button
+          v-if="!stateAdd && !stateupdate && !statedetail"
           :width="100"
           v-model="toggleView"
           :sync="true"
@@ -127,17 +129,6 @@
         <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp" />
         <ProjectUpdator v-if="stateupdate" :project_id="pcode2" v-on:goBackpage="gbp2" />
         <!-- <v-btn @click="check_stateupdate(state)"></v-btn> -->
-=======
-      <v-flex xs12 sm8 md9 >
-          <v-btn  @click="changeComponent()" v-if="isMine && !statedetail && !stateupdate"><span id='toggletext'>프로젝트 생성하기</span></v-btn>
-          <toggle-button v-if="!stateAdd && !stateupdate && !statedetail" :width="100" v-model="toggleView" :sync="true"
-               :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
-          <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc"  v-on:goup="update_project" />
-          <ProjectEditor v-if="stateAdd && !statedetail && !stateupdate" />
-          <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
-          <ProjectUpdator v-if="stateupdate" :project_id="pcode2" v-on:goBackpage="gbp2" />
-          <!-- <v-btn @click="check_stateupdate(state)"></v-btn> -->
->>>>>>> 6c4ff6c710ec2b85cd2c047308c3fee9d8aabf4b
       </v-flex>
     </v-layout>
   </div>
@@ -196,23 +187,18 @@ export default {
       }
       this.$store.commit("convertPVT", this.toggleView);
     },
-<<<<<<< HEAD
     changeComponent() {
-      this.stateAdd = this.stateAdd ? false : true;
-=======
-    changeComponent(){
-      var v_button = document.getElementById('toggletext');
+      var v_button = document.getElementById("toggletext");
       if (this.stateAdd) {
-        v_button.innerHTML='프로젝트 생성하기'
-      } else  {
-        v_button.innerHTML='뒤로가기'
+        v_button.innerHTML = "프로젝트 생성하기";
+      } else {
+        v_button.innerHTML = "뒤로가기";
       }
-      this.stateAdd = !this.stateAdd
->>>>>>> 6c4ff6c710ec2b85cd2c047308c3fee9d8aabf4b
+      this.stateAdd = !this.stateAdd;
     },
     cc(pcode) {
       this.pcode = pcode;
-      console.log("에/");
+      // console.log("에/");
       this.statedetail = true;
       this.loading = false;
     },
