@@ -153,6 +153,7 @@ export default {
   },
   methods: {
     async SELECT_Userdata() {
+      this.toStory(true);
       this.userdata = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       if ( this.userdata[0].userIntro == "" ) {
         this.userdata[0].userIntro = "소개말이 없습니다."
@@ -180,6 +181,7 @@ export default {
       } else {
         this.skillToggle = false;
       }
+      this.toStory(false);
     },
     receiveIntro(intro) {
       FirebaseService.UPDATE_userIntro(intro,this.$route.params.id);
@@ -242,6 +244,10 @@ export default {
       var following = await FirebaseService.SELECT_Userdata(this.$route.params.id);
       var tmp = following[0].followerlist.includes(this.$session.get('session_id'));
       this.isFollow=tmp;
+    },
+    toStory(load) {
+      console.log("로딩중.",load)
+      this.$emit('toStory',load);
     },
     removeImage(){
       FirebaseService.DELETE_userImage(this.$route.params.id);

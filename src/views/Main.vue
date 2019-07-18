@@ -8,11 +8,6 @@
 
     <!-- 필터링 -->
     <Filters />
-    <notifications group="full-width"
-                  width="100%" />
-    <v-btn @click="show('foo-css', 'success')"> aazz</v-btn>
-    <v-btn @click="show('foo-css', 'warn')"> aazz</v-btn>
-    <v-btn @click="show('foo-css', 'error')"> aazz</v-btn>
     <!-- 여기에다가 프로젝트들은 그냥 띄우면 되지 않ㅇ르까..?? -->
     <!-- <Projects /> -->
 
@@ -45,22 +40,6 @@ export default {
     GetSession() {
       console.log(this.$session.get('session_id'), ' : 현재 아이디')
     },
-    show (group, type = '') {
-       const text = `
-         This is notification text!
-         <br>
-         Date: ${new Date()}
-       `
-       this.$notify({
-         group,
-         title: `Test ${type} notification #${this.id++}`,
-         text,
-         type,
-         data: {
-           randomNumber: Math.random()
-         }
-       })
-     },
   }
 };
 </script>

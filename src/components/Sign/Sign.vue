@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="dialog" max-width="600px" v-if="user==''">
+    <v-dialog v-model="dialog" max-width="600px" v-if=" user== '' || user == undefined ">
       <template v-slot:activator="{ on }">
         <v-btn flat class="black--text" v-on="on">Sign In</v-btn>
       </template>
@@ -39,7 +39,7 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="signupmodal" max-width="500px" v-if="user==''">
+    <v-dialog v-model="signupmodal" max-width="500px" v-if=" user== '' || user == undefined ">
       <template v-slot:activator="{ on: { click } }">
         <v-btn flat class="black--text" v-on:click="click">Sign Up</v-btn>
       </template>
@@ -54,8 +54,8 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-btn class="black--text" flat @click="GetUserinfo(user)" v-if="user!==''">{{user}}</v-btn>
-    <v-btn class="black--text" flat @click="Logout()" v-if="user!==''">Log Out</v-btn>
+    <v-btn class="black--text" flat @click="GetUserinfo(user)" v-if="user!=='' && user!==undefined">{{user}}</v-btn>
+    <v-btn class="black--text" flat @click="Logout()" v-if="user!=='' && user!==undefined">Log Out</v-btn>
   </v-layout>
 </template>
 
