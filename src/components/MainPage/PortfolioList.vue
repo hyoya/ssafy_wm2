@@ -1,11 +1,11 @@
 <template>
   <div class="PortfolioList__container">
     <div class="PortfolioList__container__content">
-      <div v-for="item in allPortfolio" class="content__portfolioList">
+      <div v-for="item in bottolePortfolio" class="content__portfolioList">
         <Portfolio v-bind:portfolio="item" />
       </div>
     </div>
-    <button class="mainMoreBtn">MORE</button>
+    <button class="mainMoreBtn" @click="morePortfolio">MORE</button>
   </div>
 </template>
 
@@ -19,7 +19,10 @@ export default {
   data() {
     return {
       allPortfolio: [],
-      bottolePortfolio: []
+      bottolePortfolio: [],
+      end: 6,
+      start: 0,
+      PageCount: ""
     };
   },
   created() {
@@ -28,8 +31,16 @@ export default {
   methods: {
     async SELECT_ALLProjects() {
       this.allPortfolio = await FirebaseService.SELECT_ALLProjects();
-
-      console.log(this.allPortfolio);
+      this.PageCount = this.allPortfolio.length;
+      console.log(this.PageCount);
+      for (let i = this.start; i < this.end; i++) {
+        this.bottolePortfolio.push(this.allPortfolio[i]);
+      }
+    },
+    morePortfolio() {
+      this.end += 6;
+      this.start += 6;
+      this.SELECT_ALLProjects();
     }
   }
 };
