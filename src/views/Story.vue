@@ -20,7 +20,7 @@
       </v-flex>
       <v-flex xs12 sm8 md9 >
           <v-btn  @click="changeComponent()" v-if="isMine && !statedetail && !stateupdate"><span id='toggletext'>프로젝트 생성하기</span></v-btn>
-          <toggle-button :width="100" v-model="toggleView" :sync="true"
+          <toggle-button v-if="!stateAdd && !stateupdate && !statedetail" :width="100" v-model="toggleView" :sync="true"
                :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
           <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc"  v-on:goup="update_project" />
           <ProjectEditor v-if="stateAdd && !statedetail && !stateupdate" />
