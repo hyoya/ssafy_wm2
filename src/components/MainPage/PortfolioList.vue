@@ -36,5 +36,11 @@ export default {
 .PortfolioList__container__content {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+.PortfolioList__container {
+  padding-left: 90px;
+  padding-right: 40px;
+  padding-top: 50px;
 }
 </style>

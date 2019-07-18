@@ -1,8 +1,8 @@
 <template>
   <div class="Portfolio__container">
     <div class="Portfolio__container__content">
-      <div class="Portfolio__box">
-        <img :src="protfolioImg" style="height:200px; width:200px;" />
+      <div class="Portfolio__box" style="background:white; height:310px; width:360px;">
+        <img :src="protfolioImg" style="height:280px; width:330px" />
       </div>
     </div>
   </div>
@@ -36,5 +36,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.Portfolio__box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
 </style>
