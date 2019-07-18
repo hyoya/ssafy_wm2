@@ -346,7 +346,7 @@ import FirebaseService from "@/services/FirebaseService";
           })
           .catch();
         }
-      },
+    },
     components: {
       VueEditor
     },
