@@ -38,13 +38,20 @@
     <!--USER SKILLS-->
     <div style="border-top:1px red dashed;"/>
     <v-layout wrap style="margin-top:2vw;">
-      <v-flex xs12 class="text-md-center subheading">Skills <SkillEditor v-on:sendSkill="receiveSkill" v-if="isMine"/> </v-flex>
+      <v-flex xs12 class="text-md-center subheading">
+        Skills
+        <SkillEditor
+        v-on:sendSkill="receiveSkill"
+        v-if="isMine"
+        v-bind:userSkills="this.userdata[0].userSkills"
+        v-bind:showSkillList="this.userdata[0].showSkillList"/>
+      </v-flex>
       <v-flex xs12>
         <div v-if="skillToggle" class="caption">
           <p> 등록된 기술이 없습니다. </p>
         </div>
         <div v-else>
-          <v-btn  flat small outline radius v-for="s in userdata[0].userSkills">{{s}}</v-btn>
+          <v-btn  flat small outline radius v-for="s in userdata[0].showSkillList">{{s}}</v-btn>
         </div>
       </v-flex>
     </v-layout>
@@ -134,7 +141,13 @@ export default {
       careerToggle : false,
       skillToggle : false,
       imageToggle : false,
-      userdata: [ {userName : ''} , {userIntro : ''} , {userEducations : ''} , {userImage : ''} ],
+      userdata: [
+        {userName : ''} ,
+        {userIntro : ''} ,
+        {userEducations : ''},
+        {userImage : ''},
+        {userSkills : ''},
+        {showSkillList:''} ],
       showRmImgBtn : false,
       reload : false,
     }
@@ -186,6 +199,7 @@ export default {
       }
       this.toStory(false);
     },
+
     receiveIntro(intro) {
       FirebaseService.UPDATE_userIntro(intro,this.$route.params.id);
       this.userdata[0].userIntro = intro;
@@ -294,6 +308,9 @@ export default {
     rmEducation(userEducations, e, userId, reload){
       this.reload = FirebaseService.DELETE_userEducations(userEducations, e, userId, reload);
     },
+
+
+
     test(tmp){
       console.log(tmp);
     },
