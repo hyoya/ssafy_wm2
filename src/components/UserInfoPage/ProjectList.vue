@@ -31,12 +31,9 @@
       <!-- 여기서부터는 전체 프로젝트를 보여주는 곳입니다.-->
 
     <v-layout row wrap justify-center>
-<<<<<<< HEAD
 
-      <v-flex v-if="seeall" v-for="i in projects.length" xs12 sm6 md4>
-=======
-      <v-flex v-for="i in max_project" xs12 sm4 v-if="layout==1">
->>>>>>> 948ebdd7bd1c770863bdf68ea6eee81ecb5d5e4b
+      <v-flex v-if="seeall" v-for="i in max_project" xs12 sm4 v-if="layout==1">
+
         <ProjectDetail v-on:popdetail="toStory"
           :projectimage="projects[i-1].data.projectimage"
           :projecttitle="projects[i-1].data.projecttitle"
