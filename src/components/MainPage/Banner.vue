@@ -1,6 +1,6 @@
 <template>
   <div class="banner__container">
-    <span class="banner__content">포트폴리오를 공유하세요. 그리고 면접제안을 받아보세요.</span>
+    <span class="banner__content">프로젝트를 공유하세요. 그리고 면접제안을 받아보세요.</span>
   </div>
 </template>
 
