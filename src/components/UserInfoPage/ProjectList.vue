@@ -2,7 +2,8 @@
 <template>
   <div>
     <v-layout row wrap justify-center>
-      <v-flex v-for="i in max_project" xs12 sm6 md4>
+      <v-flex v-for="i in max_project" xs12 sm6 md4
+        style="border:1px solid black; margin:1vw; padding:1vw;">
         <ProjectDetail v-on:popdetail="toStory"
           :projectimage="projects[i-1].data.projectimage"
           :projecttitle="projects[i-1].data.projecttitle"
@@ -10,8 +11,23 @@
           :project_id="projects[i-1].project_id"
           >
         </ProjectDetail>
-        <v-btn v-if="isMine" @click="goup(projects[i-1].project_id)">수정하기</v-btn>
-        <v-btn v-if="isMine" @click="DELETE_project(i-1, projects[i-1])">삭제하기</v-btn>
+        <div
+        style="float:right; margin-right:1vw;">
+          <v-flex
+            v-if="isMine"
+            @click="goup(projects[i-1].project_id)"
+            class="d-inline"
+            style="margin-right:1vw;">
+            <img src="../../assets/icon_set/technics.png" alt="Smiley" style="cursor: pointer;"/>
+          </v-flex>
+          <v-flex
+            v-if="isMine"
+            @click="DELETE_project(i-1, projects[i-1])"
+            class="d-inline"
+            style="margin-right:1vw;">
+            <img src="../../assets/icon_set/delete.png" alt="Smiley" style="cursor: pointer;"/>
+          </v-flex>
+        </div>
         <v-divider></v-divider>
       </v-flex>
     </v-layout>
