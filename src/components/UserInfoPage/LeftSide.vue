@@ -2,19 +2,26 @@
 <template>
   <div style="padding:1vw; background:white">
     <!-- USER Profile Img -->
-    <v-layout wrap align-center justify-space-around>
-      <div v-if="!image">
+    <v-layout wrap align-center justify-space-around @mouseover="showRmImgBtn=true" @mouseleave="showRmImgBtn=false">
+      <div v-if="!image" justify-center>
         <v-avatar size="150" class="grey lighten-2">
           <img src="https://i.imgur.com/aTI4OeZ.png?1">
         </v-avatar>
         <input type="file" @change="onFileChange" />
       </div>
-      <div v-else>
+
+      <div v-else style="position:relative;">
+        <v-btn
+          @click="removeImage"
+          v-show="showRmImgBtn"
+          flat outline small absolute fab
+          style="z-index:2; right:0;">
+          X
+        </v-btn>
+        <br/>
         <v-avatar size="150" class="grey lighten-2">
           <img :src="image"/>
         </v-avatar>
-        <br/>
-        <v-btn @click="removeImage">Remove image</v-btn>
       </div>
     </v-layout>
 
@@ -52,10 +59,24 @@
         <div v-if="careerToggle" class="caption">
           <p> 등록된 경력이 없습니다. </p>
         </div>
-        <div v-for="c in userdata[0].userCareers" class="caption" v-else>
-          {{c.Company}} {{c.Position}}<br/>
-          {{c.Description}}<br/>
-          {{c.Startday}} ~ {{c.Endday}}<br/>
+
+        <div
+        v-else
+        v-for="(c, index) in userdata[0].userCareers"
+        class="caption"
+        @mouseover="showRmCarBtn=true" @mouseleave="showRmCarBtn=false"
+        style="position:relative; padding:15px 6px; border-bottom:1px black solid;">
+          <v-btn
+            v-on:click="rmCareer(c.Company, c.Position, c.Description, index)"
+            v-show="showRmCarBtn"
+            flat outline small absolute fab
+            style="z-index:2; right:0;">
+            X
+          </v-btn>
+          <span class="subheading">{{c.Company}}<br/></span>
+          <span class="body-2">{{c.Position}}<br/></span>
+          <span class="gray--text">{{c.Description}}</span>
+          <span class="gray--text" v-if="c.Startday !=''"><br/>{{c.Startday}} ~ {{c.Endday}}</span>
         </div>
       </v-flex>
     </v-layout>
@@ -69,10 +90,24 @@
         <div v-if="educationToggle" class="caption">
           <p> 등록된 교육이력이 없습니다. </p>
         </div>
-        <div v-for="e in userdata[0].userEducations" class="caption" v-else>
-          {{e.Agency}}<br/>
-          {{e.Degree}}<br/>
-          {{e.Startday}} ~ {{e.Endday}}<br/>
+
+        <div
+          v-else
+          v-for="(e, index) in userdata[0].userEducations"
+          class="caption"
+          @mouseover="showRmEduBtn=true" @mouseleave="showRmEduBtn=false"
+          style="position:relative; padding:15px 6px; border-bottom:1px black solid;"
+          >
+          <v-btn
+            v-on:click="rmEducation(e.Agency, e.Degree, e.Startday, index)"
+            v-show="showRmEduBtn"
+            flat outline small absolute fab
+            style="z-index:2; right:0;">
+            X
+          </v-btn>
+          <span class="subheading">{{e.Agency}}<br/></span>
+          <span class="body-2">{{e.Degree}}<br/></span>
+          <span class="gray--text">{{e.Startday}} ~ {{e.Endday}}<br/></span>
         </div>
       </v-flex>
     </v-layout>
@@ -97,6 +132,9 @@ export default {
       skillToggle : false,
       imageToggle : false,
       userdata: [ {userName : ''} , {userIntro : ''} , {userEducations : ''} , {userImage : ''} ],
+      showRmImgBtn : false,
+      showRmCarBtn : false,
+      showRmEduBtn : false,
     }
   },
   props: {
@@ -240,7 +278,26 @@ export default {
         FirebaseService.UPDATE_userImage(this.image,this.$route.params.id)
       })
       .catch();
+    },
+
+    rmCareer(cCompany, cPosition, cDescription, idx){
+      console.log("remove Career");
+      console.log("1 :: ", cCompany);
+      console.log("2 :: ", cPosition);
+      console.log("3 :: ", cDescription);
+      console.log("4 :: ", idx);
+    },
+    rmEducation(eAgency, eDegree, eStartday, idx){
+      console.log("remove Education");
+      console.log("1 :: ", eAgency);
+      console.log("2 :: ", eDegree);
+      console.log("3 :: ", eStartday);
+      console.log("4 :: ", idx);
+    },
+    test(tmp){
+      console.log(tmp);
     }
+
   },
 
 
