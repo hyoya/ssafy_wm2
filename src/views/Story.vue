@@ -22,7 +22,10 @@
           <v-btn  @click="changeComponent()" v-if="isMine && !statedetail && !stateupdate"><span id='toggletext'>프로젝트 생성하기</span></v-btn>
           <toggle-button v-if="!stateAdd && !stateupdate && !statedetail" :width="100" v-model="toggleView" :sync="true"
                :labels="{checked: '새창으로 보기', unchecked: '현재 페이지'}"/>
-          <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc"  v-on:goup="update_project" />
+          <v-btn @click="layout1()"> 레이아웃 1</v-btn>
+          <v-btn @click="layout2()"> 레이아웃 2</v-btn>
+          <v-btn @click="layout3()"> 레이아웃 3</v-btn>
+          <ProjectList v-if="!stateAdd && !statedetail && !stateupdate" v-on:toStory="cc"  v-on:goup="update_project" :layout="layout"/>
           <ProjectEditor v-if="stateAdd && !statedetail && !stateupdate" />
           <Project v-if="statedetail" :pcode="pcode" v-on:goBackpage="gbp"/>
           <ProjectUpdator v-if="stateupdate" :project_id="pcode2" v-on:goBackpage="gbp2" />
@@ -55,6 +58,7 @@ export default {
       stateupdate : false,
       pcode2 : '',
       loading : false,
+      layout : "1",
     }
   },
   created() {
@@ -116,8 +120,16 @@ export default {
       } else {
         this.$loading(false)
       }
+    },
+    layout1() {
+      this.layout = "1";
+    },
+    layout2() {
+      this.layout = "2";
+    },
+    layout3() {
+      this.layout = "3";
     }
-
   },
   components: {
     TopSide,

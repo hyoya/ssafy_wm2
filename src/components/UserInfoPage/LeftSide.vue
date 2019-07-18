@@ -78,7 +78,7 @@
             v-show:false
             flat outline small absolute fab
             style="z-index:2; right:0;"
-            class ="carbtn">
+            class ="carbtn" v-if="isMine">
             X
           </v-btn>
           <span class="subheading">{{c.Company}}<br/></span>
@@ -111,7 +111,7 @@
             v-show:false
             flat outline small absolute fab
             style="z-index:2; right:0;"
-            class ="edubtn"
+            class ="edubtn" v-if="isMine"
             >
             X
           </v-btn>
