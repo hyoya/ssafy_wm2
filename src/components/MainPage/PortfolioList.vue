@@ -64,7 +64,7 @@ export default {
 .mainMoreBtn {
   margin-left: 570px;
   font-size: 20px;
-  background: purple;
+  background: #248bf7;
   color: white;
   border-radius: 5%;
   width: 80px;
