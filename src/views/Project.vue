@@ -219,6 +219,7 @@ export default {
         // 로그인 안했으면 안했다고 알려줘야지 헤헤
           this.showNotification('foo-css','error','댓글 작성 오류','로그인이 필요한 기능입니다.')
       }
+      this.comment = ''
     },
     async get_comments() {
       this.comments = await FirebaseService.SELECT_Comments(this.project_id)

@@ -187,6 +187,7 @@ export default {
         // 로그인 안했으면 안했다고 알려줘야지 헤헤
         alert('너 로그인안했다. 댓글못쓴다~')
       }
+      this.comment = ''
     },
     async get_comments() {
       this.comments = await FirebaseService.SELECT_Comments(this.project_id)
