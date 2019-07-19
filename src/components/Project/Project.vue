@@ -86,9 +86,14 @@
 
                     <v-list-tile-action>
                       <div style='display:inline-block;'>
-                        <img v-if="com.User==user" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHUSURBVFiF7Za/SxthGMc/76sFOU2q0aFWLf0fusmN/hh0ClkydFHpUMGpVOiQ2uIiKoj4o0J1CaVL7Fp0cTkoFVqE/gelxslEY0jDVe/tEDw8zUXvuFNEn+2e5+75fu75ce8JPNrQxIyqFV+beCW85JNeAYK2er8Pnn/TyyrjZjdegQv9Gl/6OICSK0BHwFp/EOrF1Mvhr2edFyug5IcQxAE6lRIr553VWtAZgjgAArquAnCtdg/g+tXaG0v42ms3a5/PVNW68QrcA9xCAFHjtK0VCwRACNrezNH6ehoZeegIaXofj2Y/0/BMDxEAUP9MHnQ8JTaasiE0vZ9oYgSkBNMMEUAp8suTHO/9pr79CbHRFI29caKJYQAKmVXKv7ZDBACso0NyC+84zlYgIoPJivj6GiVjw2s6f1tgFQv8/WnY1yeHOco73/yk8geg6f1EBpKgFCcH+9Q1tzpmIlQATe9z9Hx/ZtwxE7IpGiKAlETjQ7Z4ydiozMTiextC6+7xlNLbX7FlcfBpAUzTMe2ng6l191D6vhUiAFD+YVT1W8UCxc0vXtPdxrPgLgFkgxIRsOsdQJAOCsBCueZy3YJci0jF8goUz4HHPrWzCNL5FvnW7Yb/F8CPuY2PJ7UAAAAASUVORK5CYII=" alt="Smiley" style="cursor: pointer; height:20px; display:inline-block;" @click="DELETE_comment(pcode, comments, index)">
+
+                        <i class="fa fa-heart" style="color:red" @click="likeit(com, index)"></i>
                         &nbsp;
-                        <i class="fa fa-heart" @click="likeit(index)"></i>
+                        <i class="fa fa-heart" @click="unlikeit(com, index)"></i>
+                        &nbsp;
+                        <img v-if="com.User==user" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHUSURBVFiF7Za/SxthGMc/76sFOU2q0aFWLf0fusmN/hh0ClkydFHpUMGpVOiQ2uIiKoj4o0J1CaVL7Fp0cTkoFVqE/gelxslEY0jDVe/tEDw8zUXvuFNEn+2e5+75fu75ce8JPNrQxIyqFV+beCW85JNeAYK2er8Pnn/TyyrjZjdegQv9Gl/6OICSK0BHwFp/EOrF1Mvhr2edFyug5IcQxAE6lRIr553VWtAZgjgAArquAnCtdg/g+tXaG0v42ms3a5/PVNW68QrcA9xCAFHjtK0VCwRACNrezNH6ehoZeegIaXofj2Y/0/BMDxEAUP9MHnQ8JTaasiE0vZ9oYgSkBNMMEUAp8suTHO/9pr79CbHRFI29caKJYQAKmVXKv7ZDBACso0NyC+84zlYgIoPJivj6GiVjw2s6f1tgFQv8/WnY1yeHOco73/yk8geg6f1EBpKgFCcH+9Q1tzpmIlQATe9z9Hx/ZtwxE7IpGiKAlETjQ7Z4ydiozMTiextC6+7xlNLbX7FlcfBpAUzTMe2ng6l191D6vhUiAFD+YVT1W8UCxc0vXtPdxrPgLgFkgxIRsOsdQJAOCsBCueZy3YJci0jF8goUz4HHPrWzCNL5FvnW7Yb/F8CPuY2PJ7UAAAAASUVORK5CYII=" alt="Smiley" style="cursor: pointer; height:20px; display:inline-block;" @click="DELETE_comment(pcode, comments, index)">
+
+
                       </div>
                     </v-list-tile-action>
 
@@ -157,9 +162,6 @@ export default {
     InfoProject(){
       alert("이 파일의 위치는 components/project/project.vue");
     },
-    likeit(index){
-      console.log("this is test tag");
-    },
     // seulgi function
     async INSERT_Comment(comment){
       if (this.user) {
@@ -167,10 +169,18 @@ export default {
         var Json = new Object();
         Json.Comment = this.comment;
         Json.User = this.user;
+        Json.likecount = 0;
+        Json.unlikecount = 0;
+        Json.like = [];
+        Json.unlike = [];
         FirebaseService.INSERT_Comment(Json, this.projectData, this.project_id);
         const newcommnet = {
         User : this.user,
-        Comment : this.comment
+        Comment : this.comment,
+        like : [],
+        unlike : [],
+        likecount : 0,
+        unlikecount : 0,
         };
         this.comments.push(newcommnet)
       } else {
@@ -186,8 +196,23 @@ export default {
     },
     DELETE_comment(project_id, comments, comment_index) {
       FirebaseService.DELETE_comment(project_id, comments, comment_index)
+    },
+
+    likeit(com, index) {
+      // if (com.like.includes(this.user)) {
+      //   console.log('이미 눌렀구나???')
+      //   var like_index = com.like.indexOf(this.user)
+      //   com.like.splice(like_index, 1)
+      //   com.likecount -= 1
+      //   // console.log(like_index)
+      //   // com.likecount -= 1
+      // } else {
+      //   console.log('너 좋아요 안눌렀구나?')
+      //   com.like.push(this.user)
+      //   com.likecount += 1
+      // }
+      // FirebaseService.UPDATE_Comment(this.comments, com, index)
     }
-    // -----------------
   },
 };
 </script>

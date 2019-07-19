@@ -364,6 +364,11 @@ export default {
             comments: old.comments
           });
         },
+        // UPDATE_Comment(comments, comment, index)  {
+        //   console.log(comments)
+        //   console.log(comment,'?')
+        //   console.log(index, '?')
+        // },
 
         UPDATE_Project(data, old, project_id) {
           old.projecttitle = data.projecttitle;
