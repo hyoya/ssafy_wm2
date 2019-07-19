@@ -16,7 +16,7 @@
         <v-card-text>
             <v-layout row justify-center wrap>
               <v-flex xs10 sm5>
-                <span>*기관명</span>
+                <span class="subheading font-weight-bold">*기관명</span>
                 <v-text-field
                   single-line
                   outline
@@ -26,7 +26,7 @@
               </v-flex>
               <v-flex hidden-only-xs sm1/>
               <v-flex xs10 sm5>
-                <span>학위</span>
+                <span class="subheading font-weight-bold">학위</span>
                 <v-text-field
                   single-line
                   outline
@@ -37,7 +37,7 @@
 
             <v-layout row justify-center wrap>
               <v-flex xs10 sm5>
-                <span>시작일</span>
+                <span class="subheading font-weight-bold">시작일</span>
                 <div><input type="date"
                   single-line
                   outline
@@ -46,7 +46,7 @@
               </v-flex>
               <v-flex hidden-xs-only sm1/>
               <v-flex xs10 sm5>
-                <span>종료일</span>
+                <span class="subheading font-weight-bold">종료일</span>
                 <div><input type="date"
                   single-line
                   outline
@@ -56,7 +56,7 @@
             </v-layout>
 
           <v-layout row wrap justify-center>
-            <v-btn v-on:click="sendEdu(eduagency,edudegree,edustartday,eduendday)">등록</v-btn>
+            <v-btn v-on:click="sendEdu(eduagency,edudegree,edustartday,eduendday)"  flat outline>등록</v-btn>
           </v-layout>
         </v-card-text>
 

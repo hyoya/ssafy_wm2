@@ -4,7 +4,7 @@
     <v-layout row wrap justify-center>
 
       <v-flex
-        v-for="i in max_project" xs12 sm4 v-if="layout==1"
+        v-for="i in max_project" xs12 sm6 lg4 v-if="layout==1"
         style="padding:10px 5px;">
         <ProjectDetail v-on:popdetail="toStory"
           v-on:UPDATE_Project="toStoryUpdate"
@@ -50,8 +50,14 @@
       </v-flex>
     </v-layout>
 
-    <v-layout>
-      <v-btn v-if="more" @click="moreproject(max_project)">더보기</v-btn>
+    <v-layout justify-center>
+      <v-btn
+        v-if="more"
+        @click="moreproject(max_project)"
+        outline flat
+        >
+        더보기
+      </v-btn>
     </v-layout>
 
   </div>
