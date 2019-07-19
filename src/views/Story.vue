@@ -134,7 +134,6 @@ export default {
     },
     cc(pcode) {
       this.pcode = pcode;
-      console.log('에/')
       this.statedetail = true;
       this.loading = false;
     },

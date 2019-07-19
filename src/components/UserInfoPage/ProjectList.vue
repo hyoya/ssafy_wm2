@@ -1,11 +1,46 @@
 <!--GetProjectByUserId-->
 <template>
+
+
   <div style="">
+      <div>
+      <!-- 필터링한 프로젝트들을 출력하는 곳입니다.-->
+        <h3>Tech별 검색</h3>
+      <ul v-for="(tech, index) in techs">
+        <label><input v-model="array" type="radio" v-bind:value="tech" ondblclick="this.checked=false">{{tech}}</label>
+      </ul>
+
+      </div>
+
+      <h3>프로젝트 리스트</h3>
+
+      <v-layout row wrap justify-center>
+
+        <v-flex  v-for="i in filter_projects.length" xs12 sm6 md4>
+          <ProjectDetail v-on:popdetail="toStory"
+            :projectimage="filter_projects[i-1].data.projectimage"
+            :projecttitle="filter_projects[i-1].data.projecttitle"
+            :projectdescription="filter_projects[i-1].data.projectdescription"
+            :project_id="filter_projects[i-1].project_id"
+            >
+          </ProjectDetail>
+          <v-divider></v-divider>
+        </v-flex>
+      </v-layout>
+
+      <!-- 필터링한 프로젝트들을 출력하는 곳입니다. (끝)-->
+
+      <!-- 여기서부터는 전체 프로젝트를 보여주는 곳입니다.-->
+
+
+
+
     <v-layout row wrap justify-center>
 
       <v-flex
         v-for="i in max_project" xs12 sm4 v-if="layout==1"
         style="padding:10px 5px;">
+
         <ProjectDetail v-on:popdetail="toStory"
           v-on:UPDATE_Project="toStoryUpdate"
           :projectimage="projects[i-1].data.projectimage"
@@ -33,6 +68,7 @@
         </ProjectDetail0>
         <v-divider></v-divider>
       </v-flex>
+
       <v-flex v-for="i in max_project" xs12 v-if="layout==3">
         <ProjectDetail1 v-on:popdetail="toStory"
           :projectimage="projects[i-1].data.projectimage"
@@ -48,9 +84,6 @@
         </ProjectDetail1>
         <v-divider></v-divider>
       </v-flex>
-    </v-layout>
-
-    <v-layout>
       <v-btn v-if="more" @click="moreproject(max_project)">더보기</v-btn>
     </v-layout>
 
@@ -71,6 +104,10 @@ export default {
       projects: [],
       max_project : 3,
       more : true,
+      techs : ["전체보기", "c", "c#", "javascript", "android", "jquery"],
+      array:'',
+      filter_projects:[],
+      seeall : true,
     };
   },
   components: {
@@ -97,7 +134,7 @@ export default {
     async SELECT_Projects() {
       this.id = this.$route.params.id;
       this.projects = await FirebaseService.SELECT_Projects(this.id);
-      console.log(this.projects)
+      // console.log(this.projects,'나옴?')
     },
     toStory(pcode) {
       // console.log("여기까지왔다.",pcode)
@@ -120,10 +157,28 @@ export default {
         this.max_project += interval
       }
     },
-    toStoryUpdate(pcode) {
-   this.$emit('toStoryUpdate',pcode);
-  },
 
+    async filterprojects() {
+      // console.log(this.array)
+      if (this.array == '전체보기') {
+        this.seeall = true
+      } else {
+        this.seeall = false
+        this.filter_projects = await FirebaseService.filter_projects(this.user, this.array)
+      }
+    },
+    toStoryUpdate(pcode) {
+      this.$emit('toStoryUpdate', pcode)
+    },
+    check() {
+      // console.log(this.filter_projects)
+    }
+  },
+  watch: {
+    array : function(){
+      this.filter_projects = []
+      this.filterprojects()
+    }
   }
 };
 </script>

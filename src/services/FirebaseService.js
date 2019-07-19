@@ -637,5 +637,128 @@ export default {
             //console.log(docSnapshots.data(), '맞냐??')
             return docSnapshots.data();
           });
-        }
-      };
+        },
+
+  // user 는 페이지의 주인, techs 는 필터를 위해 내가 선택한 것들.
+  async filter_projects(user, tech) {
+    // console.log(tech)
+    var p_id_box = []
+    // console.log(techs)
+      // console.log(i)
+        return firestore
+        .collection('projects')
+        .where('session_id', '==', user)
+        .where('projecttech', "array-contains", tech)
+        .get()
+        .then(docSnapshots => {
+          return docSnapshots.docs.map(doc => {
+            var data = doc.data();
+            var id = doc.id;
+            // console.log(id)
+            if (p_id_box.includes(id)) {
+              console.log(id, '이것은 이미 들어있다.')
+            } else {
+              p_id_box.push(id);
+              // console.log(id, data)
+              return { project_id : id , data: data }
+            }
+          })
+        })
+  },
+
+
+  // -----------------------------------------------------------------
+  //hyoya
+  // Function :: 팔로우를 추가합니다.
+  // Parameter :: 팔로잉을 당한사람, 현재 유저의 아이디,
+  //              팔로잉 당하는 사람의 기존 팔로워 리스트,  현재 유저의 팔로잉 리스트를 가져옵니다.
+  async follow(follow, user, followerlist, followinglist) {
+    followerlist.push(user);
+    followinglist.push(follow);
+    firestore
+      .collection("users")
+      .doc(follow)
+      .update({
+        followerlist: followerlist
+      });
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        followinglist: followinglist
+      });
+  },
+
+  // Function :: 언팔로우합니다.
+  // Parameter :: 팔로우 헸던 사람, 현재 유저의 아이디,
+  //              팔로잉 당하는 사람의 기존 팔로워 리스트,  현재 유저의 팔로잉 리스트를 가져옵니다.
+  async unfollow(follow, user, followerlist, followinglist) {
+    followerlist.splice(followerlist.indexOf(user), 1);
+    followinglist.splice(followinglist.indexOf(follow), 1);
+    firestore
+      .collection("users")
+      .doc(follow)
+      .update({
+        followerlist: followerlist
+      });
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        followinglist: followinglist
+      });
+  },
+
+  // Function :: 프로젝트를 좋아요 누른다
+  // Parameter :: 좋아요가 눌러진 프로젝트 고유아이디
+  //              프로젝트에 저장된 프로젝트를 좋아요 누른 사람 리스트, 유저의 좋아요리스트
+  async likeit(targetProject, user, targetlikeitlist, userlikeitlist) {
+    targetlikeitlist.push(user);
+    userlikeitlist.push(targetProject);
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        likeitProject: userlikeitlist
+      });
+    firestore
+      .collection("projects")
+      .doc(targetProject)
+      .update({
+        likeit: targetlikeitlist
+      });
+  },
+
+  // Function :: 프로젝트를 좋아요를 취소한다.
+  // Parameter :: 좋아요가 취소된 프로젝트 고유아이디,
+  //              프로젝트에 저장된 프로젝트를 좋아요 누른 사람 리스트, 유저의 좋아요리스트
+  async unlikeit(targetProject, user, targetlikeitlist, userlikeitlist) {
+    targetlikeitlist.splice(targetlikeitlist.indexOf(user), 1);
+    userlikeitlist.splice(userlikeitlist.indexOf(targetProject), 1);
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        likeitProject: userlikeitlist
+      });
+    firestore
+      .collection("projects")
+      .doc(targetProject)
+      .update({
+        likeit: targetlikeitlist
+      });
+  },
+
+  // Function :: 프로젝트 디테일을 project_id로 가져옵니다
+  // Parameter :: 프로젝트 고유 아이디
+  async SELECT_ProjectsByPcode(pcode) {
+    return firestore
+      .collection("projects")
+      .doc(pcode)
+      .get()
+      .then(docSnapshots => {
+        //console.log(docSnapshots.data(), '맞냐??')
+        return docSnapshots.data();
+      });
+  }
+};
