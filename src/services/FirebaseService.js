@@ -424,7 +424,12 @@ export default {
               followinglist: [],
               likeitProject: []
             });
-
+            firestore
+            .collection("user_addon")
+            .doc(id)
+            .set({
+              toggleView : false,
+            });
             alert(`${id}님, 회원가입이 완료되었습니다.`);
             return true;
           })
@@ -549,22 +554,9 @@ export default {
           followinglist.push(follow);
           firestore
           .collection("users")
-          .doc(id)
-          .set({
-            email: id,
-            first_name: first_name,
-            last_name: last_name,
-            phonenumber: phonenumber,
-            userSkills: userSkills,
-            userImage: userImage,
-            userName: first_name + last_name,
-            userIntro: userIntro,
-            userCareers: userCareers,
-            userEducations: userEducations,
-            followerlist:[],
-            followinglist:[],
-            likeitProject:[],
-            showSkillList:[],
+          .doc(follow)
+          .update({
+            followerlist: followerlist
           });
           firestore
           .collection("users")

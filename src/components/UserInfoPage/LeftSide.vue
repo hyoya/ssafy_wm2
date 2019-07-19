@@ -27,9 +27,21 @@
     <!--USER Intro-->
     <v-layout style="margin-top:1vw;">
       <v-flex class="text-md-center">
-        <span class="title text-md-center">{{userdata[0].userName}}</span>
-        <v-btn fab flat outline small v-if="!isMine && !isFollow" @click="follow()">팔로우!</v-btn>
-        <v-btn fab flat outline small v-if="!isMine && isFollow" @click="unfollow()">언팔!</v-btn>
+        <span class="title text-md-center">{{userdata[0].userName}}  </span>
+        <v-flex
+        fab flat outline small
+        v-if="!isMine && !isFollow"
+        @click="follow()"
+        >
+          <img src="../../assets/icon_set/add-user.png" alt="follow" style="cursor:pointer; width:25px;height:25px;"/>
+        </v-flex>
+        <v-flex
+        fab flat outline small
+        v-if="!isMine && isFollow"
+        @click="unfollow()"
+        >
+        <img src="../../assets/icon_set/followers2.png" alt="unfollow" style="cursor:pointer; width:25px;height:25px;"/>
+        </v-flex>
         <div class="subheading grey--text"> {{userdata[0].userIntro}}
          <IntroEditor v-on:sendIntro="receiveIntro" :introinput="userdata[0].userIntro" v-if="isMine"/>
          </div>
@@ -38,6 +50,7 @@
 
     <!--USER SKILLS-->
     <v-layout wrap style="margin-top:2vw;">
+
       <v-flex xs12 class="text-md-center subheading">
         Skills
         <SkillEditor
@@ -46,12 +59,20 @@
         v-bind:userSkills="this.userdata[0].userSkills"
         v-bind:showSkillList="this.userdata[0].showSkillList"/>
       </v-flex>
+
       <v-flex xs12>
         <div v-if="skillToggle" class="caption">
           <p> 등록된 기술이 없습니다. </p>
         </div>
+
         <div v-else>
-          <v-btn  flat small outline radius v-for="s in userdata[0].showSkillList">{{s}}</v-btn>
+          <v-flex
+           v-for="s in userdata[0].showSkillList"
+           d-inline
+           style="border:1px solid red; padding:2px 10px; border-radius:8px; margin:2px 4px;"
+           >
+            {{s}}
+          </v-flex>
         </div>
       </v-flex>
     </v-layout>
@@ -319,3 +340,13 @@ export default {
 
 };
 </script>
+
+<style>
+  .skillselected{
+
+  }
+
+  .skillunselected{
+
+  }
+</style>

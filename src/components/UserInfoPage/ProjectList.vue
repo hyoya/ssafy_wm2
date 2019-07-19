@@ -1,9 +1,10 @@
 <!--GetProjectByUserId-->
 <template>
-  <div>
 
-      <!-- 필터링한 프로젝트들을 출력하는 곳입니다.-->
+
+  <div style="">
       <div>
+      <!-- 필터링한 프로젝트들을 출력하는 곳입니다.-->
         <h3>Tech별 검색</h3>
       <ul v-for="(tech, index) in techs">
         <label><input v-model="array" type="radio" v-bind:value="tech" ondblclick="this.checked=false">{{tech}}</label>
@@ -12,6 +13,7 @@
       </div>
 
       <h3>프로젝트 리스트</h3>
+
       <v-layout row wrap justify-center>
 
         <v-flex  v-for="i in filter_projects.length" xs12 sm6 md4>
@@ -30,11 +32,17 @@
 
       <!-- 여기서부터는 전체 프로젝트를 보여주는 곳입니다.-->
 
+
+
+
     <v-layout row wrap justify-center>
 
-      <v-flex v-if="seeall" v-for="i in max_project" xs12 sm4 v-if="layout==1">
+      <v-flex
+        v-for="i in max_project" xs12 sm4 v-if="layout==1"
+        style="padding:10px 5px;">
 
         <ProjectDetail v-on:popdetail="toStory"
+          v-on:UPDATE_Project="toStoryUpdate"
           :projectimage="projects[i-1].data.projectimage"
           :projecttitle="projects[i-1].data.projecttitle"
           :projectdescription="projects[i-1].data.projectdescription"
@@ -42,25 +50,9 @@
           :project_writer="projects[i-1].data.session_id"
           >
         </ProjectDetail>
-        <div
-        style="float:right; margin-right:1vw;">
-          <v-flex
-            v-if="isMine"
-            @click="goup(projects[i-1].project_id)"
-            class="d-inline"
-            style="margin-right:1vw;">
-            <img src="../../assets/icon_set/technics.png" alt="Smiley" style="cursor: pointer;"/>
-          </v-flex>
-          <v-flex
-            v-if="isMine"
-            @click="DELETE_project(i-1, projects[i-1])"
-            class="d-inline"
-            style="margin-right:1vw;">
-            <img src="../../assets/icon_set/delete.png" alt="Smiley" style="cursor: pointer;"/>
-          </v-flex>
-        </div>
-        <v-divider></v-divider>
       </v-flex>
+
+
       <v-flex v-for="i in max_project" xs12 v-if="layout==2">
         <ProjectDetail0 v-on:popdetail="toStory"
           :projectimage="projects[i-1].data.projectimage"
@@ -76,6 +68,7 @@
         </ProjectDetail0>
         <v-divider></v-divider>
       </v-flex>
+
       <v-flex v-for="i in max_project" xs12 v-if="layout==3">
         <ProjectDetail1 v-on:popdetail="toStory"
           :projectimage="projects[i-1].data.projectimage"
@@ -91,9 +84,6 @@
         </ProjectDetail1>
         <v-divider></v-divider>
       </v-flex>
-    </v-layout>
-
-    <v-layout>
       <v-btn v-if="more" @click="moreproject(max_project)">더보기</v-btn>
     </v-layout>
 
@@ -150,10 +140,6 @@ export default {
       // console.log("여기까지왔다.",pcode)
       this.$emit('toStory',pcode);
     },
-    goup(pcode2) {
-      // console.log(pcode2, '이거 나옴??')
-      this.$emit('goup',pcode2);
-    },
     DELETE_project(index, project) {
       if (confirm("알림 : 삭제된 프로젝트는 복구가 불가능합니다. 삭제하시겠습니까?")) {
         console.log(project.project_id)
@@ -171,6 +157,7 @@ export default {
         this.max_project += interval
       }
     },
+
     async filterprojects() {
       // console.log(this.array)
       if (this.array == '전체보기') {
@@ -179,7 +166,9 @@ export default {
         this.seeall = false
         this.filter_projects = await FirebaseService.filter_projects(this.user, this.array)
       }
-
+    },
+    toStoryUpdate(pcode) {
+      this.$emit('toStoryUpdate', pcode)
     },
     check() {
       // console.log(this.filter_projects)
