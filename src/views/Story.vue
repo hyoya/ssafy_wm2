@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- TODO 여백 -->
-    <v-layout><v-flex style="margin:50px;" /></v-layout>
+    <v-layout><v-flex style="margin:25px;" /></v-layout>
 
     <div v-if="loading">
       <br>  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -12,7 +12,7 @@
 
     <v-layout row wrap>
       <v-flex xs12>
-        <TopSide/>
+        <TopBar/>
       </v-flex>
     </v-layout>
 
@@ -76,7 +76,7 @@
 <script>
 import FirebaseService from "@/services/FirebaseService";
 
-import TopSide from "../components/UserInfoPage/TopSide";
+import TopBar from "../components/Followers/TopBar";
 import LeftSide from "../components/UserInfoPage/LeftSide";
 import ProjectList from "../components/UserInfoPage/ProjectList";
 import ProjectEditor from "../components/UserInfoPage/ProjectEditor";
@@ -173,7 +173,7 @@ export default {
 
   },
   components: {
-    TopSide,
+    TopBar,
     LeftSide,
     ProjectList,
     ProjectEditor,
