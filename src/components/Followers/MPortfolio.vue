@@ -3,7 +3,7 @@
     <div class="mportfolio__container__content">
       <div class="portfolio__box">
         <button style="height:100%; width:100%;" @click="popdetail(projectId)">
-          <img :src="projectInfo" style="height:100%; width:100%;" />
+          <img :src="projectInfo" style="height:140px; width:200px;" />
         </button>
       </div>
     </div>
@@ -38,7 +38,10 @@ export default {
 
 <style scoped>
 .portfolio__box {
-  background-color: blue;
+  display: flex;
+  justify-content: flex;
+  align-items: center;
+  background-color: white;
   height: 150px;
   width: 220px;
 }
