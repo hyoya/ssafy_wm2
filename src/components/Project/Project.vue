@@ -63,7 +63,7 @@
                   <v-text-field label="Comment" v-model="comment"></v-text-field>
 
                   <v-btn @click="INSERT_Comment(comment)">submit</v-btn>
-                  <v-btn @click="InfoProject()">project정보</v-btn>
+                  <v-btn @click="InfoProject()">파일위치(관리자용)</v-btn>
                 </form>
 
                 <!-- comment sort -->
@@ -150,7 +150,7 @@ export default {
       this.$loading(false)
     },
     InfoProject(){
-      console.log("this is test tag");
+      alert("이 파일의 위치는 components/project/project.vue");
     },
     likeit(index){
       console.log("this is test tag");

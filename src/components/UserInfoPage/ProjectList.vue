@@ -169,9 +169,6 @@ export default {
     },
     toStoryUpdate(pcode) {
       this.$emit('toStoryUpdate', pcode)
-    },
-    check() {
-      // console.log(this.filter_projects)
     }
   },
   watch: {

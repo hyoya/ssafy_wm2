@@ -63,7 +63,7 @@
                   <!-- <v-text-field label="Comment" required @input="$v.name.$touch()" @blur="$v.name.$touch()" v-model="comment"></v-text-field> -->
                   <v-text-field label="Comment" v-model="comment"></v-text-field>
                   <v-btn @click="INSERT_Comment(comment)">submit</v-btn>
-                  <v-btn @click="InfoProject()">project정보</v-btn>
+                  <v-btn @click="InfoProject()">파일위치(관리자용)</v-btn>
                 </form>
 
                 <!-- comment sort -->
@@ -122,7 +122,7 @@ export default {
   name: "Project",
   data() {
     return {
-      project_id:"",
+      project_id: "",
       project: "",
       user:"",
       comments:[],
@@ -132,11 +132,14 @@ export default {
   },
   components: {
     BigImg,
+    pcode : {type:String, default:""}
   },
   created(){
     this.user = this.$session.get('session_id')
     this.project_id = this.$route.params.pcode;
     this.bindData();
+    this.$store.state.no_header = true;
+    this.isLikeItCheck();
     this.get_comments();
   },
   methods: {
@@ -154,7 +157,8 @@ export default {
       this.$loading(false)
     },
     InfoProject(){
-      console.log("this is test tag");
+      // 이게 새 창에서 뜨는 것
+      alert("이 파일의 위치는 views/project.vue");
     },
     async isLikeItCheck(){
       var targetProject = await FirebaseService.SELECT_Project(this.project_id);
@@ -165,7 +169,6 @@ export default {
     async likeit(){
       var targetProject = await FirebaseService.SELECT_Project(this.project_id);
       var userlikeitlist = await FirebaseService.SELECT_Userdata(this.$session.get('session_id'));
-
       await FirebaseService.likeit(
         this.project_id,
         this.$session.get('session_id'),
@@ -185,16 +188,6 @@ export default {
         userlikeitlist[0].likeitProject
       );
       this.isLikeItCheck();
-    },
-  },
-  created(){
-    this.project_id = this.$route.params.pcode;
-    this.bindData();
-    this.$store.state.no_header = true;
-    this.isLikeItCheck();
-    //this.project = FirebaseService.SELECT_ProjectsByPcode(this.$route.params.pcode);
-    //console.log("gg", this.project);
-
     },
     // seulgi function
     async INSERT_Comment(comment){
@@ -216,9 +209,7 @@ export default {
     },
     async get_comments() {
       this.comments = await FirebaseService.SELECT_Comments(this.project_id)
-    },
-    // -----------------
-  props: {
-  },
-};
+    }
+  }
+}
 </script>
