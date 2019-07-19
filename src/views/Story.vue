@@ -104,9 +104,12 @@
     <v-layout row wrap>
       <v-flex xs12>
         <TopBar />
+        <div v-show="this.viewFollower">follower</div>
+        <div v-show="this.viewFollowing">follwing</div>
       </v-flex>
     </v-layout>
-    <v-layout row wrap>
+    <FollowerList v-show="this.viewFollower || this.viewFollowing"></FollowerList>
+    <v-layout v-if="!this.viewFollower && !this.viewFollowing" row wrap>
       <v-flex xs12 sm4 md3>
         <LeftSide xs12 sm4 md3 :isMine="isMine" v-on:toStory="fromLeftSide" />
       </v-flex>
@@ -186,12 +189,14 @@
 <script>
 import FirebaseService from "@/services/FirebaseService";
 
+import FollowerList from "../components/Followers/FollowerList";
 import TopBar from "../components/Followers/TopBar";
 import LeftSide from "../components/UserInfoPage/LeftSide";
 import ProjectList from "../components/UserInfoPage/ProjectList";
 import ProjectEditor from "../components/UserInfoPage/ProjectEditor";
 import Project from "../components/Project/Project";
 import ProjectUpdator from "../components/UserInfoPage/ProjectUpdator";
+import { mapState } from "vuex";
 export default {
   name: "Story",
   data() {
@@ -205,7 +210,9 @@ export default {
       stateupdate: false,
       pcode2: "",
       loading: false,
-      layout: "1"
+      layout: "1",
+      viewFollower: false,
+      viewFollowing: false
     };
   },
   created() {
@@ -290,12 +297,22 @@ export default {
     ProjectList,
     ProjectEditor,
     Project,
-    ProjectUpdator
+    ProjectUpdator,
+    FollowerList
   },
+  computed: mapState(["followerView", "followingView"]), // 뷰엑스 값을 여기서 참조하겠다.
   watch: {
     // 라우터 객체를 감시하고 있다가 fetchData() 함수를 호출한다
     //'$route': 'fetchData'
-    toggleView: "updateToggle"
+    toggleView: "updateToggle",
+
+    //값이 변할때마다 할 일들? new / old
+    followerView(to, from) {
+      this.viewFollower = this.$store.state.followerView;
+    },
+    followingView(to, from) {
+      this.viewFollowing = this.$store.state.followingView;
+    }
   }
 };
 </script>

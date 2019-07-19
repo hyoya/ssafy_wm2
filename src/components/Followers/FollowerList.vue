@@ -63,7 +63,8 @@ export default {
 </script>
 
 <style scoped>
-.followerList__container {
-  overflow: auto;
+.followList__container {
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 </style>

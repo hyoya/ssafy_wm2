@@ -1,10 +1,11 @@
 <template>
   <div class="topbar__container">
     <div class="topbar__container__content">
-      <div class="content__stars">
+      <!--추후 기능 추가하면 다시 추가 예정-->
+      <!-- <div class="content__stars">
         <div class="stars__title">Stars &nbsp</div>
         <div class="stars__amount">{{starNumber}} &nbsp&nbsp</div>
-      </div>
+      </div>-->
       <button class="content__followers" @click="followerView()">
         <div class="stars__title">Followers &nbsp</div>
         <div class="stars__amount">{{followerNumber}} &nbsp&nbsp</div>
@@ -12,8 +13,6 @@
       <button class="content__followings" @click="followingView()">
         <div class="stars__title">Following &nbsp</div>
         <div class="stars__amount">{{followingNumber}}</div>
-        <div class>{{this.$store.state.followerView}}</div>
-        <div class>{{this.$store.state.followingView}}</div>
       </button>
     </div>
   </div>

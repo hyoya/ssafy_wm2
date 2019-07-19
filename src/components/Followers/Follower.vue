@@ -70,6 +70,7 @@ export default {
 }
 .followerInfo__name {
   padding-top: 50px;
+  width: 200px;
 }
 .content__followerImg {
   display: flex;
