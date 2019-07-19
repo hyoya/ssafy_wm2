@@ -544,6 +544,21 @@ export default {
           location.replace(str);
         },
 
+        DELETE_comment(project_id, comments, comment_index) {
+          // console.log(project_id)
+          // console.log(comments)
+          // console.log(comment_index)
+          var old = comments
+          old.splice(comment_index, 1)
+          return firestore
+          .collection('projects')
+          .doc(project_id)
+          .update({
+            comments:old
+          })
+        },
+
+
         // -----------------------------------------------------------------
         //hyoya
         // Function :: 팔로우를 추가합니다.

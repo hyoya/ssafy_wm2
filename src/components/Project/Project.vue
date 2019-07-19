@@ -76,7 +76,7 @@
 
                 <!-- comment list -->
                 <v-list>
-                  <v-list-tile v-for="(com, index) in comments">
+                  <v-list-tile v-for="(com, index) in comments" style="border-bottom: 1px solid #9E6E2E; margin:5px; padding:5px;">
 
                     <v-list-tile-content>
                       <v-list-tile-title v-html="com.Comment"></v-list-tile-title>
@@ -85,8 +85,13 @@
                     </v-list-tile-content>
 
                     <v-list-tile-action>
-                      <i class="fa fa-heart" @click="likeit(index)"></i>
+                      <div style='display:inline-block;'>
+                        <img v-if="com.User==user" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHUSURBVFiF7Za/SxthGMc/76sFOU2q0aFWLf0fusmN/hh0ClkydFHpUMGpVOiQ2uIiKoj4o0J1CaVL7Fp0cTkoFVqE/gelxslEY0jDVe/tEDw8zUXvuFNEn+2e5+75fu75ce8JPNrQxIyqFV+beCW85JNeAYK2er8Pnn/TyyrjZjdegQv9Gl/6OICSK0BHwFp/EOrF1Mvhr2edFyug5IcQxAE6lRIr553VWtAZgjgAArquAnCtdg/g+tXaG0v42ms3a5/PVNW68QrcA9xCAFHjtK0VCwRACNrezNH6ehoZeegIaXofj2Y/0/BMDxEAUP9MHnQ8JTaasiE0vZ9oYgSkBNMMEUAp8suTHO/9pr79CbHRFI29caKJYQAKmVXKv7ZDBACso0NyC+84zlYgIoPJivj6GiVjw2s6f1tgFQv8/WnY1yeHOco73/yk8geg6f1EBpKgFCcH+9Q1tzpmIlQATe9z9Hx/ZtwxE7IpGiKAlETjQ7Z4ydiozMTiextC6+7xlNLbX7FlcfBpAUzTMe2ng6l191D6vhUiAFD+YVT1W8UCxc0vXtPdxrPgLgFkgxIRsOsdQJAOCsBCueZy3YJci0jF8goUz4HHPrWzCNL5FvnW7Yb/F8CPuY2PJ7UAAAAASUVORK5CYII=" alt="Smiley" style="cursor: pointer; height:20px; display:inline-block;" @click="DELETE_comment(pcode, comments, index)">
+                        &nbsp;
+                        <i class="fa fa-heart" @click="likeit(index)"></i>
+                      </div>
                     </v-list-tile-action>
+
                   </v-list-tile>
                 </v-list>
 
@@ -127,7 +132,7 @@ export default {
     project: "",
     user:"",
     comments:[],
-    comment:""
+    comment:"",
   }
   },
   props : {
@@ -146,7 +151,7 @@ export default {
     async bindData(){
       this.$loading(true)
       this.project = await FirebaseService.SELECT_ProjectsByPcode(this.project_id);
-      console.log(this.project);
+      // console.log(this.project);
       this.$loading(false)
     },
     InfoProject(){
@@ -178,6 +183,9 @@ export default {
     },
     goBackpage() {
       this.$emit('goBackpage');
+    },
+    DELETE_comment(project_id, comments, comment_index) {
+      FirebaseService.DELETE_comment(project_id, comments, comment_index)
     }
     // -----------------
   },
