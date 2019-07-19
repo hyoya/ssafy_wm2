@@ -14,7 +14,7 @@
         <v-card-text>
           <v-layout row wrap justify-center>
             <v-flex xs10>
-              <span>설명</span>
+              <span class="subheading font-weight-bold">설명</span>
               <v-textarea
               outline
               clearable
@@ -27,7 +27,7 @@
         </v-card-text>
 
         <v-layout row wrap justify-center>
-          <v-btn v-on:click="sendIntro(intro)"> 등록 </v-btn>
+          <v-btn v-on:click="sendIntro(intro)"  flat outline> 등록 </v-btn>
         </v-layout>
 
       </v-card>

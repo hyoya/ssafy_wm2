@@ -25,5 +25,15 @@ export default {
 };
 </script>
 
-<style>
+<style type="text/css">
+@font-face{
+  font-family: 'binggraeregular';
+  src:url('assets/font/Binggrae/binggrae-webfont.woff')  format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*{
+  font-family: 'binggraeregular';
+}
 </style>

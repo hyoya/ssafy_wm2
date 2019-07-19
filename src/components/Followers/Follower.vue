@@ -2,7 +2,7 @@
   <div class="follower__container">
     <hr />
     <div class="container__content box">
-      <div class="content__followerImg box">
+      <div class="content__followerImg">
         <img :src="userImg" style="height:95px; width:95px; border-radius:50px" />
       </div>
       <div class="content__followerInfo box">
@@ -59,6 +59,7 @@ export default {
 
 <style scoped>
 .box {
+  width: 240px;
   height: 165px;
 }
 .container__content {

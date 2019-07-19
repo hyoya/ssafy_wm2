@@ -364,6 +364,11 @@ export default {
             comments: old.comments
           });
         },
+        // UPDATE_Comment(comments, comment, index)  {
+        //   console.log(comments)
+        //   console.log(comment,'?')
+        //   console.log(index, '?')
+        // },
 
         UPDATE_Project(data, old, project_id) {
           old.projecttitle = data.projecttitle;
@@ -543,6 +548,21 @@ export default {
           var str = location.origin + "/story/" + user;
           location.replace(str);
         },
+
+        DELETE_comment(project_id, comments, comment_index) {
+          // console.log(project_id)
+          // console.log(comments)
+          // console.log(comment_index)
+          var old = comments
+          old.splice(comment_index, 1)
+          return firestore
+          .collection('projects')
+          .doc(project_id)
+          .update({
+            comments:old
+          })
+        },
+
 
         // -----------------------------------------------------------------
         //hyoya

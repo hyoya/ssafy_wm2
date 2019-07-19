@@ -38,7 +38,7 @@
     <v-layout row wrap justify-center>
 
       <v-flex
-        v-for="i in max_project" xs12 sm4 v-if="layout==1"
+        v-for="i in max_project" xs12 sm6 lg4 v-if="layout==1"
         style="padding:10px 5px;">
 
         <ProjectDetail v-on:popdetail="toStory"
@@ -84,7 +84,16 @@
         </ProjectDetail1>
         <v-divider></v-divider>
       </v-flex>
-      <v-btn v-if="more" @click="moreproject(max_project)">더보기</v-btn>
+    </v-layout>
+
+    <v-layout justify-center>
+      <v-btn
+        v-if="more"
+        @click="moreproject(max_project)"
+        outline flat
+        >
+        더보기
+      </v-btn>
     </v-layout>
 
   </div>
@@ -169,9 +178,6 @@ export default {
     },
     toStoryUpdate(pcode) {
       this.$emit('toStoryUpdate', pcode)
-    },
-    check() {
-      // console.log(this.filter_projects)
     }
   },
   watch: {

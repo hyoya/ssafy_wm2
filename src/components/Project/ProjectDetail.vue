@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="text-xs-center" style=" padding: 10px 5px; background:white;">
+  <v-flex class="text-xs-center" style=" padding: 10px 5px;">
     <v-flex hidden-xs-only>
       <button flat class="white--text" @click="popdetail(project_id)" style="height:80%;width:80%;">
         <v-img :src="projectimage" height="20vw" width="100%"></v-img>
@@ -14,14 +14,14 @@
           @click="UPDATE_Project(project_id)"
           class="d-inline"
           style="margin-right:1vw;">
-          <img src="../../assets/icon_set/technics.png" alt="Smiley" style="cursor: pointer;"/>
+          <img src="../../assets/icon_set/technics.png" alt="Smiley" style="cursor: pointer; height:25px;"/>
         </v-flex>
         <v-flex
           v-if="isMine"
           @click="DELETE_Project(project_id)"
           class="d-inline"
           style="margin-right:1vw;">
-          <img src="../../assets/icon_set/delete.png" alt="Smiley" style="cursor: pointer;"/>
+          <img src="../../assets/icon_set/delete.png" alt="Smiley" style="cursor: pointer; height:30px;"/>
         </v-flex>
       </div>
 
