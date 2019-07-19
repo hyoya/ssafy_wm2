@@ -29,8 +29,8 @@ export default {
         this.portfolio.project_id
       );
       this.protfolioImg = this.portfolioInfo.projectimage;
-      console.log(this.protfolioImg);
-      console.log(this.portfolioId);
+      // console.log(this.protfolioImg);
+      // console.log(this.portfolioId);
     },
     popdetail(pcode) {
       window.open("../project/" + pcode);
