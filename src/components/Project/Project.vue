@@ -2,7 +2,7 @@
   <div>
     <v-layout>
       <!-- profile img -->
-      <v-btn @click="goBackpage()"> 뒤로가기 </v-btn>
+      <v-btn @click="goBackpage()" flat outline> 뒤로가기 </v-btn>
       <v-toolbar-title class="font-weight-medium">
 
          <span class="font-weight-bold">{{project.projecttitle}} </span>

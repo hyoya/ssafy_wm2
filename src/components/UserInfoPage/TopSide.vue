@@ -1,6 +1,8 @@
 <!--userState -->
 <template>
-    <v-flex class="subheading grey--text text-md-center" >
+    <v-flex
+    class="subheading grey--text text-md-center"
+    style="border-bottom:1px #cecece solid; padding-bottom:1vw;" >
       followers {{followers}} stars {{stars}}
     </v-flex>
 </template>
