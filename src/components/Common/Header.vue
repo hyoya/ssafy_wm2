@@ -8,7 +8,6 @@
       <!-- <div id="google_translate_element"></div> -->
       <Sign />
       <v-btn flat class="font-bold-light" href="/companyIntro">Company</v-btn>
-      <v-btn flat class="font-bold-light" href="/followers">followers</v-btn>
     </div>
     <hr />
   </div>

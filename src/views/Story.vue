@@ -104,8 +104,6 @@
     <v-layout row wrap>
       <v-flex xs12>
         <TopBar />
-        <div v-show="this.viewFollower">follower</div>
-        <div v-show="this.viewFollowing">follwing</div>
       </v-flex>
     </v-layout>
     <FollowerList v-show="this.viewFollower || this.viewFollowing"></FollowerList>

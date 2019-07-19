@@ -57,12 +57,12 @@ export default {
   grid-gap: 1rem;
 }
 .PortfolioList__container {
-  padding-left: 90px;
+  padding-left: 100px;
   padding-right: 40px;
   padding-top: 50px;
 }
 .mainMoreBtn {
-  margin-left: 570px;
+  margin-left: 550px;
   font-size: 20px;
   background: #929292;
   color: white;
