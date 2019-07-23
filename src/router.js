@@ -8,6 +8,7 @@ import Followers from "./views/Followers.vue";
 import Project from "./views/Project.vue";
 import Vuex from 'vuex';
 import store from './store';
+import Manager from './views/Manager.vue';
 
 Vue.use(Vuex);
 Vue.use(store);
@@ -54,6 +55,11 @@ export default new Router({
       path:"/project/:pcode",
       name:"project",
       component:Project
+    },
+    {
+      path:"/manager",
+      name:"manager",
+      component:Manager
     }
   ]
 });
