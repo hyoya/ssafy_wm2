@@ -13,7 +13,6 @@
       <v-btn flat class="font-bold-light" href="/Manager">Manager</v-btn>
       <v-btn flat class="font-bold-light" href="/story">Story</v-btn>
       <v-btn flat class="font-bold-light" href="/companyIntro">Company</v-btn>
-      <v-btn flat class="font-bold-light" href="/followers">followers</v-btn>
     </div>
     <hr />
   </div>
