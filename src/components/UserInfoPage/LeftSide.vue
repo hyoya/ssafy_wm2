@@ -69,8 +69,8 @@
           style="padding:10px 0px;">
           <v-flex
            v-for="s in userdata[0].showSkillList"
-           d-inline
-           style="cursor:pointer;border:1px solid #cecece; padding:2px 10px; border-radius:8px; margin:2px 4px;">
+           d-inline-block
+           style="cursor:pointer;border:1px solid #cecece; padding:2px 10px; border-radius:8px; margin:6px 4px;">
             {{s}}
           </v-flex>
         </div>
